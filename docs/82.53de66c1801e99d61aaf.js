@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmytonwallet=self.webpackChunkmytonwallet||[]).push([[82],{77082:(e,s,a)=>{a.r(s),a.d(s,{SplashScreenWeb:()=>n});var l=a(16546);class n extends l.E_{async show(e){}async hide(e){}}}}]);
+//# sourceMappingURL=82.53de66c1801e99d61aaf.js.map
