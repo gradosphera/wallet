@@ -1,4 +1,4 @@
-const MANIFEST_URL = 'https://checkin.mytonwallet.org/tonconnect-manifest.json';
+const MANIFEST_URL = 'https://raw.githubusercontent.com/gradosphera/brand-assets/refs/heads/main/wallet/tonconnect-manifest.json';
 const JSBRIDGE_KEY = 'mytonwallet';
 const UNIVERSAL_LINK = 'https://connect.mytonwallet.org';
 const BRIDGE_URL = 'https://tonconnectbridge.mytonwallet.org/bridge';
@@ -6,7 +6,7 @@ const BRIDGE_URL = 'https://tonconnectbridge.mytonwallet.org/bridge';
 const CAPTCHA_KEY = '0x4AAAAAAAWP-ib_cL3bojOS';
 
 const REF_LINK_PREFIX = 'https://my.tt/r/';
-const BOT_USERNAME = 'MyTonWalletBot';
+const BOT_USERNAME = 'wallet_gradosphera_bot';
 
 let captchaLoadedResolve = undefined;
 let captchaLoadedPromise = new Promise((resolve) => {
