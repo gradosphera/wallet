@@ -30,36 +30,40 @@ export async function doTonMagic(isEnabled: boolean, cb: NoneToVoidFunction) {
 
     addBadge('Loading <b>TON magic</b>...');
 
-    const responses = await Promise.all(filesToInject.map(async (fileName: string) => {
-      const res = await fetch(`https://ton.org/app/${fileName}`);
+    const responses = await Promise.all(
+      filesToInject.map(async (fileName: string) => {
+        const res = await fetch(`https://ton.org/app/${fileName}`);
 
-      if (res.status !== 200) {
-        throw new Error(`[TON Wallet] Failed to load magic: ${res.statusText}. File: ${fileName}`);
-      }
-
-      return [
-        fileName,
-        new Response(await res.blob(), {
-          headers: res.headers,
-          status: res.status,
-          statusText: res.statusText,
-        }),
-      ];
-    }));
-
-    await Promise.all(responses.map(async ([fileName, response]) => {
-      if (fileName.startsWith('main.')) {
-        if (fileName.endsWith('.js')) {
-          await assetCache.put(`${TELEGRAM_WEB_URL}${localRevision}`, response.clone());
-        } else if (fileName.endsWith('.css')) {
-          const linkEl = document.querySelector('link[rel=stylesheet]')!;
-          const currentCssRevision = linkEl.getAttribute('href');
-          await assetCache.put(`${TELEGRAM_WEB_URL}${currentCssRevision}`, response.clone());
+        if (res.status !== 200) {
+          throw new Error(`[TON Wallet] Failed to load magic: ${res.statusText}. File: ${fileName}`);
         }
-      } else {
-        await assetCache.put(`${TELEGRAM_WEB_URL}${fileName}`, response.clone());
-      }
-    }));
+
+        return [
+          fileName,
+          new Response(await res.blob(), {
+            headers: res.headers,
+            status: res.status,
+            statusText: res.statusText,
+          }),
+        ];
+      }),
+    );
+
+    await Promise.all(
+      responses.map(async ([fileName, response]) => {
+        if (fileName.startsWith('main.')) {
+          if (fileName.endsWith('.js')) {
+            await assetCache.put(`${TELEGRAM_WEB_URL}${localRevision}`, response.clone());
+          } else if (fileName.endsWith('.css')) {
+            const linkEl = document.querySelector('link[rel=stylesheet]')!;
+            const currentCssRevision = linkEl.getAttribute('href');
+            await assetCache.put(`${TELEGRAM_WEB_URL}${currentCssRevision}`, response.clone());
+          }
+        } else {
+          await assetCache.put(`${TELEGRAM_WEB_URL}${fileName}`, response.clone());
+        }
+      }),
+    );
 
     localStorage.setItem('ton:magicRevision', magicRevision);
   } else {
