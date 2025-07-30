@@ -14,27 +14,16 @@ import yaml from 'js-yaml';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import type { Compiler, Configuration } from 'webpack';
-import {
-  DefinePlugin, EnvironmentPlugin, IgnorePlugin, NormalModuleReplacementPlugin, ProvidePlugin,
-} from 'webpack';
+import { DefinePlugin, EnvironmentPlugin, IgnorePlugin, NormalModuleReplacementPlugin, ProvidePlugin } from 'webpack';
 
-import {
-  APP_NAME,
-  EXTENSION_DESCRIPTION,
-  EXTENSION_NAME,
-  PRODUCTION_URL,
-} from './src/config';
+import { APP_NAME, EXTENSION_DESCRIPTION, EXTENSION_NAME, PRODUCTION_URL } from './src/config';
 
 dotenv.config();
 
 // GitHub workflow uses an empty string as the default value if it's not in repository variables, so we cannot define a default value here
 process.env.BASE_URL = process.env.BASE_URL || PRODUCTION_URL;
 
-const {
-  APP_ENV = 'production',
-  BASE_URL,
-  HEAD,
-} = process.env;
+const { APP_ENV = 'production', BASE_URL, HEAD } = process.env;
 const IS_CORE_WALLET = process.env.IS_CORE_WALLET === '1';
 const IS_CAPACITOR = process.env.IS_CAPACITOR === '1';
 const IS_EXTENSION = process.env.IS_EXTENSION === '1';
@@ -47,18 +36,19 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 const branch = HEAD || gitRevisionPlugin.branch();
 const appRevision = !branch || branch === 'HEAD' ? gitRevisionPlugin.commithash()?.substring(0, 7) : branch;
 const canUseStatoscope = !IS_EXTENSION && !IS_PACKAGED_ELECTRON && !IS_CAPACITOR;
-const cspConnectSrcExtra = APP_ENV === 'development'
-  ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}`
-  : '';
+const cspConnectSrcExtra =
+  APP_ENV === 'development' ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}` : '';
 const cspScriptSrcExtra = IS_TELEGRAM_APP ? 'https://telegram.org' : '';
-const cspFrameSrcExtra = IS_CORE_WALLET ? '' : [
-  'https://buy-sandbox.moonpay.com/',
-  'https://buy.moonpay.com/',
-  'https://dreamwalkers.io/',
-  'https://avanchange.com/',
-  'https://pay.wata.pro/',
-  'https://royalpay.cc/',
-].join(' ');
+const cspFrameSrcExtra = IS_CORE_WALLET
+  ? ''
+  : [
+      'https://buy-sandbox.moonpay.com/',
+      'https://buy.moonpay.com/',
+      'https://dreamwalkers.io/',
+      'https://avanchange.com/',
+      'https://pay.wata.pro/',
+      'https://royalpay.cc/',
+    ].join(' ');
 
 // The `connect-src` rule contains `https:` due to arbitrary requests are needed for jetton JSON configs.
 // The `img-src` rule contains `https:` due to arbitrary image URLs being used as jetton logos.
@@ -76,7 +66,8 @@ const CSP = `
   font-src 'self' https://fonts.gstatic.com/;
   form-action 'none';
   frame-src 'self' ${cspFrameSrcExtra};`
-  .replace(/\s+/g, ' ').trim();
+  .replace(/\s+/g, ' ')
+  .trim();
 
 const appVersion = require('./package.json').version;
 
@@ -222,26 +213,28 @@ export default function createConfig(
     },
 
     plugins: [
-      ...(IS_OPERA_EXTENSION ? [{
-        apply: (compiler: Compiler) => {
-          compiler.hooks.afterDone.tap('After Compilation', async () => {
-            const dir = './dist/';
+      ...(IS_OPERA_EXTENSION
+        ? [
+            {
+              apply: (compiler: Compiler) => {
+                compiler.hooks.afterDone.tap('After Compilation', async () => {
+                  const dir = './dist/';
 
-            for (const filename of await fs.promises.readdir(dir)) {
-              const file = path.join(dir, filename);
+                  for (const filename of await fs.promises.readdir(dir)) {
+                    const file = path.join(dir, filename);
 
-              if (file.endsWith('.tgs')) {
-                await fs.promises.rename(file, file.replace('.tgs', '.json'));
-              } else if (filename.includes('main') && filename.endsWith('.js')) {
-                const content = (await fs.promises.readFile(file))
-                  .toString('utf-8')
-                  .replace(/\.tgs"/g, '.json"');
-                await fs.promises.writeFile(file, content);
-              }
-            }
-          });
-        },
-      }] : []),
+                    if (file.endsWith('.tgs')) {
+                      await fs.promises.rename(file, file.replace('.tgs', '.json'));
+                    } else if (filename.includes('main') && filename.endsWith('.js')) {
+                      const content = (await fs.promises.readFile(file)).toString('utf-8').replace(/\.tgs"/g, '.json"');
+                      await fs.promises.writeFile(file, content);
+                    }
+                  }
+                });
+              },
+            },
+          ]
+        : []),
       new WebpackBeforeBuildPlugin((stats: any, callback: VoidFunction) => {
         const defaultI18nYaml = fs.readFileSync('./src/i18n/en.yaml', 'utf8');
         const defaultI18nJson = convertI18nYamlToJson(defaultI18nYaml, mode === 'production');
@@ -265,7 +258,7 @@ export default function createConfig(
         chunks: ['main'],
         csp: CSP,
         title: APP_NAME,
-        homepage: IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://mytonwallet.io',
+        homepage: IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://wallet.gradosphera.org',
         assets_prefix: IS_CORE_WALLET ? 'coreWallet/' : '',
       }),
       new PreloadWebpackPlugin({
@@ -276,9 +269,11 @@ export default function createConfig(
           /theme_.*?\.png/, // Theme icons
           /chain_.*?\.png/, // Chain icons
           /settings_.*?\.svg/, // Settings icons (svg)
-          ...(IS_CORE_WALLET ? [
-            /core_wallet_.*?\.png/, // Lottie thumbs for TON Wallet
-          ] : []),
+          ...(IS_CORE_WALLET
+            ? [
+                /core_wallet_.*?\.png/, // Lottie thumbs for TON Wallet
+              ]
+            : []),
         ],
         as(entry: string) {
           if (/\.png$/.test(entry)) return 'image';
@@ -357,10 +352,10 @@ export default function createConfig(
               manifest.action = { default_title: APP_NAME };
               manifest.icons = IS_CORE_WALLET
                 ? {
-                  192: 'coreWallet/icon-192x192.png',
-                  256: 'coreWallet/icon-256x256.png',
-                  512: 'coreWallet/icon-512x512.png',
-                }
+                    192: 'coreWallet/icon-192x192.png',
+                    256: 'coreWallet/icon-256x256.png',
+                    512: 'coreWallet/icon-512x512.png',
+                  }
                 : { 192: 'icon-192x192.png', 384: 'icon-384x384.png', 512: 'icon-512x512.png' };
 
               if (IS_FIREFOX_EXTENSION) {
@@ -383,9 +378,8 @@ export default function createConfig(
           {
             from: 'src/i18n/*.yaml',
             to: 'i18n/[name].json',
-            transform: (content: Buffer) => convertI18nYamlToJson(
-              content as unknown as string, mode === 'production',
-            ) as any,
+            transform: (content: Buffer) =>
+              convertI18nYamlToJson(content as unknown as string, mode === 'production') as any,
           },
           {
             from: IS_TELEGRAM_APP ? 'src/_headers_telegram' : 'src/_headers',
@@ -393,28 +387,35 @@ export default function createConfig(
           },
         ],
       }),
-      ...(canUseStatoscope ? [new StatoscopeWebpackPlugin({
-        statsOptions: {
-          context: __dirname,
-        },
-        saveReportTo: path.resolve('./public/statoscope-report.html'),
-        saveStatsTo: path.resolve('./public/statoscope-build-statistics.json'),
-        normalizeStats: true,
-        open: false,
-        extensions: [new WebpackContextExtension()], // eslint-disable-line @typescript-eslint/no-use-before-define
-      })] : []),
+      ...(canUseStatoscope
+        ? [
+            new StatoscopeWebpackPlugin({
+              statsOptions: {
+                context: __dirname,
+              },
+              saveReportTo: path.resolve('./public/statoscope-report.html'),
+              saveStatsTo: path.resolve('./public/statoscope-build-statistics.json'),
+              normalizeStats: true,
+              open: false,
+              extensions: [new WebpackContextExtension()], // eslint-disable-line @typescript-eslint/no-use-before-define
+            }),
+          ]
+        : []),
       ...(IS_EXTENSION
         ? [
-          new NormalModuleReplacementPlugin(
-            /src\/api\/providers\/worker\/connector\.ts/,
-            '../extension/connectorForPopup.ts',
-          ),
-        ]
+            new NormalModuleReplacementPlugin(
+              /src\/api\/providers\/worker\/connector\.ts/,
+              '../extension/connectorForPopup.ts',
+            ),
+          ]
         : []),
     ],
 
-    devtool:
-      IS_EXTENSION ? 'cheap-source-map' : APP_ENV === 'production' && IS_PACKAGED_ELECTRON ? undefined : 'source-map',
+    devtool: IS_EXTENSION
+      ? 'cheap-source-map'
+      : APP_ENV === 'production' && IS_PACKAGED_ELECTRON
+      ? undefined
+      : 'source-map',
   };
 }
 
