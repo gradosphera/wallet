@@ -51,18 +51,19 @@ const IS_OPERA_EXTENSION = process.env.IS_OPERA_EXTENSION === '1';
 
 const appCommitHash = new GitRevisionPlugin().commithash();
 const canUseStatoscope = !IS_EXTENSION && !IS_PACKAGED_ELECTRON && !IS_CAPACITOR;
-const cspConnectSrcExtra = APP_ENV === 'development'
-  ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}`
-  : '';
+const cspConnectSrcExtra =
+  APP_ENV === 'development' ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}` : '';
 const cspScriptSrcExtra = IS_TELEGRAM_APP ? 'https://telegram.org' : '';
-const cspFrameSrcExtra = IS_CORE_WALLET ? '' : [
-  'https://buy-sandbox.moonpay.com/',
-  'https://buy.moonpay.com/',
-  'https://dreamwalkers.io/',
-  'https://avanchange.com/',
-  ...IFRAME_WHITELIST,
-  SUBPROJECT_URL_MASK,
-].join(' ');
+const cspFrameSrcExtra = IS_CORE_WALLET
+  ? ''
+  : [
+      'https://buy-sandbox.moonpay.com/',
+      'https://buy.moonpay.com/',
+      'https://dreamwalkers.io/',
+      'https://avanchange.com/',
+      ...IFRAME_WHITELIST,
+      SUBPROJECT_URL_MASK,
+    ].join(' ');
 
 const cspConnectSrcHosts = [
   BRILLIANT_API_BASE_URL,
@@ -106,7 +107,8 @@ const CSP = `
   font-src 'self' https://fonts.gstatic.com/;
   form-action 'none';
   frame-src 'self' https: ${cspFrameSrcExtra};`
-  .replace(/\s+/g, ' ').trim();
+  .replace(/\s+/g, ' ')
+  .trim();
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const appVersion = require('./package.json').version;
@@ -265,26 +267,28 @@ export default function createConfig(
     },
 
     plugins: [
-      ...(IS_OPERA_EXTENSION ? [{
-        apply: (compiler: Compiler) => {
-          compiler.hooks.afterDone.tap('After Compilation', async () => {
-            const dir = './dist/';
+      ...(IS_OPERA_EXTENSION
+        ? [
+            {
+              apply: (compiler: Compiler) => {
+                compiler.hooks.afterDone.tap('After Compilation', async () => {
+                  const dir = './dist/';
 
-            for (const filename of await fs.promises.readdir(dir)) {
-              const file = path.join(dir, filename);
+                  for (const filename of await fs.promises.readdir(dir)) {
+                    const file = path.join(dir, filename);
 
-              if (file.endsWith('.tgs')) {
-                await fs.promises.rename(file, file.replace('.tgs', '.json'));
-              } else if (filename.includes('main') && filename.endsWith('.js')) {
-                const content = (await fs.promises.readFile(file))
-                  .toString('utf-8')
-                  .replace(/\.tgs"/g, '.json"');
-                await fs.promises.writeFile(file, content);
-              }
-            }
-          });
-        },
-      }] : []),
+                    if (file.endsWith('.tgs')) {
+                      await fs.promises.rename(file, file.replace('.tgs', '.json'));
+                    } else if (filename.includes('main') && filename.endsWith('.js')) {
+                      const content = (await fs.promises.readFile(file)).toString('utf-8').replace(/\.tgs"/g, '.json"');
+                      await fs.promises.writeFile(file, content);
+                    }
+                  }
+                });
+              },
+            },
+          ]
+        : []),
       new WatchFilePlugin({
         rules: [
           {
@@ -321,7 +325,7 @@ export default function createConfig(
         chunks: ['main'],
         csp: CSP,
         title: APP_NAME,
-        homepage: IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://mytonwallet.io',
+        homepage: IS_CORE_WALLET ? 'https://wallet.gradosphera.org' : 'https://mytonwallet.io',
         assets_prefix: IS_CORE_WALLET ? 'coreWallet/' : '',
       }),
       new PreloadWebpackPlugin({
@@ -332,9 +336,11 @@ export default function createConfig(
           /theme_.*?\.png/, // Theme icons
           /chain_.*?\.png/, // Chain icons
           /settings_.*?\.svg/, // Settings icons (svg)
-          ...(IS_CORE_WALLET ? [
-            /core_wallet_.*?\.png/, // Lottie thumbs for TON Wallet
-          ] : []),
+          ...(IS_CORE_WALLET
+            ? [
+                /core_wallet_.*?\.png/, // Lottie thumbs for TON Wallet
+              ]
+            : []),
         ],
         as(entry: string) {
           if (/\.png$/.test(entry)) return 'image';
@@ -404,10 +410,10 @@ export default function createConfig(
               manifest.action = { default_title: APP_NAME };
               manifest.icons = IS_CORE_WALLET
                 ? {
-                  192: 'coreWallet/icon-192x192.png',
-                  256: 'coreWallet/icon-256x256.png',
-                  512: 'coreWallet/icon-512x512.png',
-                }
+                    192: 'coreWallet/icon-192x192.png',
+                    256: 'coreWallet/icon-256x256.png',
+                    512: 'coreWallet/icon-512x512.png',
+                  }
                 : { 192: 'icon-192x192.png', 384: 'icon-384x384.png', 512: 'icon-512x512.png' };
 
               if (IS_FIREFOX_EXTENSION) {
@@ -430,9 +436,8 @@ export default function createConfig(
           {
             from: 'src/i18n/*.yaml',
             to: 'i18n/[name].json',
-            transform: (content: Buffer) => convertI18nYamlToJson(
-              content as unknown as string, mode === 'production',
-            ) as any,
+            transform: (content: Buffer) =>
+              convertI18nYamlToJson(content as unknown as string, mode === 'production') as any,
           },
           {
             from: IS_TELEGRAM_APP ? 'src/_headers_telegram' : 'src/_headers',
@@ -440,21 +445,28 @@ export default function createConfig(
           },
         ],
       }),
-      ...(canUseStatoscope ? [new StatoscopeWebpackPlugin({
-        statsOptions: {
-          context: __dirname,
-        },
-        saveReportTo: path.resolve('./public/statoscope-report.html'),
-        saveStatsTo: path.resolve(statoscopeStatsFile),
-        normalizeStats: true,
-        open: false,
-        extensions: [new WebpackContextExtension()],
-        ...(statoscopeStatsFileToCompare ? { additionalStats: [statoscopeStatsFileToCompare] } : undefined),
-      })] : []),
+      ...(canUseStatoscope
+        ? [
+            new StatoscopeWebpackPlugin({
+              statsOptions: {
+                context: __dirname,
+              },
+              saveReportTo: path.resolve('./public/statoscope-report.html'),
+              saveStatsTo: path.resolve(statoscopeStatsFile),
+              normalizeStats: true,
+              open: false,
+              extensions: [new WebpackContextExtension()],
+              ...(statoscopeStatsFileToCompare ? { additionalStats: [statoscopeStatsFileToCompare] } : undefined),
+            }),
+          ]
+        : []),
     ],
 
-    devtool:
-      IS_EXTENSION ? 'cheap-source-map' : APP_ENV === 'production' && IS_PACKAGED_ELECTRON ? undefined : 'source-map',
+    devtool: IS_EXTENSION
+      ? 'cheap-source-map'
+      : APP_ENV === 'production' && IS_PACKAGED_ELECTRON
+      ? undefined
+      : 'source-map',
   };
 }
 
