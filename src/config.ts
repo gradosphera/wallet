@@ -42,8 +42,8 @@ export const IS_TELEGRAM_APP = process.env.IS_TELEGRAM_APP === '1';
 
 export const ELECTRON_HOST_URL = 'https://dumb-host';
 export const INACTIVE_MARKER = '[Inactive]';
-export const PRODUCTION_URL = IS_CORE_WALLET ? 'https://wallet.gradosphera.org' : 'https://mytonwallet.app';
-export const BETA_URL = IS_CORE_WALLET ? 'https://beta.wallet.gradosphera.org' : 'https://beta.mytonwallet.app';
+export const PRODUCTION_URL = IS_CORE_WALLET ? 'https://wallet.gradosphera.org' : 'https://wallet.gradosphera.org';
+export const BETA_URL = IS_CORE_WALLET ? 'https://beta.wallet.gradosphera.org' : 'https://beta.wallet.gradosphera.org';
 export const APP_INSTALL_URL = 'https://get.mytonwallet.io/';
 export const APP_REPO_URL = 'https://github.com/mytonwalletorg/mytonwallet';
 export const BASE_URL = process.env.BASE_URL;
@@ -59,7 +59,9 @@ export const DEBUG_ALERT_MSG = 'Shoot!\nSomething went wrong, please see the err
 
 export const PIN_LENGTH = 4;
 export const NATIVE_BIOMETRICS_USERNAME = IS_CORE_WALLET ? 'TonWallet' : 'MyTonWallet';
-export const NATIVE_BIOMETRICS_SERVER = IS_CORE_WALLET ? 'https://wallet.gradosphera.org' : 'https://mytonwallet.app';
+export const NATIVE_BIOMETRICS_SERVER = IS_CORE_WALLET
+  ? 'https://wallet.gradosphera.org'
+  : 'https://wallet.gradosphera.org';
 
 export const IS_BIP39_MNEMONIC_ENABLED = !IS_CORE_WALLET;
 export const MNEMONIC_COUNT = 24;

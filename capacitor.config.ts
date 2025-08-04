@@ -27,12 +27,10 @@ const COMMON_PLUGINS = [
   'cordova-plugin-inappbrowser',
 ];
 
-const IOS_PLUGINS = [
-  '@capacitor/splash-screen',
-];
+const IOS_PLUGINS = ['@capacitor/splash-screen'];
 
 const config: CapacitorConfig = {
-  appId: 'org.mytonwallet.app',
+  appId: 'org.wallet.gradosphera.org',
   appName: 'MyTonWallet',
   webDir: 'dist',
   server: {
