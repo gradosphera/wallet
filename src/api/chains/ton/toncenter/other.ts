@@ -114,8 +114,11 @@ export function getToncenterHeaders(network: ApiNetwork) {
   const { apiHeaders, toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
   const apiKey = network === 'testnet' ? toncenterTestnetKey : toncenterMainnetKey;
 
+  // Remove X-App-Origin header to avoid CORS issues with TON Center API
+  const { 'X-App-Origin': _removed, ...safeHeaders } = apiHeaders || {};
+
   return {
-    ...apiHeaders,
+    ...safeHeaders,
     ...(apiKey && { 'X-Api-Key': apiKey }),
     'X-Actions-Version': TONCENTER_ACTIONS_VERSION,
   };

@@ -28,7 +28,8 @@ export function setEnvironment(args: ApiInitArgs) {
     isDappSupported: true,
     isSseSupported: args.isElectron || (IS_CAPACITOR && !args.isNativeBottomSheet),
 
-    apiHeaders: { 'X-App-Origin': args.isElectron ? ELECTRON_ORIGIN : self?.origin },
+    // Only include X-App-Origin for internal services, not external APIs
+    apiHeaders: args.isElectron ? { 'X-App-Origin': ELECTRON_ORIGIN } : {},
     toncenterMainnetKey: args.isElectron ? ELECTRON_TONCENTER_MAINNET_KEY : TONCENTER_MAINNET_KEY,
     toncenterTestnetKey: args.isElectron ? ELECTRON_TONCENTER_TESTNET_KEY : TONCENTER_TESTNET_KEY,
   };
