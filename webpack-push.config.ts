@@ -13,9 +13,7 @@ import { convertI18nYamlToJson } from './dev/locales/convertI18nYamlToJson';
 
 dotenv.config();
 
-const {
-  PUSH_API_URL,
-} = process.env;
+const { PUSH_API_URL } = process.env;
 
 const { APP_ENV = 'production' } = process.env;
 const IS_TELEGRAM_APP = process.env.IS_TELEGRAM_APP === '1';
@@ -23,15 +21,16 @@ const IS_TELEGRAM_APP = process.env.IS_TELEGRAM_APP === '1';
 const defaultI18nFilename = path.resolve(__dirname, './src/push/i18n/en.json');
 
 const cspConnectSrcHosts = [
-  'https://toncenter.mytonwallet.org/',
+  'https://toncenter.com/',
   'https://raw.githubusercontent.com/ton-blockchain/wallets-list/',
   'https://tonconnectbridge.mytonwallet.org/',
   PUSH_API_URL,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 
-const cspConnectSrcExtra = APP_ENV === 'development'
-  ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}`
-  : '';
+const cspConnectSrcExtra =
+  APP_ENV === 'development' ? `http://localhost:3000 ${process.env.CSP_CONNECT_SRC_EXTRA_URL}` : '';
 
 const cspScriptSrcExtra = IS_TELEGRAM_APP ? 'https://telegram.org' : '';
 
@@ -48,7 +47,8 @@ const CSP = `
   font-src 'self' https://fonts.gstatic.com/;
   form-action 'none';
   frame-src 'self'`
-  .replace(/\s+/g, ' ').trim();
+  .replace(/\s+/g, ' ')
+  .trim();
 
 export default function createConfig(
   _: any,
@@ -218,9 +218,8 @@ export default function createConfig(
           {
             from: 'src/push/i18n/*.yaml',
             to: 'i18n/[name].json',
-            transform: (content: Buffer) => convertI18nYamlToJson(
-              content as unknown as string, mode === 'production',
-            ) as any,
+            transform: (content: Buffer) =>
+              convertI18nYamlToJson(content as unknown as string, mode === 'production') as any,
           },
         ],
       }),

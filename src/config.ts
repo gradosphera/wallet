@@ -103,7 +103,7 @@ export const THEME_DEFAULT = 'system';
 
 export const MAIN_ACCOUNT_ID = '0-ton-mainnet';
 
-export const TONCENTER_MAINNET_URL = process.env.TONCENTER_MAINNET_URL || 'https://toncenter.mytonwallet.org';
+export const TONCENTER_MAINNET_URL = process.env.TONCENTER_MAINNET_URL || 'https://toncenter.com';
 export const TONCENTER_MAINNET_KEY = process.env.TONCENTER_MAINNET_KEY;
 export const ELECTRON_TONCENTER_MAINNET_KEY = process.env.ELECTRON_TONCENTER_MAINNET_KEY;
 export const TONAPIIO_MAINNET_URL = process.env.TONAPIIO_MAINNET_URL || 'https://tonapiio.mytonwallet.org';
