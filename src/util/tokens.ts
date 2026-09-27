@@ -34,8 +34,10 @@ export function getIsServiceToken(token?: ApiToken) {
     || PRICELESS_TOKEN_HASHES.has(codeHash);
 }
 
-export function getIsPricelessToken(token?: ApiToken) {
-  return Boolean(token && HIDDEN_PRICE_TOKEN_SLUGS.has(token.slug));
+export function getIsPricelessToken(token?: { slug?: string }) {
+  const { slug } = token ?? {};
+
+  return Boolean(slug && HIDDEN_PRICE_TOKEN_SLUGS.has(slug));
 }
 
 export function buildUserToken(token: ApiTokenWithPrice | ApiToken): UserToken {
