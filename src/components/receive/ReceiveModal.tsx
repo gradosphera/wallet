@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from '../../lib/teact/teact';
 import { getActions, withGlobal } from '../../global';
 
-import { selectCurrentAccount, selectIsMultichainAccount } from '../../global/selectors';
+import { selectIsMultichainAccount } from '../../global/selectors';
 import buildClassName from '../../util/buildClassName';
 import { IS_IOS_APP } from '../../util/windowEnvironment';
 
@@ -16,19 +16,11 @@ import styles from './ReceiveModal.module.scss';
 
 type StateProps = {
   isOpen?: boolean;
-  isLedger?: boolean;
-  isTestnet?: boolean;
-  isSwapDisabled: boolean;
-  isOnRampDisabled: boolean;
   isMultichainAccount: boolean;
 };
 
 function ReceiveModal({
   isOpen,
-  isTestnet,
-  isLedger,
-  isSwapDisabled,
-  isOnRampDisabled,
   isMultichainAccount,
 }: StateProps) {
   const { closeReceiveModal } = getActions();
@@ -36,9 +28,7 @@ function ReceiveModal({
   const lang = useLang();
 
   const { isLandscape } = useDeviceScreen();
-  const isSwapAllowed = !isTestnet && !isLedger && !isSwapDisabled;
-  const isOnRampAllowed = !isTestnet && !isOnRampDisabled;
-  const modalTitle = lang(isSwapAllowed || isOnRampAllowed ? 'Add / Buy' : 'Add');
+  const modalTitle = lang('Add');
 
   useEffect(() => {
     if (isOpen && isLandscape) {
@@ -67,15 +57,8 @@ function ReceiveModal({
 }
 
 export default memo(withGlobal((global): StateProps => {
-  const { isSwapDisabled, isOnRampDisabled } = global.restrictions;
-  const account = selectCurrentAccount(global);
-
   return {
     isOpen: global.isReceiveModalOpen,
-    isTestnet: global.settings.isTestnet,
-    isSwapDisabled,
-    isOnRampDisabled,
-    isLedger: Boolean(account?.ledger),
     isMultichainAccount: selectIsMultichainAccount(global, global.currentAccountId!),
   };
 })(ReceiveModal));
