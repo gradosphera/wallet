@@ -545,7 +545,7 @@ function applyGradospheraCatalog(
     ...GRADOSPHERA_VOTE_SITE,
     manifestUrl: '',
     canBeRestricted: false,
-    isExternal: true,
+    isExternal: false,
     isFeatured: false,
     categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
   };
