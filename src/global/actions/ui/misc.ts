@@ -359,16 +359,6 @@ addActionHandler('setLandscapeActionsActiveTabIndex', (global, actions, { index 
   });
 });
 
-addActionHandler('closeSecurityWarning', (global) => {
-  return {
-    ...global,
-    settings: {
-      ...global.settings,
-      isSecurityWarningHidden: true,
-    },
-  };
-});
-
 addActionHandler('toggleTokensWithNoCost', (global, actions, { isEnabled }) => {
   return updateSettings(global, { areTokensWithNoCostHidden: isEnabled });
 });

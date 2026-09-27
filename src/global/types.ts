@@ -737,7 +737,6 @@ export type GlobalState = {
     isDeeplinkHookEnabled?: boolean;
     isPasswordNumeric?: boolean; // Backwards compatibility for non-numeric passwords from older versions
     isTestnet?: boolean;
-    isSecurityWarningHidden?: boolean;
     areTokensWithNoCostHidden: boolean;
     isSortByValueEnabled?: boolean;
     importToken?: {
@@ -1062,7 +1061,6 @@ export interface ActionPayloads {
   startChangingNetwork: { network: ApiNetwork };
   changeNetwork: { network: ApiNetwork };
   changeLanguage: { langCode: LangCode };
-  closeSecurityWarning: undefined;
   toggleTokensWithNoCost: { isEnabled: boolean };
   toggleSortByValue: { isEnabled: boolean };
   updateOrderedSlugs: { orderedSlugs: string[] };
