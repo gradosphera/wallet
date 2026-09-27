@@ -48,7 +48,6 @@ import styles from './Card.module.scss';
 interface OwnProps {
   ref?: ElementRef<HTMLDivElement>;
   onTokenCardClose: NoneToVoidFunction;
-  onYieldClick: (stakingId?: string) => void;
 }
 
 interface StateProps {
@@ -67,7 +66,6 @@ function Card({
   tokens,
   currentTokenSlug,
   onTokenCardClose,
-  onYieldClick,
   baseCurrency,
   stakingStates,
   isSensitiveDataHidden,
@@ -246,7 +244,6 @@ function Card({
           token={renderedToken!}
           ref={tokenCardRef}
           isUpdating={isUpdating}
-          onYieldClick={isViewMode ? undefined : onYieldClick}
           onClose={onTokenCardClose}
         />
       )}

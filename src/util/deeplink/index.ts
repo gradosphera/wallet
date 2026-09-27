@@ -361,15 +361,6 @@ export async function processSelfDeeplink(deeplink: string): Promise<boolean> {
         return true;
       }
 
-      case DeeplinkCommand.Stake: {
-        if (isTestnet) {
-          actions.showError({ error: 'Staking is not supported in Testnet.' });
-        } else {
-          actions.startStaking();
-        }
-        return true;
-      }
-
       case DeeplinkCommand.Transfer: {
         return await processTonDeeplink(convertSelfUrlToTonDeeplink(deeplink));
       }

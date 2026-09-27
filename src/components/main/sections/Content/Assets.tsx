@@ -46,7 +46,6 @@ type OwnProps = {
   isActive?: boolean;
   isSeparatePanel?: boolean;
   onTokenClick: (slug: string) => void;
-  onStakedTokenClick: (stakingId?: string) => void;
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 };
 
@@ -79,7 +78,6 @@ function Assets({
   isSeparatePanel,
   currentTokenSlug,
   onTokenClick,
-  onStakedTokenClick,
   baseCurrency,
   mycoin,
   isMultichainAccount,
@@ -230,7 +228,7 @@ function Assets({
           isViewMode={isViewMode}
           isSwapDisabled={isSwapDisabled}
           stakingState={state}
-          onClick={onStakedTokenClick}
+          onClick={onTokenClick}
         />
       );
     });

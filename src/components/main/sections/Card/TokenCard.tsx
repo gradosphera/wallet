@@ -44,7 +44,6 @@ interface OwnProps {
   token: UserToken;
   classNames?: string;
   isUpdating?: boolean;
-  onYieldClick?: (stakingId?: string) => void;
   onClose: NoneToVoidFunction;
 }
 
@@ -77,7 +76,6 @@ function TokenCard({
   tokenAddress,
   stakingStates,
   isSensitiveDataHidden,
-  onYieldClick,
   onClose,
 }: OwnProps & StateProps) {
   const { loadPriceHistory } = getActions();
@@ -106,7 +104,7 @@ function TokenCard({
   } = token;
   const isPriceless = getIsPricelessToken(token);
 
-  const { annualYield, yieldType, id: stakingId } = useMemo(() => {
+  const { annualYield, yieldType } = useMemo(() => {
     if (IS_CORE_WALLET) return undefined;
 
     return stakingStates?.reduce((bestState, state) => {
@@ -246,10 +244,7 @@ function TokenCard({
           <span className={styles.tokenTitle}>
             <span className={styles.tokenName}>{name}</span>
             {yieldType && (
-              <span
-                className={buildClassName(styles.apy, onYieldClick && styles.interactive)}
-                onClick={onYieldClick ? () => onYieldClick(stakingId) : undefined}
-              >
+              <span className={styles.apy}>
                 {yieldType} {round(annualYield ?? 0, 2)}%
               </span>
             )}
