@@ -1,4 +1,22 @@
-**TON Wallet** is a fork of **MyTonWallet**.
+**GradospheraWallet** is a fork of **MyTonWallet**.
+
+---
+
+# GradospheraWallet · Кошелёк ДАО Градосфера
+
+Форк [MyTonWallet](https://mytonwallet.io) — web-кошелёк и браузерное расширение для сети [TON](https://ton.org),
+поддерживающее жетоны, NFT, TON DNS и TON Sites.
+
+Оригинальный проект распространяется под [GNU GPL v3](./LICENSE) — этот форк наследует ту же лицензию
+и attribution. Изменения относительно оригинала: собственный TonConnect bridge, каталог приложений ДАО,
+жетон Благо, русский интерфейс и брендинг Градосфера.
+
+## Брендинг
+
+- Название: `GradospheraWallet` (значение `APP_NAME` в env; дефолт в коде — `MyTonWallet`).
+- Логотип: как у жетона Благо — `https://github.com/gradosphera/brand-assets` (CC0).
+- Иконки: `public/logo.svg`, `public/icon-*.png`, `public/apple-touch-icon.png`, `public/favicon.ico`,
+  `public/tonconnect-icon.png`, `public/icon-electron-*`, а также весь набор `public/coreWallet/`.
 
 ---
 
