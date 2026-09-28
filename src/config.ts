@@ -269,6 +269,8 @@ export const TON_DNS_COLLECTION = 'EQC3dNlesgVD8YbAazcauIrXBPfiVhMMr5YYk2in0Mtsz
 export const TON_DNS_RENEWAL_WARNING_DAYS = 14;
 export const TON_DNS_RENEWAL_NFT_WARNING_DAYS = 30;
 
+export const GRAM_SYMBOL = 'GRAM';
+
 export const TONCOIN = {
   name: 'Toncoin',
   symbol: 'TON',
@@ -534,14 +536,14 @@ export const SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY = IS_CORE_WALLET;
 export const PORTRAIT_MIN_ASSETS_TAB_VIEW = 4;
 export const LANDSCAPE_MIN_ASSETS_TAB_VIEW = 6;
 
-export const DEFAULT_PRICE_CURRENCY = 'USD';
+export const DEFAULT_PRICE_CURRENCY: ApiBaseCurrency = TONCOIN.symbol;
 export const CURRENCIES: Record<ApiBaseCurrency, { name: string; decimals: number; shortSymbol?: string }> = {
   USD: { name: 'US Dollar', decimals: 2, shortSymbol: '$' },
   EUR: { name: 'Euro', decimals: 2, shortSymbol: '€' },
   RUB: { name: 'Ruble', decimals: 2, shortSymbol: '₽' },
   CNY: { name: 'Yuan', decimals: 2, shortSymbol: '¥' },
   BTC: { name: 'Bitcoin', decimals: 9 },
-  [TONCOIN.symbol]: { name: 'Toncoin', decimals: 9 },
+  [TONCOIN.symbol]: { name: 'GRAM', decimals: 9, shortSymbol: GRAM_SYMBOL },
 };
 
 export const BURN_ADDRESS = 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ';
@@ -648,6 +650,10 @@ export const PRICELESS_TOKEN_HASHES = new Set([
 export const STAKED_TOKEN_SLUGS = new Set([STAKED_TON_SLUG, STAKED_MYCOIN_SLUG, TON_TSUSDE.slug]);
 
 export const HIDDEN_PRICE_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
+
+// Жетоны ДАО, которые всегда показываются в группе «Популярные» на экране
+// «Добавить токен», даже если бэкенд не отдаёт их как isPopular.
+export const DAO_POPULAR_TOKEN_SLUGS: string[] = [BLAGO.slug];
 
 export const DEFAULT_OUR_SWAP_FEE = 0.875;
 

@@ -2,6 +2,7 @@ import type { ApiBalanceBySlug, ApiChain } from '../../api/types';
 import type { AccountSettings, GlobalState, UserToken } from '../types';
 
 import {
+  DAO_POPULAR_TOKEN_SLUGS,
   DEFAULT_ENABLED_TOKEN_COUNT,
   DEFAULT_ENABLED_TOKEN_SLUGS,
   MYCOIN,
@@ -9,11 +10,13 @@ import {
   PRICELESS_TOKEN_HASHES,
   PRIORITY_TOKEN_SLUGS,
   TINY_TRANSFER_MAX_COST,
+  TOKEN_INFO,
   TONCOIN,
 } from '../../config';
 import { toBig } from '../../util/decimals';
 import memoize from '../../util/memoize';
 import { round } from '../../util/round';
+import { buildUserToken } from '../../util/tokens';
 import withCache from '../../util/withCache';
 import { selectAccountSettings, selectAccountState, selectCurrentAccountState } from './accounts';
 
@@ -168,4 +171,28 @@ export function selectChainTokenWithMaxBalanceSlow(global: GlobalState, chain: A
 
       return currentBalance > maxBalance ? currentToken : maxToken;
     });
+}
+
+const selectDaoPopularTokensMemoizedFor = withCache(() => memoize(
+  (balancesBySlug: ApiBalanceBySlug, tokenInfo: GlobalState['tokenInfo']): UserToken[] => {
+    return DAO_POPULAR_TOKEN_SLUGS.reduce((acc, slug) => {
+      const info = tokenInfo.bySlug[slug] ?? TOKEN_INFO[slug];
+      if (!info) return acc;
+
+      return [...acc, {
+        ...buildUserToken(info),
+        amount: balancesBySlug[slug] ?? 0n,
+      }];
+    }, [] as UserToken[]);
+  },
+));
+
+// Жетоны ДАО в группе «Популярные», даже если бэкенд не отдаёт их как isPopular.
+export function selectDaoPopularTokens(global: GlobalState) {
+  const balancesBySlug = selectCurrentAccountState(global)?.balances?.bySlug;
+  if (!balancesBySlug || !global.tokenInfo) {
+    return undefined;
+  }
+
+  return selectDaoPopularTokensMemoizedFor()(balancesBySlug, global.tokenInfo);
 }
