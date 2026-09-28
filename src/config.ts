@@ -242,7 +242,8 @@ export const NOMINATORS_STAKING_MIN_AMOUNT = 10_000n * ONE_TON;
 export const MIN_ACTIVE_STAKING_REWARDS = 100_000_000n; // 0.1 MY
 
 export const TONCONNECT_PROTOCOL_VERSION = 2;
-export const TONCONNECT_WALLET_JSBRIDGE_KEY = IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet';
+export const TONCONNECT_WALLET_JSBRIDGE_KEY = process.env.TONCONNECT_WALLET_JSBRIDGE_KEY
+  || (IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet');
 export const EMBEDDED_DAPP_BRIDGE_CHANNEL = 'embedded-dapp-bridge';
 
 export const GRADOSPHERA_DAO_CATEGORY_ID = 100;

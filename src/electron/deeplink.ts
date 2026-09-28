@@ -7,10 +7,14 @@ import {
   focusMainWindow, IS_LINUX, IS_MAC_OS, IS_WINDOWS, mainWindow,
 } from './utils';
 
+function omitProtocol(url?: string) {
+  return url ? url.replace(/:\/\/$/, '').replace(/:\/\//, '') : undefined;
+}
+
 const TON_PROTOCOL = 'ton';
 const TONCONNECT_PROTOCOL = 'tc';
-const TONCONNECT_PROTOCOL_SELF = 'mytonwallet-tc';
-const SELF_PROTOCOL = 'mtw';
+const TONCONNECT_PROTOCOL_SELF = omitProtocol(process.env.TONCONNECT_PROTOCOL_SELF) || 'mytonwallet-tc';
+const SELF_PROTOCOL = omitProtocol(process.env.SELF_PROTOCOL) || 'mtw';
 
 let deeplinkUrl: string | undefined;
 
