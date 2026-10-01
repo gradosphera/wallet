@@ -1,7 +1,7 @@
 import React, {
-  memo,
+  memo, useMemo,
 } from '../../lib/teact/teact';
-import { getActions } from '../../global';
+import { getActions, withGlobal } from '../../global';
 
 import type { AnimationLevel, Theme } from '../../global/types';
 
@@ -9,11 +9,19 @@ import {
   ANIMATION_LEVEL_MAX,
   ANIMATION_LEVEL_MIN,
 } from '../../config';
+import { isCustomizationUnlocked } from '../../global/helpers';
+import {
+  selectCurrentAccountSettings,
+  selectCurrentAccountState,
+  selectIsCurrentAccountViewMode,
+} from '../../global/selectors';
+import { getBaseAccentColors } from '../../util/accentColor/constants';
 import buildClassName from '../../util/buildClassName';
 import switchAnimationLevel from '../../util/switchAnimationLevel';
 import switchTheme from '../../util/switchTheme';
 import { IS_ELECTRON, IS_WINDOWS } from '../../util/windowEnvironment';
 
+import useAppTheme from '../../hooks/useAppTheme';
 import useHistoryBack from '../../hooks/useHistoryBack';
 import useLang from '../../hooks/useLang';
 import useLastCallback from '../../hooks/useLastCallback';
@@ -28,6 +36,11 @@ import styles from './Settings.module.scss';
 import darkThemeImg from '../../assets/theme/theme_dark.png';
 import lightThemeImg from '../../assets/theme/theme_light.png';
 import systemThemeImg from '../../assets/theme/theme_system.png';
+
+interface StateProps {
+  accentColorIndex?: number;
+  isAccentPaletteAvailable: boolean;
+}
 
 interface OwnProps {
   isActive?: boolean;
@@ -58,14 +71,17 @@ function SettingsAppearance({
   isActive,
   theme,
   animationLevel,
+  accentColorIndex,
+  isAccentPaletteAvailable,
   isInsideModal,
   isTrayIconEnabled,
   onTrayIconEnabledToggle,
   handleBackClick,
-}: OwnProps) {
+}: OwnProps & StateProps) {
   const {
     setTheme,
     setAnimationLevel,
+    setAccentColor,
   } = getActions();
 
   const lang = useLang();
@@ -79,6 +95,26 @@ function SettingsAppearance({
     handleScroll: handleContentScroll,
     isScrolled,
   } = useScrolledState();
+
+  const appTheme = useAppTheme(theme);
+
+  const accentColors = useMemo(() => getBaseAccentColors(appTheme), [appTheme]);
+
+  function renderColorButton(color?: string, index?: number) {
+    const isSelected = accentColorIndex === index;
+
+    return (
+      <button
+        key={color || 'default'}
+        type="button"
+        disabled={isSelected}
+        style={color ? `--current-accent-color: ${color}` : undefined}
+        className={buildClassName(styles.colorButton, isSelected && styles.colorButtonCurrent)}
+        aria-label={lang('Change Palette')}
+        onClick={() => setAccentColor({ accentColorIndex: index })}
+      />
+    );
+  }
 
   const handleThemeChange = useLastCallback((newTheme: string) => {
     document.documentElement.classList.add('no-transitions');
@@ -142,6 +178,18 @@ function SettingsAppearance({
           </div>
         </div>
 
+        {isAccentPaletteAvailable && (
+          <>
+            <p className={styles.blockTitle}>{lang('Palette')}</p>
+            <div className={styles.block}>
+              <div className={styles.colorList}>
+                {renderColorButton()}
+                {accentColors.map(({ color, index }) => renderColorButton(color, index))}
+              </div>
+            </div>
+          </>
+        )}
+
         <p className={styles.blockTitle}>{lang('Other')}</p>
         <div className={styles.settingsBlock}>
           <div className={buildClassName(styles.item, styles.item_small)} onClick={handleAnimationLevelToggle}>
@@ -170,4 +218,11 @@ function SettingsAppearance({
   );
 }
 
-export default memo(SettingsAppearance);
+export default memo(withGlobal<OwnProps>((global): StateProps => {
+  const balancesBySlug = selectCurrentAccountState(global)?.balances?.bySlug;
+
+  return {
+    accentColorIndex: selectCurrentAccountSettings(global)?.accentColorIndex,
+    isAccentPaletteAvailable: !selectIsCurrentAccountViewMode(global) && isCustomizationUnlocked(balancesBySlug),
+  };
+})(SettingsAppearance));

@@ -660,9 +660,10 @@ export const ALWAYS_ENABLED_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
 // «Добавить токен», даже если бэкенд не отдаёт их как isPopular.
 export const DAO_POPULAR_TOKEN_SLUGS: string[] = [BLAGO.slug];
 
-// Холдеры этих жетонов (от 1 штуки) получают выбор палитры оформления карточки
-// кошелька. NFT-коллекции карточек для этого не требуются.
-export const CARD_THEME_UNLOCK_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
+// Холдеры этих жетонов (от 1 штуки) получают выбор оформления: палитры
+// карточки кошелька и палитры акцентных цветов. NFT-коллекции карточек
+// для этого не требуются.
+export const CUSTOMIZATION_UNLOCK_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
 
 export const DEFAULT_OUR_SWAP_FEE = 0.875;
 

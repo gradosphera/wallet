@@ -32,3 +32,18 @@ const excludedIndices = new Set([
 export const COLORS_TO_DETECT = ACCENT_COLORS.light
   .map((color, index) => ({ color, index }))
   .filter(({ index }) => !excludedIndices.has(index));
+
+/**
+ * Базовые акцентные цвета выбранной темы — те, что не привязаны к NFT-картам
+ * (радиоактивный, серебро, золото и ч/б остаются NFT-спеццветами).
+ * Состав одинаков для light и dark, но сами значения у 0–6 отличаются.
+ */
+export function getBaseAccentColors(appTheme: 'light' | 'dark') {
+  return ACCENT_COLORS[appTheme]
+    .map((color, index) => ({ color, index }))
+    .filter(({ index }) => !excludedIndices.has(index));
+}
+
+export function isBaseAccentColorIndex(index: number): boolean {
+  return COLORS_TO_DETECT.some((color) => color.index === index);
+}

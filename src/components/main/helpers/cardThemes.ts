@@ -1,7 +1,3 @@
-import type { ApiBalanceBySlug } from '../../../api/types';
-
-import { CARD_THEME_UNLOCK_TOKEN_SLUGS } from '../../../config';
-
 export interface CardTheme {
   /** Идентификатор, который хранится в настройках аккаунта */
   id: string;
@@ -36,18 +32,4 @@ export function findCardTheme(id?: string): CardTheme | undefined {
 /** Класс темы для карточки; `undefined` — базовая карточка без темы */
 export function getCardThemeClassName(id?: string): string | undefined {
   return findCardTheme(id)?.className;
-}
-
-/**
- * Палитра доступна, если у пользователя есть хотя бы 1 штука
- * любого жетона из CARD_THEME_UNLOCK_TOKEN_SLUGS.
- */
-export function isCardThemeUnlocked(balancesBySlug?: ApiBalanceBySlug): boolean {
-  if (!balancesBySlug) return false;
-
-  for (const slug of CARD_THEME_UNLOCK_TOKEN_SLUGS) {
-    if ((balancesBySlug[slug] ?? 0n) > 0n) return true;
-  }
-
-  return false;
 }

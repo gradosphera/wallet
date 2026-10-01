@@ -1,7 +1,7 @@
-import type { ApiChain, ApiSwapAsset, ApiTokenWithPrice, ApiTransaction } from '../../api/types';
+import type { ApiBalanceBySlug, ApiChain, ApiSwapAsset, ApiTokenWithPrice, ApiTransaction } from '../../api/types';
 import type { Account, UserSwapToken } from '../types';
 
-import { CHAIN_CONFIG, TINY_TRANSFER_MAX_COST, TONCOIN } from '../../config';
+import { CHAIN_CONFIG, CUSTOMIZATION_UNLOCK_TOKEN_SLUGS, TINY_TRANSFER_MAX_COST, TONCOIN } from '../../config';
 import { isScamTransaction } from '../../util/activities';
 import { toBig } from '../../util/decimals';
 
@@ -42,4 +42,20 @@ export function getIsInternalSwap({
     && getIsSupportedChain(from.chain)
     && addressByChain[to.chain as ApiChain] === toAddress
   );
+}
+
+/**
+ * Оформление кошелька — палитра карточки и палитра акцентных цветов —
+ * доступно держателям CUSTOMIZATION_UNLOCK_TOKEN_SLUGS. Требуется хотя бы
+ * 1 штука жетона; проверяется по balances.bySlug, потому что всегда
+ * включённые жетоны кладутся в bySlug с нулевым балансом.
+ */
+export function isCustomizationUnlocked(balancesBySlug?: ApiBalanceBySlug): boolean {
+  if (!balancesBySlug) return false;
+
+  for (const slug of CUSTOMIZATION_UNLOCK_TOKEN_SLUGS) {
+    if ((balancesBySlug[slug] ?? 0n) > 0n) return true;
+  }
+
+  return false;
 }

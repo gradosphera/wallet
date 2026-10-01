@@ -2,9 +2,11 @@ import type { GlobalState } from '../../types';
 import { MintCardState } from '../../types';
 
 import { getAccentColorIndexFromNft } from '../../../util/accentColor';
+import { isBaseAccentColorIndex } from '../../../util/accentColor/constants';
 import { callActionInMain } from '../../../util/multitab';
 import { IS_DELEGATED_BOTTOM_SHEET } from '../../../util/windowEnvironment';
-import { findCardTheme, isCardThemeUnlocked } from '../../../components/main/helpers/cardThemes';
+import { findCardTheme } from '../../../components/main/helpers/cardThemes';
+import { isCustomizationUnlocked } from '../../helpers';
 import { addActionHandler, getGlobal, setGlobal } from '../../index';
 import { resetHardware, updateCurrentAccountSettings, updateMintCards } from '../../reducers';
 import { selectCurrentAccountState, selectIsHardwareAccount } from '../../selectors';
@@ -70,6 +72,24 @@ addActionHandler('clearAccentColorFromNft', (global) => {
   });
 });
 
+addActionHandler('setAccentColor', (global, actions, { accentColorIndex }) => {
+  if (IS_DELEGATED_BOTTOM_SHEET) {
+    callActionInMain('setAccentColor', { accentColorIndex });
+    return;
+  }
+
+  if (accentColorIndex !== undefined && !isBaseAccentColorIndex(accentColorIndex)) return;
+
+  const balancesBySlug = selectCurrentAccountState(global)?.balances?.bySlug;
+  if (!isCustomizationUnlocked(balancesBySlug)) return;
+
+  global = updateCurrentAccountSettings(global, {
+    accentColorNft: undefined,
+    accentColorIndex,
+  });
+  setGlobal(global);
+});
+
 addActionHandler('setCardTheme', (global, actions, { themeId }) => {
   if (IS_DELEGATED_BOTTOM_SHEET) {
     callActionInMain('setCardTheme', { themeId });
@@ -79,7 +99,7 @@ addActionHandler('setCardTheme', (global, actions, { themeId }) => {
   if (themeId && !findCardTheme(themeId)) return;
 
   const balancesBySlug = selectCurrentAccountState(global)?.balances?.bySlug;
-  if (!isCardThemeUnlocked(balancesBySlug)) return;
+  if (!isCustomizationUnlocked(balancesBySlug)) return;
 
   global = updateCurrentAccountSettings(global, { cardTheme: themeId });
   setGlobal(global);
