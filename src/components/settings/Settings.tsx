@@ -12,11 +12,11 @@ import {
   APP_ENV_MARKER,
   APP_NAME,
   APP_VERSION,
+  GRADOSPHERA_GITHUB_URL,
   IS_CAPACITOR,
   IS_CORE_WALLET,
   IS_EXTENSION,
   LANG_LIST,
-  MTW_CARDS_WEBSITE,
   MTW_TIPS_CHANNEL_NAME,
   PROXY_HOSTS,
   SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY,
@@ -24,7 +24,6 @@ import {
   TELEGRAM_WEB_URL,
   TONCOIN,
 } from '../../config';
-import { getHelpCenterUrl } from '../../global/helpers/getHelpCenterUrl';
 import {
   selectCurrentAccountState,
   selectCurrentAccountTokens,
@@ -47,7 +46,6 @@ import {
   IS_DAPP_SUPPORTED,
   IS_DELEGATED_BOTTOM_SHEET,
   IS_ELECTRON,
-  IS_LEDGER_SUPPORTED,
   IS_TOUCH_ENV,
   IS_WEB,
 } from '../../util/windowEnvironment';
@@ -95,13 +93,11 @@ import assetsActivityImg from '../../assets/settings/settings_assets-activity.sv
 import connectedDappsImg from '../../assets/settings/settings_connected-dapps.svg';
 import disclaimerImg from '../../assets/settings/settings_disclaimer.svg';
 import exitImg from '../../assets/settings/settings_exit.svg';
-import helpcenterImg from '../../assets/settings/settings_helpcenter.svg';
+import githubImg from '../../assets/settings/settings_github_icon.png';
 import installAppImg from '../../assets/settings/settings_install-app.svg';
 import installDesktopImg from '../../assets/settings/settings_install-desktop.svg';
 import installMobileImg from '../../assets/settings/settings_install-mobile.svg';
 import languageImg from '../../assets/settings/settings_language.svg';
-import ledgerImg from '../../assets/settings/settings_ledger.svg';
-import mtwCardsImg from '../../assets/settings/settings_mtw-cards.svg';
 import upgradeImg from '../../assets/settings/settings_mytonwallet.svg';
 import notifications from '../../assets/settings/settings_notifications.svg';
 import securityImg from '../../assets/settings/settings_security.svg';
@@ -168,7 +164,6 @@ function Settings({
 }: OwnProps & StateProps) {
   const {
     setSettingsState,
-    openSettingsHardwareWallet,
     closeSettings,
     toggleDeeplinkHook,
     toggleTonProxy,
@@ -386,10 +381,6 @@ function Settings({
     }
   });
 
-  function handleOpenHardwareModal() {
-    openSettingsHardwareWallet();
-  }
-
   const handleMultipleClick = () => {
     if (clicksAmount + 1 >= AMOUNT_OF_CLICKS_FOR_DEVELOPERS_MODE) {
       openDeveloperModal();
@@ -593,47 +584,22 @@ function Settings({
             )}
           </div>
 
-          {(!!versions?.length || IS_LEDGER_SUPPORTED) && (
+          {!!versions?.length && (
             <div className={styles.block}>
-              {!!versions?.length && (
-                <div className={styles.item} onClick={handleOpenWalletVersion}>
-                  <img className={styles.menuIcon} src={walletVersionImg} alt={lang('Wallet Versions')} />
-                  {lang('Wallet Versions')}
+              <div className={styles.item} onClick={handleOpenWalletVersion}>
+                <img className={styles.menuIcon} src={walletVersionImg} alt={lang('Wallet Versions')} />
+                {lang('Wallet Versions')}
 
-                  <div className={styles.itemInfo}>
-                    {currentVersion}
-                    <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-                  </div>
-                </div>
-              )}
-              {IS_LEDGER_SUPPORTED && (
-                <div className={styles.item} onClick={handleOpenHardwareModal}>
-                  <img className={styles.menuIcon} src={ledgerImg} alt={lang('Connect Ledger')} />
-                  {lang('Connect Ledger')}
-
+                <div className={styles.itemInfo}>
+                  {currentVersion}
                   <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
-              )}
+              </div>
             </div>
           )}
 
           {!IS_CORE_WALLET && (
             <>
-              {!isNftBuyingDisabled && (
-                <div className={styles.block}>
-                  <a
-                    href={MTW_CARDS_WEBSITE}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.item}
-                  >
-                    <img className={styles.menuIcon} src={mtwCardsImg} alt={lang('MyTonWallet Cards NFT')} />
-                    {lang('MyTonWallet Cards NFT')}
-
-                    <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-                  </a>
-                </div>
-              )}
               <div className={styles.block}>
                 <a
                   href={`https://t.me/${MTW_TIPS_CHANNEL_NAME[langCode] ?? MTW_TIPS_CHANNEL_NAME.ru}`}
@@ -647,13 +613,13 @@ function Settings({
                   <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </a>
                 <a
-                  href={getHelpCenterUrl(langCode, 'home')}
+                  href={GRADOSPHERA_GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.item}
                 >
-                  <img className={styles.menuIcon} src={helpcenterImg} alt={lang('Help Center')} />
-                  {lang('Help Center')}
+                  <img className={styles.menuIcon} src={githubImg} alt={lang('Github')} />
+                  {lang('Github')}
 
                   <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </a>

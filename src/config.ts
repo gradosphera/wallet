@@ -244,12 +244,16 @@ export const EMBEDDED_DAPP_BRIDGE_CHANNEL = 'embedded-dapp-bridge';
 
 export const GRADOSPHERA_DAO_CATEGORY_ID = 100;
 export const GRADOSPHERA_DAO_CATEGORY_NAME = 'ДАО';
+// Название на экране блокировки (поле ввода пароля и биометрия).
+// Отдельное от APP_NAME, чтобы не менять брендинг в остальных разделах.
+export const APP_LOCKED_SCREEN_NAME = 'Кошелёк ДАО Градосфера';
 export const GRADOSPHERA_VOTE_SITE = {
   url: 'https://blago-vote.vercel.app',
   name: 'Голос',
   icon: 'https://raw.githubusercontent.com/gradosphera/blago-vote/refs/heads/main/public/vote.png',
   description: 'Голосование',
 };
+export const GRADOSPHERA_GITHUB_URL = 'https://github.com/gradosphera';
 export const GRADOSPHERA_KEEP_CATEGORY_NAMES = ['DYOR', 'Utilities'];
 
 export const NFT_FRAGMENT_COLLECTIONS = [
@@ -655,6 +659,10 @@ export const ALWAYS_ENABLED_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
 // Жетоны ДАО, которые всегда показываются в группе «Популярные» на экране
 // «Добавить токен», даже если бэкенд не отдаёт их как isPopular.
 export const DAO_POPULAR_TOKEN_SLUGS: string[] = [BLAGO.slug];
+
+// Холдеры этих жетонов (от 1 штуки) получают выбор палитры оформления карточки
+// кошелька. NFT-коллекции карточек для этого не требуются.
+export const CARD_THEME_UNLOCK_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
 
 export const DEFAULT_OUR_SWAP_FEE = 0.875;
 

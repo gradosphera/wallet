@@ -2,7 +2,7 @@ import React, { type ElementRef, memo } from '../../lib/teact/teact';
 
 import type { Theme } from '../../global/types';
 
-import { APP_NAME } from '../../config';
+import { APP_LOCKED_SCREEN_NAME } from '../../config';
 import buildClassName from '../../util/buildClassName';
 
 import useLang from '../../hooks/useLang';
@@ -34,7 +34,7 @@ function UnlockButtonSlide({
       style={`--position-top: ${innerContentTopPosition}px;`}
     >
       <Logo theme={theme} />
-      <span className={buildClassName(styles.title, 'rounded-font')}>{APP_NAME}</span>
+      <span className={buildClassName(styles.title, 'rounded-font')}>{APP_LOCKED_SCREEN_NAME}</span>
       <Button isPrimary onClick={handleChangeSlideForBiometricAuth}>
         {lang('Unlock')}
       </Button>

@@ -19,6 +19,7 @@ import buildClassName from '../../../../util/buildClassName';
 import captureEscKeyListener from '../../../../util/captureEscKeyListener';
 import { formatCurrency, getShortCurrencySymbol } from '../../../../util/formatNumber';
 import { IS_IOS, IS_SAFARI } from '../../../../util/windowEnvironment';
+import { getCardThemeClassName, isCardThemeUnlocked } from '../../helpers/cardThemes';
 import { calculateFullBalance } from './helpers/calculateFullBalance';
 import getSensitiveDataMaskSkinFromCardNft from './helpers/getSensitiveDataMaskSkinFromCardNft';
 
@@ -39,6 +40,7 @@ import SensitiveData from '../../../ui/SensitiveData';
 import Spinner from '../../../ui/Spinner';
 import Transition from '../../../ui/Transition';
 import CardAddress from './CardAddress';
+import CardThemeButton from './CardThemeButton';
 import CurrencySwitcherMenu from './CurrencySwitcherMenu';
 import CustomCardManager from './CustomCardManager';
 import TokenCard from './TokenCard';
@@ -56,6 +58,8 @@ interface StateProps {
   baseCurrency?: ApiBaseCurrency;
   stakingStates?: ApiStakingState[];
   cardNft?: ApiNft;
+  cardTheme?: string;
+  isCardThemeAvailable: boolean;
   isSensitiveDataHidden?: true;
   isNftBuyingDisabled: boolean;
   isViewMode: boolean;
@@ -71,6 +75,8 @@ function Card({
   isSensitiveDataHidden,
   isNftBuyingDisabled,
   cardNft,
+  cardTheme,
+  isCardThemeAvailable,
   isViewMode,
 }: OwnProps & StateProps) {
   const amountRef = useRef<HTMLDivElement>();
@@ -99,6 +105,8 @@ function Card({
     withShouldRender: true,
   });
   const sensitiveDataMaskSkin = getSensitiveDataMaskSkinFromCardNft(cardNft);
+  // Палитра не применяется поверх NFT-фона: картинка перекрывает её полностью
+  const cardThemeClassName = cardNft ? undefined : getCardThemeClassName(cardTheme);
 
   const handleCardChange = useLastCallback((hasGradient: boolean, className?: string) => {
     setCustomCardClassName(className);
@@ -229,13 +237,21 @@ function Card({
         {isUpdating ? <LoadingDots isActive isDoubled /> : undefined}
       </Transition>
 
-      <div className={buildClassName(styles.container, currentTokenSlug && styles.backstage, customCardClassName)}>
+      <div
+        className={buildClassName(
+          styles.container,
+          currentTokenSlug && styles.backstage,
+          customCardClassName,
+          cardThemeClassName,
+        )}
+      >
         <CustomCardManager nft={cardNft} onCardChange={handleCardChange} />
 
         <div className={buildClassName(styles.containerInner, customCardClassName)}>
           {values ? renderBalance() : renderLoader()}
           <CardAddress withTextGradient={withTextGradient} />
           {!IS_CORE_WALLET && !isNftBuyingDisabled && !isViewMode && <MintCardButton />}
+          {isCardThemeAvailable && !cardNft && <CardThemeButton />}
         </div>
       </div>
 
@@ -256,7 +272,7 @@ export default memo(
     (global): StateProps => {
       const accountState = selectCurrentAccountState(global);
       const stakingStates = selectAccountStakingStates(global, global.currentAccountId!);
-      const { cardBackgroundNft: cardNft } = selectCurrentAccountSettings(global) || {};
+      const { cardBackgroundNft: cardNft, cardTheme } = selectCurrentAccountSettings(global) || {};
 
       return {
         isViewMode: selectIsCurrentAccountViewMode(global),
@@ -265,6 +281,8 @@ export default memo(
         baseCurrency: global.settings.baseCurrency,
         stakingStates,
         cardNft,
+        cardTheme,
+        isCardThemeAvailable: isCardThemeUnlocked(accountState?.balances?.bySlug),
         isSensitiveDataHidden: global.settings.isSensitiveDataHidden,
         isNftBuyingDisabled: global.restrictions.isNftBuyingDisabled,
       };

@@ -4,6 +4,7 @@ import { DEFAULT_PRICE_CURRENCY, TOKEN_INFO } from '../../config';
 import Deferred from '../../util/Deferred';
 import { buildCollectionByKey, omitUndefined } from '../../util/iteratees';
 import { tokenRepository } from '../db';
+import { withLocalTokenImage } from './localTokenImages';
 
 export const tokensPreload = new Deferred();
 const tokensCache: {
@@ -11,7 +12,9 @@ const tokensCache: {
   bySlug: Record<string, ApiTokenWithPrice>;
 } = {
   baseCurrency: DEFAULT_PRICE_CURRENCY,
-  bySlug: { ...TOKEN_INFO },
+  bySlug: Object.fromEntries(
+    Object.entries(TOKEN_INFO).map(([slug, token]) => [slug, withLocalTokenImage(token)]),
+  ),
 };
 
 export async function loadTokensCache() {
@@ -51,7 +54,7 @@ export async function updateTokens(
       shouldSendUpdate = true;
     }
 
-    tokensCache.bySlug[token.slug] = mergedToken;
+    tokensCache.bySlug[token.slug] = withLocalTokenImage(mergedToken);
     if (token.tokenAddress) {
       tokensForDb.push(mergedToken);
     }

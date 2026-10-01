@@ -4,9 +4,10 @@ import { MintCardState } from '../../types';
 import { getAccentColorIndexFromNft } from '../../../util/accentColor';
 import { callActionInMain } from '../../../util/multitab';
 import { IS_DELEGATED_BOTTOM_SHEET } from '../../../util/windowEnvironment';
+import { findCardTheme, isCardThemeUnlocked } from '../../../components/main/helpers/cardThemes';
 import { addActionHandler, getGlobal, setGlobal } from '../../index';
 import { resetHardware, updateCurrentAccountSettings, updateMintCards } from '../../reducers';
-import { selectIsHardwareAccount } from '../../selectors';
+import { selectCurrentAccountState, selectIsHardwareAccount } from '../../selectors';
 
 addActionHandler('openMintCardModal', (global): GlobalState => {
   return updateMintCards(global, { state: MintCardState.Initial });
@@ -67,4 +68,19 @@ addActionHandler('clearAccentColorFromNft', (global) => {
     accentColorNft: undefined,
     accentColorIndex: undefined,
   });
+});
+
+addActionHandler('setCardTheme', (global, actions, { themeId }) => {
+  if (IS_DELEGATED_BOTTOM_SHEET) {
+    callActionInMain('setCardTheme', { themeId });
+    return;
+  }
+
+  if (themeId && !findCardTheme(themeId)) return;
+
+  const balancesBySlug = selectCurrentAccountState(global)?.balances?.bySlug;
+  if (!isCardThemeUnlocked(balancesBySlug)) return;
+
+  global = updateCurrentAccountSettings(global, { cardTheme: themeId });
+  setGlobal(global);
 });

@@ -474,6 +474,8 @@ export interface AccountSettings {
   cardBackgroundNft?: ApiNft;
   accentColorNft?: ApiNft;
   accentColorIndex?: number;
+  /** Идентификатор палитры карточки; доступна холдерам CARD_THEME_UNLOCK_TOKEN_SLUGS */
+  cardTheme?: string;
   isAllowSuspiciousActions?: boolean;
 }
 
@@ -1092,6 +1094,7 @@ export interface ActionPayloads {
   // Account Settings
   setCardBackgroundNft: { nft: ApiNft };
   clearCardBackgroundNft: undefined;
+  setCardTheme: { themeId?: string };
   checkCardNftOwnership: undefined;
   installAccentColorFromNft: { nft: ApiNft };
   clearAccentColorFromNft: undefined;

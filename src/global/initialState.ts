@@ -26,6 +26,7 @@ import {
   TOKEN_INFO,
 } from '../config';
 import { IS_IOS_APP, USER_AGENT_LANG_CODE } from '../util/windowEnvironment';
+import { withLocalTokenImage } from '../api/common/localTokenImages';
 
 export const STATE_VERSION = 44;
 
@@ -77,7 +78,9 @@ export const INITIAL_STATE: GlobalState = {
   stakingDefault: DEFAULT_STAKING_STATE,
 
   tokenInfo: {
-    bySlug: TOKEN_INFO,
+    bySlug: Object.fromEntries(
+      Object.entries(TOKEN_INFO).map(([slug, token]) => [slug, withLocalTokenImage(token)]),
+    ),
   },
 
   swapTokenInfo: {
