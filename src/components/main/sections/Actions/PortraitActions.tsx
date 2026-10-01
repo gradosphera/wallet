@@ -1,9 +1,6 @@
 import React, { type ElementRef, memo } from '../../../../lib/teact/teact';
 import { getActions } from '../../../../global';
 
-import type { StakingStateStatus } from '../../../../util/staking';
-
-import { IS_CORE_WALLET } from '../../../../config';
 import buildClassName from '../../../../util/buildClassName';
 import { vibrate } from '../../../../util/haptics';
 import { handleSendMenuItemClick, SEND_CONTEXT_MENU_ITEMS } from './helpers/sendMenu';
@@ -13,40 +10,23 @@ import useLastCallback from '../../../../hooks/useLastCallback';
 
 import Button from '../../../ui/Button';
 import WithContextMenu from '../../../ui/WithContextMenu';
-import { STAKING_TAB_TEXT_VARIANTS } from './LandscapeActions';
 
 import styles from './PortraitActions.module.scss';
 
 interface OwnProps {
-  isTestnet?: boolean;
-  isLedger?: boolean;
-  stakingStatus: StakingStateStatus;
   isSwapDisabled?: boolean;
-  isStakingDisabled?: boolean;
-  isOnRampDisabled?: boolean;
   containerRef: ElementRef<HTMLDivElement>;
-  onEarnClick: NoneToVoidFunction;
 }
 
 function PortraitActions({
-  isTestnet,
-  stakingStatus,
-  isStakingDisabled,
   isSwapDisabled,
-  isOnRampDisabled,
   containerRef,
-  onEarnClick,
 }: OwnProps) {
   const {
     startTransfer, startSwap, openReceiveModal,
   } = getActions();
 
   const lang = useLang();
-
-  const isOnRampAllowed = !isTestnet && !isOnRampDisabled;
-  const addBuyButtonName = IS_CORE_WALLET
-    ? 'Receive'
-    : (!isSwapDisabled || isOnRampAllowed ? 'Add / Buy' : 'Add');
 
   const handleStartSwap = useLastCallback(() => {
     void vibrate();
@@ -66,12 +46,6 @@ function PortraitActions({
     openReceiveModal();
   });
 
-  const handleEarnClick = useLastCallback(() => {
-    void vibrate();
-
-    onEarnClick();
-  });
-
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
@@ -81,7 +55,7 @@ function PortraitActions({
           onClick={handleAddBuyClick}
         >
           <i className={buildClassName(styles.buttonIcon, 'icon-action-add')} aria-hidden />
-          {lang(addBuyButtonName)}
+          {lang('Add')}
         </Button>
         <WithContextMenu
           rootRef={containerRef}
@@ -110,16 +84,6 @@ function PortraitActions({
           >
             <i className={buildClassName(styles.buttonIcon, 'icon-action-swap')} aria-hidden />
             {lang('Swap')}
-          </Button>
-        )}
-        {!isStakingDisabled && (
-          <Button
-            isSimple
-            className={buildClassName(styles.button, stakingStatus !== 'inactive' && styles.button_purple)}
-            onClick={handleEarnClick}
-          >
-            <i className={buildClassName(styles.buttonIcon, 'icon-action-earn')} aria-hidden />
-            {lang(STAKING_TAB_TEXT_VARIANTS[stakingStatus])}
           </Button>
         )}
       </div>

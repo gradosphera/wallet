@@ -42,6 +42,7 @@ import { getLocalAddressName } from '../../../../util/getLocalAddressName';
 import getPseudoRandomNumber from '../../../../util/getPseudoRandomNumber';
 import { vibrate } from '../../../../util/haptics';
 import { shortenAddress } from '../../../../util/shortenAddress';
+import { getIsPricelessToken } from '../../../../util/tokens';
 
 import useLang from '../../../../hooks/useLang';
 import useLastCallback from '../../../../hooks/useLastCallback';
@@ -284,7 +285,7 @@ function Transaction({
   }
 
   function renderBaseCurrencyAmount() {
-    if (getTransactionAmountDisplayMode(transaction) === 'hide' || !token) {
+    if (getTransactionAmountDisplayMode(transaction) === 'hide' || !token || getIsPricelessToken(token)) {
       return undefined;
     }
 

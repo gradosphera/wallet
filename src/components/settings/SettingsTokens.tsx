@@ -7,7 +7,7 @@ import { getActions } from '../../global';
 import type { ApiBaseCurrency } from '../../api/types';
 import { SettingsState, type UserToken } from '../../global/types';
 
-import { DEFAULT_ENABLED_TOKEN_SLUGS } from '../../config';
+import { ALWAYS_ENABLED_TOKEN_SLUGS, DEFAULT_ENABLED_TOKEN_SLUGS } from '../../config';
 import { bigintMultiplyToNumber } from '../../util/bigint';
 import buildClassName from '../../util/buildClassName';
 import { toDecimal } from '../../util/decimals';
@@ -148,7 +148,10 @@ function SettingsTokens({
     const style = `top: ${isDragged ? draggedTop : top}px;`;
     const knobStyle = 'left: 1rem;';
 
-    const isDeleteButtonVisible = amount === 0n && !DEFAULT_ENABLED_TOKEN_SLUGS.includes(slug);
+    const isAlwaysEnabled = ALWAYS_ENABLED_TOKEN_SLUGS.has(slug);
+    const isDeleteButtonVisible = amount === 0n
+      && !isAlwaysEnabled
+      && !DEFAULT_ENABLED_TOKEN_SLUGS.includes(slug);
 
     const isDragDisabled = isSortByValueEnabled || tokens!.length <= 1;
 
@@ -166,7 +169,11 @@ function SettingsTokens({
         parentRef={tokensRef}
         scrollRef={parentContainer}
 
-        onClick={(e) => handleTokenVisibility(token, e)}
+        onClick={(e) => {
+          // Токены из ALWAYS_ENABLED_TOKEN_SLUGS всегда остаются включёнными
+          if (isAlwaysEnabled) return;
+          handleTokenVisibility(token, e);
+        }}
       >
         <TokenIcon token={token} withChainIcon={withChainIcon} />
         <div className={styles.tokenInfo}>

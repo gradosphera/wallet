@@ -3,7 +3,7 @@ import { getActions } from '../../global';
 
 import type { Theme } from '../../global/types';
 
-import { APP_NAME } from '../../config';
+import { APP_LOCKED_SCREEN_NAME } from '../../config';
 import { getDoesUsePinPad, getIsNativeBiometricAuthSupported } from '../../util/biometrics';
 import buildClassName from '../../util/buildClassName';
 import { vibrateOnSuccess } from '../../util/haptics';
@@ -78,7 +78,7 @@ function PasswordFormSlide({
         onUpdate={handlePasswordChange}
       >
         <Logo theme={theme} />
-        <span className={buildClassName(styles.title, 'rounded-font')}>{APP_NAME}</span>
+        <span className={buildClassName(styles.title, 'rounded-font')}>{APP_LOCKED_SCREEN_NAME}</span>
       </PasswordForm>
     </div>
   );

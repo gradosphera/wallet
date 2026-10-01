@@ -8,6 +8,7 @@ import { getActions, getGlobal } from '../global';
 
 import {
   ANIMATION_LEVEL_DEFAULT,
+  APP_NAME,
   DEBUG,
   STRICTERDOM_ENABLED,
   THEME_DEFAULT,
@@ -47,7 +48,9 @@ void (async () => {
   });
 
   const walletInfoList = await tonConnect.getWallets();
-  const mtwWalletInfo = walletInfoList.find((walletInfo) => walletInfo.appName === 'mytonwallet');
+  const mtwWalletInfo = walletInfoList.find(
+    (walletInfo) => walletInfo.appName === APP_NAME.toLowerCase(),
+  );
 
   if (DEBUG) {
     // eslint-disable-next-line no-console

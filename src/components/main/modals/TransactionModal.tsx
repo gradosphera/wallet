@@ -13,14 +13,12 @@ import type {
   ApiTransactionActivity,
 } from '../../../api/types';
 import type { Account, SavedAddress, Theme } from '../../../global/types';
-import { ActiveTab } from '../../../global/types';
 
 import {
   ANIMATED_STICKER_TINY_ICON_PX,
   ANIMATION_END_DELAY,
   ANIMATION_LEVEL_MIN,
   IS_CAPACITOR,
-  IS_CORE_WALLET,
   TONCOIN,
   VALIDATION_PERIOD_MS,
 } from '../../../config';
@@ -123,12 +121,9 @@ function TransactionModal({
   const {
     fetchActivityDetails,
     startTransfer,
-    startStaking,
-    startUnstaking,
     closeActivityInfo,
     setIsPinAccepted,
     clearIsPinAccepted,
-    setLandscapeActionsActiveTabIndex,
   } = getActions();
 
   const lang = useLang();
@@ -261,27 +256,6 @@ function TransactionModal({
       amount: bigintAbs(amount!),
       comment: !isIncoming ? comment : undefined,
     });
-  });
-
-  const handleStartStakingClick = useLastCallback(() => {
-    closeActivityInfo({ id: id! });
-
-    if (!isPortrait) {
-      setLandscapeActionsActiveTabIndex({ index: ActiveTab.Stake });
-      return;
-    }
-
-    startStaking();
-  });
-
-  const handleUnstakeMoreClick = useLastCallback(() => {
-    closeActivityInfo({ id: id! });
-
-    if (!isPortrait) {
-      setLandscapeActionsActiveTabIndex({ index: ActiveTab.Stake });
-    }
-
-    startUnstaking();
   });
 
   const handlePasswordSubmit = useLastCallback(async (password: string) => {
@@ -475,8 +449,6 @@ function TransactionModal({
   }
 
   function renderFooter() {
-    const canUnstake = isOurStaking && (isOurUnstaking || transaction?.type === 'unstakeRequest')
-      && stakingStatus === 'active';
     const buttons: TeactNode[] = [];
 
     if (!isOurStaking && !isIncoming && !isNftTransfer) {
@@ -486,24 +458,6 @@ function TransactionModal({
         </Button>,
       );
     }
-    if (!IS_CORE_WALLET && isOurStaking) {
-      buttons.push(
-        <Button
-          onClick={handleStartStakingClick}
-          className={buildClassName(styles.button, canUnstake && styles.buttonWide)}
-        >
-          {lang('Stake Again')}
-        </Button>,
-      );
-    }
-    if (canUnstake) {
-      buttons.push(
-        <Button onClick={handleUnstakeMoreClick} className={buildClassName(styles.button, styles.buttonWide)}>
-          {lang('Unstake More')}
-        </Button>,
-      );
-    }
-
     return buttons.length ? <div className={styles.footer}>{buttons}</div> : undefined;
   }
 

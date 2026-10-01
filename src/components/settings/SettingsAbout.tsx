@@ -86,7 +86,7 @@ function SettingsAbout({
         <h2 className={styles.title}>
           {APP_NAME} {APP_VERSION} {APP_ENV_MARKER}
           {!IS_CORE_WALLET && (
-            <a href="https://mytonwallet.io/" target="_blank" className={styles.titleLink} rel="noreferrer">
+            <a href="https://wallet.gradosphera.org" target="_blank" className={styles.titleLink} rel="noreferrer">
               mytonwallet.io
             </a>
           )}
@@ -134,7 +134,7 @@ function SettingsAbout({
               <p className={styles.text}>
                 {lang('$about_proxy_magic_description', {
                   extension_link: (
-                    <a href="https://mytonwallet.io/" target="_blank" rel="noreferrer">
+                    <a href="https://wallet.gradosphera.org" target="_blank" rel="noreferrer">
                       {renderText(aboutExtensionTitle)}
                     </a>
                   ),
@@ -177,7 +177,7 @@ function SettingsAbout({
         <div className={styles.aboutFooterWrapper}>
           <div className={styles.aboutFooterContent}>
             <a
-              href="https://mytonwallet.io/terms-of-use"
+              href="https://wallet.gradosphera.org/terms-of-use"
               target="_blank"
               rel="noreferrer"
               onClick={handleUrlClick}
@@ -185,7 +185,7 @@ function SettingsAbout({
             </a>
             <i className={styles.dotLarge} aria-hidden />
             <a
-              href="https://mytonwallet.io/privacy-policy"
+              href="https://wallet.gradosphera.org/privacy-policy"
               target="_blank"
               rel="noreferrer"
               onClick={handleUrlClick}

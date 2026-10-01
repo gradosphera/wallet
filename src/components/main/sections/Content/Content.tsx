@@ -53,7 +53,6 @@ import styles from './Content.module.scss';
 interface OwnProps {
   isActive?: boolean;
   onTabsStuck?: (isStuck: boolean) => void;
-  onStakedTokenClick: NoneToVoidFunction;
 }
 
 interface StateProps {
@@ -86,7 +85,6 @@ function Content({
   nfts,
   currentCollectionAddress,
   selectedAddresses,
-  onStakedTokenClick,
   blacklistedNftAddresses,
   whitelistedNftAddresses,
   selectedNftsToHide,
@@ -429,7 +427,6 @@ function Content({
           <Assets
             isActive={isActive}
             onTokenClick={handleClickAsset}
-            onStakedTokenClick={onStakedTokenClick}
             onScroll={isLandscape ? handleContentScroll : undefined}
           />
         );
@@ -509,7 +506,6 @@ function Content({
           <Assets
             isActive
             isSeparatePanel
-            onStakedTokenClick={onStakedTokenClick}
             onTokenClick={handleClickAsset}
           />
         </div>

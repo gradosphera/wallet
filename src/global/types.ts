@@ -77,7 +77,7 @@ export type DialogType = {
   };
 };
 
-export type LangCode = 'en' | 'es' | 'ru' | 'zh-Hant' | 'zh-Hans' | 'tr' | 'de' | 'th' | 'uk' | 'pl';
+export type LangCode = 'ru';
 
 export interface LangItem {
   langCode: LangCode;
@@ -474,6 +474,8 @@ export interface AccountSettings {
   cardBackgroundNft?: ApiNft;
   accentColorNft?: ApiNft;
   accentColorIndex?: number;
+  /** Идентификатор палитры карточки; доступна холдерам CARD_THEME_UNLOCK_TOKEN_SLUGS */
+  cardTheme?: string;
   isAllowSuspiciousActions?: boolean;
 }
 
@@ -737,7 +739,6 @@ export type GlobalState = {
     isDeeplinkHookEnabled?: boolean;
     isPasswordNumeric?: boolean; // Backwards compatibility for non-numeric passwords from older versions
     isTestnet?: boolean;
-    isSecurityWarningHidden?: boolean;
     areTokensWithNoCostHidden: boolean;
     isSortByValueEnabled?: boolean;
     importToken?: {
@@ -1062,7 +1063,6 @@ export interface ActionPayloads {
   startChangingNetwork: { network: ApiNetwork };
   changeNetwork: { network: ApiNetwork };
   changeLanguage: { langCode: LangCode };
-  closeSecurityWarning: undefined;
   toggleTokensWithNoCost: { isEnabled: boolean };
   toggleSortByValue: { isEnabled: boolean };
   updateOrderedSlugs: { orderedSlugs: string[] };
@@ -1094,6 +1094,7 @@ export interface ActionPayloads {
   // Account Settings
   setCardBackgroundNft: { nft: ApiNft };
   clearCardBackgroundNft: undefined;
+  setCardTheme: { themeId?: string };
   checkCardNftOwnership: undefined;
   installAccentColorFromNft: { nft: ApiNft };
   clearAccentColorFromNft: undefined;

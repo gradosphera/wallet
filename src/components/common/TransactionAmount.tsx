@@ -7,6 +7,7 @@ import { bigintAbs } from '../../util/bigint';
 import buildClassName from '../../util/buildClassName';
 import { toDecimal } from '../../util/decimals';
 import { formatBaseCurrencyAmount, formatCurrencyExtended } from '../../util/formatNumber';
+import { getIsPricelessToken } from '../../util/tokens';
 
 import SensitiveData from '../ui/SensitiveData';
 
@@ -14,7 +15,7 @@ import styles from './TransactionAmount.module.scss';
 
 interface OwnProps {
   amount: bigint;
-  token?: Pick<ApiTokenWithPrice, 'decimals' | 'symbol' | 'price'>;
+  token?: Pick<ApiTokenWithPrice, 'decimals' | 'symbol' | 'price' | 'slug'>;
   isIncoming?: boolean;
   isScam?: boolean;
   isFailed?: boolean;
@@ -77,7 +78,7 @@ function TransactionAmount({
   }
 
   function renderBaseCurrencyAmount() {
-    if (!token) {
+    if (!token || getIsPricelessToken(token)) {
       return undefined;
     }
 

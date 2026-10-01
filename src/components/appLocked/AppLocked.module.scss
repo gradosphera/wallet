@@ -42,10 +42,15 @@ $contentMaxWidth: 31.4375rem;
 }
 
 .title {
+  max-width: 100%;
+
   font-size: 1.6875rem;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.15;
   color: var(--color-black);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .passwordFormContent {

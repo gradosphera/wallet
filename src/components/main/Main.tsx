@@ -3,23 +3,19 @@ import React, {
 } from '../../lib/teact/teact';
 import { getActions, withGlobal } from '../../global';
 
-import type { ApiStakingState } from '../../api/types';
-import { ActiveTab, ContentTab, type Theme } from '../../global/types';
+import { ContentTab, type Theme } from '../../global/types';
 
 import { IS_CORE_WALLET } from '../../config';
 import {
-  selectAccountStakingState,
   selectCurrentAccount,
   selectCurrentAccountSettings,
   selectCurrentAccountState,
   selectIsCurrentAccountViewMode,
-  selectIsStakingDisabled,
   selectIsSwapDisabled,
 } from '../../global/selectors';
 import { useAccentColor } from '../../util/accentColor';
 import buildClassName from '../../util/buildClassName';
 import { captureEvents, SwipeDirection } from '../../util/captureEvents';
-import { getStakingStateStatus } from '../../util/staking';
 import {
   IS_DELEGATED_BOTTOM_SHEET, IS_ELECTRON, IS_TOUCH_ENV, REM,
 } from '../../util/windowEnvironment';
@@ -40,10 +36,6 @@ import LinkingDomainModal from '../domain/LinkingDomainModal';
 import RenewDomainModal from '../domain/RenewDomainModal';
 import InvoiceModal from '../receive/InvoiceModal';
 import ReceiveModal from '../receive/ReceiveModal';
-import StakeModal from '../staking/StakeModal';
-import StakingClaimModal from '../staking/StakingClaimModal';
-import StakingInfoModal from '../staking/StakingInfoModal';
-import UnstakeModal from '../staking/UnstakeModal';
 import UpdateAvailable from '../ui/UpdateAvailable';
 import VestingModal from '../vesting/VestingModal';
 import VestingPasswordModal from '../vesting/VestingPasswordModal';
@@ -61,13 +53,10 @@ interface OwnProps {
 
 type StateProps = {
   currentTokenSlug?: string;
-  stakingState?: ApiStakingState;
   isTestnet?: boolean;
   isLedger?: boolean;
   isViewMode?: boolean;
-  isStakingInfoModalOpen?: boolean;
   isSwapDisabled?: boolean;
-  isStakingDisabled?: boolean;
   isOnRampDisabled?: boolean;
   isMediaViewerOpen?: boolean;
   theme: Theme;
@@ -80,13 +69,10 @@ const UPDATE_SWAPS_INTERVAL = 3000; // 3 sec
 function Main({
   isActive,
   currentTokenSlug,
-  stakingState,
   isTestnet,
   isViewMode,
   isLedger,
-  isStakingInfoModalOpen,
   isSwapDisabled,
-  isStakingDisabled,
   isOnRampDisabled,
   isMediaViewerOpen,
   theme,
@@ -96,10 +82,6 @@ function Main({
     selectToken,
     openBackupWalletModal,
     setActiveContentTab,
-    closeStakingInfo,
-    openStakingInfoOrStart,
-    changeCurrentStaking,
-    setLandscapeActionsActiveTabIndex,
     loadExploreSites,
     openReceiveModal,
     updatePendingSwaps,
@@ -113,8 +95,6 @@ function Main({
   const [isFocused, markIsFocused, unmarkIsFocused] = useFlag(!isBackgroundModeActive());
   const [areTabsStuck, setAreTabsStuck] = useState(false);
   const intersectionRootMarginTop = HEADER_HEIGHT_REM * REM + safeAreaTop;
-
-  const stakingStatus = stakingState ? getStakingStateStatus(stakingState) : 'inactive';
 
   useBackgroundMode(unmarkIsFocused, markIsFocused);
 
@@ -171,16 +151,6 @@ function Main({
   const appTheme = useAppTheme(theme);
   useAccentColor(isPortrait ? portraitContainerRef : landscapeContainerRef, appTheme, accentColorIndex);
 
-  const handleEarnClick = useLastCallback((stakingId?: string) => {
-    if (stakingId) changeCurrentStaking({ stakingId });
-
-    if (isPortrait || isViewMode) {
-      openStakingInfoOrStart();
-    } else {
-      setLandscapeActionsActiveTabIndex({ index: ActiveTab.Stake });
-    }
-  });
-
   function renderPortraitLayout() {
     return (
       <div ref={portraitContainerRef} className={styles.portraitContainer}>
@@ -196,25 +166,15 @@ function Main({
           <Card
             ref={cardRef}
             onTokenCardClose={handleTokenCardClose}
-            onYieldClick={handleEarnClick}
           />
 
           {!isViewMode && (
-            <PortraitActions
-              containerRef={portraitContainerRef}
-              isTestnet={isTestnet}
-              stakingStatus={stakingStatus}
-              isStakingDisabled={isStakingDisabled}
-              isSwapDisabled={isSwapDisabled}
-              isOnRampDisabled={isOnRampDisabled}
-              onEarnClick={handleEarnClick}
-            />
+            <PortraitActions containerRef={portraitContainerRef} isSwapDisabled={isSwapDisabled} />
           )}
         </div>
 
         <Content
           isActive={isActive}
-          onStakedTokenClick={handleEarnClick}
           onTabsStuck={setAreTabsStuck}
         />
       </div>
@@ -229,18 +189,17 @@ function Main({
 
           <Header />
 
-          <Card onTokenCardClose={handleTokenCardClose} onYieldClick={handleEarnClick} />
+          <Card onTokenCardClose={handleTokenCardClose} />
           {!isViewMode && (
             <LandscapeActions
               containerRef={landscapeContainerRef}
-              stakingStatus={stakingStatus}
               isLedger={isLedger}
               theme={theme}
             />
           )}
         </div>
         <div className={styles.main}>
-          <Content onStakedTokenClick={handleEarnClick} />
+          <Content />
         </div>
       </div>
     );
@@ -250,12 +209,8 @@ function Main({
     <>
       {!IS_DELEGATED_BOTTOM_SHEET && (isPortrait ? renderPortraitLayout() : renderLandscapeLayout())}
 
-      <StakeModal />
-      <StakingInfoModal isOpen={isStakingInfoModalOpen} onClose={closeStakingInfo} />
       <ReceiveModal />
       <InvoiceModal />
-      <UnstakeModal />
-      <StakingClaimModal />
       <VestingModal />
       <VestingPasswordModal />
       <RenewDomainModal />
@@ -274,20 +229,13 @@ export default memo(
 
       const { isOnRampDisabled } = global.restrictions;
 
-      const stakingState = global.currentAccountId
-        ? selectAccountStakingState(global, global.currentAccountId)
-        : undefined;
-
       return {
-        stakingState,
         currentTokenSlug,
         isTestnet: global.settings.isTestnet,
         isLedger: Boolean(ledger),
         isViewMode: selectIsCurrentAccountViewMode(global),
-        isStakingInfoModalOpen: global.isStakingInfoModalOpen,
         isMediaViewerOpen: Boolean(global.mediaViewer?.mediaId),
         isSwapDisabled: selectIsSwapDisabled(global),
-        isStakingDisabled: selectIsStakingDisabled(global),
         isOnRampDisabled,
         theme: global.settings.theme,
         accentColorIndex: selectCurrentAccountSettings(global)?.accentColorIndex,

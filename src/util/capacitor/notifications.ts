@@ -103,7 +103,6 @@ function handlePushNotificationActionPerformed(notification: ActionPerformed) {
   const {
     showAnyAccountTx,
     showAnyAccountTokenActivity,
-    openAnyAccountStakingInfo,
     switchAccountAndOpenUrl,
     openDomainRenewalModal,
   } = getActions();
@@ -130,9 +129,6 @@ function handlePushNotificationActionPerformed(notification: ActionPerformed) {
   } else if (action === 'jettonTx') {
     const { slug } = notificationData;
     showAnyAccountTokenActivity({ accountId, slug, network });
-  } else if (action === 'staking') {
-    const { stakingId } = notificationData;
-    openAnyAccountStakingInfo({ accountId, network, stakingId });
   } else if (action === 'expiringDns') {
     const { domainAddress } = notificationData;
     openDomainRenewalModal({ accountId, network, addresses: [domainAddress] });

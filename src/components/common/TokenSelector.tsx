@@ -21,6 +21,7 @@ import {
 import {
   selectAvailableUserForSwapTokens,
   selectCurrentAccount,
+  selectDaoPopularTokens,
   selectIsMultichainAccount,
   selectPopularTokens,
   selectSwapTokens,
@@ -32,6 +33,7 @@ import getPseudoRandomNumber from '../../util/getPseudoRandomNumber';
 import { isValidAddressOrDomain } from '../../util/isValidAddressOrDomain';
 import { disableSwipeToClose, enableSwipeToClose } from '../../util/modalSwipeManager';
 import getChainNetworkName from '../../util/swap/getChainNetworkName';
+import { getIsPricelessToken } from '../../util/tokens';
 import { ANIMATED_STICKERS_PATHS } from '../ui/helpers/animatedAssets';
 
 import useFocusAfterAnimation from '../../hooks/useFocusAfterAnimation';
@@ -75,6 +77,7 @@ interface StateProps {
   token?: TokenType;
   userTokens?: TokenType[];
   popularTokens?: TokenType[];
+  daoPopularTokens?: TokenType[];
   swapTokens?: UserSwapToken[];
   tokenInSlug?: string;
   pairsBySlug?: Record<string, AssetPairs>;
@@ -96,11 +99,15 @@ enum SearchState {
 const EMPTY_ARRAY: never[] = [];
 const EMPTY_OBJECT = {};
 
+// Показывается вместо цены у жетонов без стоимости (см. HIDDEN_PRICE_TOKEN_SLUGS).
+const PRICELESS_TOKEN_EMOJI = '🫶';
+
 function TokenSelector({
   token,
   userTokens: userTokensProp = EMPTY_ARRAY,
   swapTokens = EMPTY_ARRAY,
   popularTokens: popularTokensProp = EMPTY_ARRAY,
+  daoPopularTokens: daoPopularTokensProp = EMPTY_ARRAY,
   header,
   shouldFilter,
   shouldUseSwapTokens,
@@ -170,21 +177,32 @@ function TokenSelector({
     [popularTokensProp, shouldHideNotSupportedTokens, availableChains, selectedChain],
   );
 
+  const popularTokensWithDao = useMemo(() => {
+    if (!daoPopularTokensProp.length) return popularTokens;
+
+    const daoSlugs = new Set(daoPopularTokensProp.map((token) => token.slug));
+
+    return [
+      ...popularTokens.filter((token) => !daoSlugs.has(token.slug)),
+      ...daoPopularTokensProp,
+    ];
+  }, [daoPopularTokensProp, popularTokens]);
+
   const { userTokensWithFilter, popularTokensWithFilter, swapTokensWithFilter } = useMemo(() => {
     if (!shouldFilter) {
       return {
         userTokensWithFilter: userTokens,
-        popularTokensWithFilter: popularTokens,
+        popularTokensWithFilter: popularTokensWithDao,
         swapTokensWithFilter: swapTokens,
       };
     }
 
     return {
       userTokensWithFilter: filterTokens(userTokens),
-      popularTokensWithFilter: filterTokens(popularTokens),
+      popularTokensWithFilter: filterTokens(popularTokensWithDao),
       swapTokensWithFilter: filterTokens(swapTokens),
     };
-  }, [filterTokens, popularTokens, shouldFilter, swapTokens, userTokens]);
+  }, [filterTokens, popularTokensWithDao, shouldFilter, swapTokens, userTokens]);
 
   const filteredTokenList = useMemo(() => {
     const tokensToFilter = shouldUseSwapTokens ? swapTokensWithFilter : allTokens;
@@ -351,9 +369,11 @@ function TokenSelector({
       ? getChainNetworkName(currentToken.chain)
       : lang('Unavailable');
 
-    const tokenPrice = currentToken.price === 0
-      ? lang('No Price')
-      : formatCurrency(currentToken.price, shortBaseSymbol, undefined, true);
+    const tokenPrice = getIsPricelessToken(currentToken)
+      ? PRICELESS_TOKEN_EMOJI
+      : currentToken.price === 0
+        ? lang('No Price')
+        : formatCurrency(currentToken.price, shortBaseSymbol, undefined, true);
 
     return (
       <Token
@@ -509,6 +529,7 @@ export default memo(withGlobal<OwnProps>((global): StateProps => {
   const pairsBySlug = global.swapPairs?.bySlug;
   const userTokens = selectAvailableUserForSwapTokens(global);
   const popularTokens = selectPopularTokens(global);
+  const daoPopularTokens = selectDaoPopularTokens(global);
   const swapTokens = selectSwapTokens(global);
   const isMultichain = selectIsMultichainAccount(global, global.currentAccountId!);
   const availableChains = selectCurrentAccount(global)?.addressByChain;
@@ -521,6 +542,7 @@ export default memo(withGlobal<OwnProps>((global): StateProps => {
     tokenInSlug,
     userTokens,
     popularTokens,
+    daoPopularTokens,
     swapTokens,
     isMultichain,
     availableChains,

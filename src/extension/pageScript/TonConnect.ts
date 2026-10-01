@@ -163,7 +163,7 @@ class TonConnect implements ExtensionTonConnectBridge {
 export function initTonConnect(apiConnector: Connector) {
   const tonConnect = new TonConnect(apiConnector);
 
-  window[TONCONNECT_WALLET_JSBRIDGE_KEY] = {
+  (window as unknown as Record<string, unknown>)[TONCONNECT_WALLET_JSBRIDGE_KEY] = {
     tonconnect: tonConnect,
   };
 

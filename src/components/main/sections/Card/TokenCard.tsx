@@ -15,6 +15,7 @@ import { formatCurrency, getShortCurrencySymbol } from '../../../../util/formatN
 import { vibrate } from '../../../../util/haptics';
 import { handleUrlClick } from '../../../../util/openUrl';
 import { round } from '../../../../util/round';
+import { getIsPricelessToken } from '../../../../util/tokens';
 import { getExplorerName, getExplorerTokenUrl } from '../../../../util/url';
 import { IS_IOS } from '../../../../util/windowEnvironment';
 import { calculateTokenCardColor } from '../../helpers/cardColors';
@@ -43,7 +44,6 @@ interface OwnProps {
   token: UserToken;
   classNames?: string;
   isUpdating?: boolean;
-  onYieldClick?: (stakingId?: string) => void;
   onClose: NoneToVoidFunction;
 }
 
@@ -76,7 +76,6 @@ function TokenCard({
   tokenAddress,
   stakingStates,
   isSensitiveDataHidden,
-  onYieldClick,
   onClose,
 }: OwnProps & StateProps) {
   const { loadPriceHistory } = getActions();
@@ -103,8 +102,9 @@ function TokenCard({
   const {
     slug, symbol, amount, name, price: lastPrice, decimals,
   } = token;
+  const isPriceless = getIsPricelessToken(token);
 
-  const { annualYield, yieldType, id: stakingId } = useMemo(() => {
+  const { annualYield, yieldType } = useMemo(() => {
     if (IS_CORE_WALLET) return undefined;
 
     return stakingStates?.reduce((bestState, state) => {
@@ -116,6 +116,8 @@ function TokenCard({
   }, [stakingStates, slug]) ?? {};
 
   const refreshHistory = useLastCallback((newPeriod?: TokenPeriod) => {
+    if (isPriceless) return;
+
     loadPriceHistory({ slug, period: newPeriod ?? period });
   });
 
@@ -123,7 +125,7 @@ function TokenCard({
     loadPriceHistory({ slug, period, currency });
   });
 
-  useInterval(refreshHistory, INTERVAL);
+  useInterval(refreshHistory, isPriceless ? undefined : INTERVAL);
 
   const history = historyPeriods?.[period];
 
@@ -156,14 +158,14 @@ function TokenCard({
   const changeValue = amountChange ? Math.abs(round(amountChange, 4)) : 0;
   const changePercent = change ? Math.abs(round((change / initialPrice!) * 100, 2)) : 0;
 
-  const withChange = Boolean(change !== undefined);
+  const withChange = Boolean(change !== undefined) && !isPriceless;
   const historyStartDay = history?.length ? new Date(history[0][0] * 1000) : undefined;
   const withExplorerButton = Boolean(token.cmcSlug || tokenAddress);
   const shouldHideChartPeriodSwitcher = !history?.length && token.priceUsd === 0;
 
   const color = useMemo(() => calculateTokenCardColor(token), [token]);
 
-  function renderExplorerLink() {
+  function renderExplorerLink(withSeparator = true) {
     const url = getExplorerTokenUrl(token.chain, token.cmcSlug, tokenAddress, isTestnet);
     if (!url) return undefined;
 
@@ -174,7 +176,7 @@ function TokenCard({
 
     return (
       <>
-        {' · '}
+        {withSeparator && ' · '}
         <a
           href={url}
           title={title}
@@ -242,10 +244,7 @@ function TokenCard({
           <span className={styles.tokenTitle}>
             <span className={styles.tokenName}>{name}</span>
             {yieldType && (
-              <span
-                className={buildClassName(styles.apy, onYieldClick && styles.interactive)}
-                onClick={onYieldClick ? () => onYieldClick(stakingId) : undefined}
-              >
+              <span className={styles.apy}>
                 {yieldType} {round(annualYield ?? 0, 2)}%
               </span>
             )}
@@ -271,53 +270,59 @@ function TokenCard({
         </div>
       </div>
 
-      <Transition activeKey={!history ? 0 : history.length ? HISTORY_PERIODS.indexOf(period) + 1 : -1} name="fade">
-        {!history ? (
-          <div className={buildClassName(styles.isLoading)}>
-            <Spinner color="white" className={styles.center} />
-          </div>
-        ) : history?.length ? (
-          <>
-            <TokenPriceChart
-              className={styles.chart}
-              imgClassName={styles.chartImg}
-              width={CHART_DIMENSIONS.width}
-              height={CHART_DIMENSIONS.height}
-              prices={history}
-              selectedIndex={selectedHistoryIndex}
-              onSelectIndex={setSelectedHistoryIndex}
-              isUpdating={isUpdating}
-            />
-
-            <div className={styles.tokenHistoryPrice}>
-              {formatCurrency(history[0][1], currencySymbol, 2, true)}
-              <div className={styles.tokenPriceDate}>{formatShortDay(lang.code!, historyStartDay!)}</div>
+      {!isPriceless && (
+        <Transition activeKey={!history ? 0 : history.length ? HISTORY_PERIODS.indexOf(period) + 1 : -1} name="fade">
+          {!history ? (
+            <div className={buildClassName(styles.isLoading)}>
+              <Spinner color="white" className={styles.center} />
             </div>
-          </>
-        ) : undefined}
-      </Transition>
+          ) : history?.length ? (
+            <>
+              <TokenPriceChart
+                className={styles.chart}
+                imgClassName={styles.chartImg}
+                width={CHART_DIMENSIONS.width}
+                height={CHART_DIMENSIONS.height}
+                prices={history}
+                selectedIndex={selectedHistoryIndex}
+                onSelectIndex={setSelectedHistoryIndex}
+                isUpdating={isUpdating}
+              />
 
-      <span
-        className={buildClassName(styles.periodChooser, shouldHideChartPeriodSwitcher && styles.periodChooserHidden)}
-        role="button"
-        tabIndex={0}
-        onClick={openHistoryMenu}
-      >
-        {period === 'ALL' ? 'All' : period}
-        <i className={buildClassName('icon', 'icon-caret-down', styles.iconCaretSmall)} aria-hidden />
-        <ChartHistorySwitcher
-          isOpen={isHistoryMenuOpen}
-          onChange={refreshHistory}
-          onClose={closeHistoryMenu}
-        />
-      </span>
+              <div className={styles.tokenHistoryPrice}>
+                {formatCurrency(history[0][1], currencySymbol, 2, true)}
+                <div className={styles.tokenPriceDate}>{formatShortDay(lang.code!, historyStartDay!)}</div>
+              </div>
+            </>
+          ) : undefined}
+        </Transition>
+      )}
+
+      {!isPriceless && (
+        <span
+          className={buildClassName(styles.periodChooser, shouldHideChartPeriodSwitcher && styles.periodChooserHidden)}
+          role="button"
+          tabIndex={0}
+          onClick={openHistoryMenu}
+        >
+          {period === 'ALL' ? 'All' : period}
+          <i className={buildClassName('icon', 'icon-caret-down', styles.iconCaretSmall)} aria-hidden />
+          <ChartHistorySwitcher
+            isOpen={isHistoryMenuOpen}
+            onChange={refreshHistory}
+            onClose={closeHistoryMenu}
+          />
+        </span>
+      )}
 
       <div className={styles.tokenCurrentPrice}>
-        {formatCurrency(price, currencySymbol, selectedHistoryIndex === -1 ? 2 : 4, true)}
-        <div className={styles.tokenPriceDate}>
-          {dateStr}
-          {withExplorerButton && renderExplorerLink()}
-        </div>
+        {!isPriceless && formatCurrency(price, currencySymbol, selectedHistoryIndex === -1 ? 2 : 4, true)}
+        {(!isPriceless || withExplorerButton) && (
+          <div className={styles.tokenPriceDate}>
+            {!isPriceless && dateStr}
+            {withExplorerButton && renderExplorerLink(!isPriceless)}
+          </div>
+        )}
       </div>
     </div>
   );

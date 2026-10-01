@@ -32,6 +32,8 @@ export default {
       APP_ENV,
       BASE_URL,
       IS_PREVIEW: 'false',
+      TONCONNECT_PROTOCOL_SELF: '',
+      SELF_PROTOCOL: '',
     }),
   ],
 
