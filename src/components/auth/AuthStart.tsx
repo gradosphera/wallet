@@ -98,13 +98,13 @@ function AuthStart({
         <img
           ref={logoRef}
           src={logoPath}
-          alt={APP_NAME}
+          alt="Кошелёк ДАО Градосфера"
           className={styles.logo}
           onLoad={markLogoReady}
         />
       )}
 
-      <div className={buildClassName(styles.appName, 'rounded-font')}>{APP_NAME}</div>
+      <div className={buildClassName(styles.appName, 'rounded-font')}>Кошелёк ДАО Градосфера</div>
       <div className={styles.info}>
         {renderText(lang('$auth_intro'))}
       </div>
@@ -115,7 +115,7 @@ function AuthStart({
           className={buildClassName(styles.btn, styles.btn_about)}
           onClick={openAbout}
         >
-          {lang('More about %app_name%', { app_name: APP_NAME })}
+          Подробнее о Кошельке
           <i className="icon-chevron-right" aria-hidden />
         </Button>
       )}
