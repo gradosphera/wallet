@@ -21,7 +21,7 @@ Dapp'ы выбирают bridge из записи в [ton-connect/wallets-list](
 | Переменная                | Значение                                                          |
 |---------------------------|-------------------------------------------------------------------|
 | `SSE_BRIDGE_URL`          | `https://gradosphera-tonconnect-bridge.dao-f7d.workers.dev/bridge/` (слэш обязателен) |
-| `APP_NAME`                | `GradospheraWallet`                                                 |
+| `APP_NAME`                | `Кошелёк ДАО Градосфера`                                           |
 | `TONCONNECT_UNIVERSAL_URL`| домен кошелька, если он отличен от дефолтного (см. ниже)           |
 | `TONCONNECT_WALLET_JSBRIDGE_KEY` | глобал, который расширение инжектит в страницу dApp (`window.<key>`); по умолчанию `tonwallet` для `IS_CORE_WALLET=1`, иначе `mytonwallet`. Нужен только для сборки расширения — в записи списка кошельков блок `js` можно не указывать |
 | `TONCONNECT_PROTOCOL_SELF` | deeplink-схема с `://`, по умолчанию `mytonwallet-tc://`. В нативных сборках схемы заданы в проектах iOS/Android, env на них не действует |
@@ -63,7 +63,7 @@ Dapp'ы выбирают bridge из записи в [ton-connect/wallets-list](
 - `src/giveaways/index.tsx` — giveaways.
 
 Оба ищут `walletInfo.appName === APP_NAME.toLowerCase()`, где `APP_NAME` берётся из env
-(по умолчанию `MyTonWallet`). Поэтому при `APP_NAME=GradospheraWallet` нужно передать `APP_NAME`
+(по умолчанию `MyTonWallet`). При использовании собственного бренда можно задать `APP_NAME`
 и в сборки multisend/giveaways — иначе мини-приложения продолжат искать оригинального `mytonwallet`.
 
 ## Публикация
