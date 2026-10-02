@@ -64,14 +64,7 @@ function AuthStart({
           >
             {lang('Secret Words')}
           </Button>
-          {IS_LEDGER_SUPPORTED && (
-            <Button
-              className={buildClassName(styles.btn, styles.btn_mini)}
-              onClick={!isLoading ? openHardwareWalletModal : undefined}
-            >
-              {lang('Ledger')}
-            </Button>
-          )}
+
         </div>
       </>
     );

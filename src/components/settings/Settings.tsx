@@ -465,26 +465,7 @@ function Settings({
           className={buildClassName(styles.content, 'custom-scroll', styles.withBottomSpace)}
           onScroll={handleContentScroll}
         >
-          {IS_CORE_WALLET && (
-            <div className={styles.block}>
-              <div className={styles.item} onClick={handleClickInstallApp}>
-                <img className={styles.menuIcon} src={upgradeImg} alt={lang('Upgrade to MyTonWallet')} />
-                {lang('Upgrade to MyTonWallet')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-              </div>
-            </div>
-          )}
-          {!IS_CORE_WALLET && IS_WEB && (
-            <div className={styles.block}>
-              <div className={styles.item} onClick={handleClickInstallApp}>
-                <img className={styles.menuIcon} src={installAppImg} alt={lang('Install App')} />
-                {lang('Install App')}
-
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-              </div>
-            </div>
-          )}
           {IS_EXTENSION && (
             <div className={styles.block}>
               {PROXY_HOSTS && (
@@ -663,14 +644,7 @@ function Settings({
 
           {!IS_CORE_WALLET && (
             <div className={styles.block}>
-              {!IS_CORE_WALLET && IS_EXTENSION && (
-                <div className={styles.item} onClick={handleClickInstallApp}>
-                  <img className={styles.menuIcon} src={installAppImg} alt={lang('Install App')} />
-                  {lang('Install App')}
 
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-                </div>
-              )}
               {!IS_CORE_WALLET && (
                 <div className={styles.item} onClick={handleAboutOpen}>
                   <img className={styles.menuIcon} src={aboutImg} alt="" />

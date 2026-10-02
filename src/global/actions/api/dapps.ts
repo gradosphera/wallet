@@ -536,9 +536,26 @@ function applyGradospheraCatalog(
   const keptCategories = serverCategories.filter(({ name }) => GRADOSPHERA_KEEP_CATEGORY_NAMES.includes(name));
   const keptCategoryIds = new Set(keptCategories.map(({ id }) => id));
 
-  const keptSites = serverSites
+  let keptSites = serverSites
     .filter((site) => site.categoryId !== undefined && keptCategoryIds.has(site.categoryId))
     .map((site) => ({ ...site, isFeatured: false }));
+
+  // Фильтрация по категориям Gradosphera
+  const dyorCategory = keptCategories.find((c) => c.name === "DYOR");
+  const utilsCategory = keptCategories.find((c) => c.name === "Utilities");
+  keptSites = keptSites.filter((site) => {
+    if (dyorCategory && site.categoryId === dyorCategory.id) {
+      const url = site.url || "";
+      const name = site.name || "";
+      return url.includes("tonviewer") || url.includes("tonscan") || name.toLowerCase().includes("tonviewer") || name.toLowerCase().includes("tonscan");
+    }
+    if (utilsCategory && site.categoryId === utilsCategory.id) {
+      const url = site.url || "";
+      const name = site.name || "";
+      return url.toLowerCase().includes("ton.domains") || name.toLowerCase().includes("domain") || name.toLowerCase().includes("domains");
+    }
+    return true;
+  });
 
   const daoCategory: ApiSiteCategory = { id: GRADOSPHERA_DAO_CATEGORY_ID, name: GRADOSPHERA_DAO_CATEGORY_NAME };
   const voteSite: ApiSite = {
