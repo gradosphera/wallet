@@ -9,7 +9,7 @@ import type { AuthConfig } from '../../util/authApi/types';
 import {
   AUTO_CONFIRM_DURATION_MINUTES,
   PIN_LENGTH,
-  SUPPORT_USERNAME,
+  SUPPORT_URL,
   WRONG_ATTEMPTS_BEFORE_LOG_OUT_SUGGESTION,
 } from '../../config';
 import { selectIsBiometricAuthEnabled, selectIsNativeBiometricAuthEnabled } from '../../global/selectors';
@@ -112,8 +112,8 @@ function useStorageClearedDialog(operationType?: OperationType) {
       title: '$storage_cleared_title',
       message: getTranslation('$storage_cleared_message', {
         support_link: (
-          <a href={`https://t.me/${SUPPORT_USERNAME}`} target="_blank" rel="noreferrer">
-            @{SUPPORT_USERNAME}
+          <a href={SUPPORT_URL} target="_blank" rel="noreferrer">
+            @gradosphera
           </a>
         ),
       }),

@@ -177,7 +177,8 @@ export const SHORT_FRACTION_DIGITS = 2;
 
 export const MAX_PUSH_NOTIFICATIONS_ACCOUNT_COUNT = 3;
 
-export const SUPPORT_USERNAME = 'mysupport';
+export const SUPPORT_USERNAME = 'gradosphera';
+export const SUPPORT_URL = 'https://t.me/gradosphera?direct';
 export const MTW_TIPS_CHANNEL_NAME: Partial<Record<LangCode, string>> = {
   ru: 'MyTonWalletTipsRu',
 };

@@ -20,7 +20,7 @@ import {
   MTW_TIPS_CHANNEL_NAME,
   PROXY_HOSTS,
   SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY,
-  SUPPORT_USERNAME,
+  SUPPORT_URL,
   TELEGRAM_WEB_URL,
   TONCOIN,
 } from '../../config';
@@ -625,7 +625,7 @@ function Settings({
                 </a>
                 {supportAccountsCount > 0 && (
                   <a
-                    href={`https://t.me/${SUPPORT_USERNAME}`}
+                    href={SUPPORT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.item}
@@ -634,7 +634,7 @@ function Settings({
                     {lang('Get Support')}
 
                     <div className={styles.itemInfo}>
-                      <span className={styles.small}>@{SUPPORT_USERNAME}</span>
+                      <span className={styles.small}>@gradosphera</span>
                       <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                     </div>
                   </a>
