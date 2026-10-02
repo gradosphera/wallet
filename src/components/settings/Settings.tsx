@@ -17,7 +17,6 @@ import {
   IS_CORE_WALLET,
   IS_EXTENSION,
   LANG_LIST,
-  MTW_TIPS_CHANNEL_NAME,
   PROXY_HOSTS,
   SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY,
   SUPPORT_URL,
@@ -103,7 +102,6 @@ import notifications from '../../assets/settings/settings_notifications.svg';
 import securityImg from '../../assets/settings/settings_security.svg';
 import supportImg from '../../assets/settings/settings_support.svg';
 import telegramImg from '../../assets/settings/settings_telegram-menu.svg';
-import tipsImg from '../../assets/settings/settings_tips.svg';
 import tonLinksImg from '../../assets/settings/settings_ton-links.svg';
 import tonMagicImg from '../../assets/settings/settings_ton-magic.svg';
 import tonProxyImg from '../../assets/settings/settings_ton-proxy.svg';
@@ -601,17 +599,6 @@ function Settings({
           {!IS_CORE_WALLET && (
             <>
               <div className={styles.block}>
-                <a
-                  href={`https://t.me/${MTW_TIPS_CHANNEL_NAME[langCode] ?? MTW_TIPS_CHANNEL_NAME.ru}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.item}
-                >
-                  <img className={styles.menuIcon} src={tipsImg} alt={lang('MyTonWallet Tips')} />
-                  {lang('MyTonWallet Tips')}
-
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-                </a>
                 <a
                   href={GRADOSPHERA_GITHUB_URL}
                   target="_blank"
