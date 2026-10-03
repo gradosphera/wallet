@@ -16,11 +16,11 @@
     },
     {
       "source": "/tonapiio/(.*)",
-      "destination": "https://tonapiio.mytonwallet.org/$1"
+      "destination": "https://tonapiio-proxy.dao-f7d.workers.dev/$1"
     },
     {
       "source": "/tonapiio-testnet/(.*)",
-      "destination": "https://tonapiio-testnet.mytonwallet.org/$1"
+      "destination": "https://tonapiio-proxy.dao-f7d.workers.dev/$1"
     },
     {
       "source": "/mtw-api/(.*)",
