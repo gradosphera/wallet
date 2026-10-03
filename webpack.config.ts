@@ -488,6 +488,10 @@ export default function createConfig(
             from: IS_TELEGRAM_APP ? 'src/_headers_telegram' : 'src/_headers',
             transform: (content: Buffer) => content.toString().replace('{{CSP}}', CSP),
           },
+          ...(IS_TELEGRAM_APP ? [{
+            from: 'public/telegram-web-app.js',
+            to: 'telegram-web-app.js',
+          }] : []),
         ],
       }),
       ...(canUseStatoscope ? [new StatoscopeWebpackPlugin({
