@@ -24,7 +24,7 @@
     },
     {
       "source": "/mtw-api/(.*)",
-      "destination": "https://api.mytonwallet.org/$1"
+      "destination": "https://mtw-api-proxy.dao-f7d.workers.dev/$1"
     },
     {
       "source": "/tronapi/(.*)",
