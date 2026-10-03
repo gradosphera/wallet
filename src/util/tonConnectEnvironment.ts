@@ -3,7 +3,7 @@ import type { DeviceInfo, Feature } from '@tonconnect/protocol';
 import type { ApiAccountWithTon } from '../api/types';
 
 import {
-  APP_NAME, IS_EXTENSION, IS_TELEGRAM_APP, TONCONNECT_PROTOCOL_VERSION,
+  APP_NAME, IS_EXTENSION, IS_TELEGRAM_APP, TONCONNECT_APP_NAME, TONCONNECT_PROTOCOL_VERSION,
 } from '../config';
 import packageJson from '../../package.json';
 import { DEFAULT_MAX_MESSAGES, W5_MAX_MESSAGES } from '../api/chains/ton/constants';
@@ -33,7 +33,7 @@ export function tonConnectGetDeviceInfo(account?: ApiAccountWithTon): DeviceInfo
 
   return {
     platform: getPlatform(),
-    appName: APP_NAME,
+    appName: TONCONNECT_APP_NAME,
     appVersion: packageJson.version,
     maxProtocolVersion: TONCONNECT_PROTOCOL_VERSION,
     features,

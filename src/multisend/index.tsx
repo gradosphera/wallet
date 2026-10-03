@@ -49,7 +49,7 @@ void (async () => {
 
   const walletInfoList = await tonConnect.getWallets();
   const mtwWalletInfo = walletInfoList.find(
-    (walletInfo) => walletInfo.appName === APP_NAME.toLowerCase(),
+    (walletInfo) => walletInfo.appName === (APP_NAME || '').toLowerCase(),
   );
 
   if (DEBUG) {
