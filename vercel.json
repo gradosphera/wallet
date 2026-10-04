@@ -8,7 +8,7 @@
     },
     {
       "source": "/toncenter/(.*)",
-      "destination": "https://toncenter-ws-proxy.dao-f7d.workers.dev/$1"
+      "destination": "/api/toncenter/$1"
     },
     {
       "source": "/toncenter-testnet/(.*)",
@@ -16,7 +16,7 @@
     },
     {
       "source": "/tonapiio/(.*)",
-      "destination": "https://tonapiio-proxy.dao-f7d.workers.dev/$1"
+      "destination": "/api/tonapiio/$1"
     },
     {
       "source": "/tonapiio-testnet/(.*)",
@@ -24,7 +24,7 @@
     },
     {
       "source": "/mtw-api/(.*)",
-      "destination": "https://mtw-api-proxy.dao-f7d.workers.dev/$1"
+      "destination": "/api/mtw/$1"
     },
     {
       "source": "/tronapi/(.*)",
