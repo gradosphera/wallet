@@ -558,6 +558,8 @@ function applyGradospheraCatalog(
   });
 
   const daoCategory: ApiSiteCategory = { id: GRADOSPHERA_DAO_CATEGORY_ID, name: GRADOSPHERA_DAO_CATEGORY_NAME };
+  const toolsCategory: ApiSiteCategory = { id: 101, name: 'Инструменты' };
+
   const voteSite: ApiSite = {
     ...GRADOSPHERA_VOTE_SITE,
     manifestUrl: '',
@@ -567,9 +569,22 @@ function applyGradospheraCatalog(
     categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
   };
 
+  const cleanLeagueSite: ApiSite = {
+    url: 'https://t.me/iligarubot/app',
+    name: 'Чистая Лига',
+    icon: 'https://raw.githubusercontent.com/gradosphera/clean-league/main/public/logo.png',
+    description: 'Проект Чистая Лига',
+    manifestUrl: '',
+    canBeRestricted: false,
+    isExternal: false,
+    isFeatured: false,
+    categoryId: 101,
+  };
+
+  // Убираем лишние папки — оставляем только DAO и Инструменты (и сайты, отфильтрованные выше)
   return {
-    categories: [...keptCategories, daoCategory],
-    sites: [...keptSites, voteSite],
+    categories: [...keptCategories, daoCategory, toolsCategory].filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i),
+    sites: [...keptSites, voteSite, cleanLeagueSite],
   };
 }
 
