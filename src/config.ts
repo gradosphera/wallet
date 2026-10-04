@@ -104,7 +104,7 @@ export const MAIN_ACCOUNT_ID = '0-ton-mainnet';
 // The API services hosted on `*.mytonwallet.org` only allow CORS for `https://mytonwallet.app`.
 // For plain-web deployments on other domains we route API requests through a same-origin reverse
 // proxy (see `vercel.json`) so the CORS restriction doesn't apply.
-const IS_PLAIN_WEB_APP = !IS_CORE_WALLET && !IS_EXTENSION && !IS_PACKAGED_ELECTRON && !IS_CAPACITOR && !IS_TELEGRAM_APP;
+const IS_PLAIN_WEB_APP = !IS_CORE_WALLET && !IS_EXTENSION && !IS_PACKAGED_ELECTRON && !IS_CAPACITOR;
 const PLAIN_WEB_ORIGIN = IS_PLAIN_WEB_APP
   ? typeof window !== 'undefined'
     ? window.location.origin
