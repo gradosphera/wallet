@@ -22,6 +22,7 @@ import styles from './Settings.module.scss';
 
 import logoDarkPath from '../../assets/logoDark.svg';
 import logoLightPath from '../../assets/logoLight.svg';
+import githubSvg from '../../assets/settings/settings_github.svg';
 
 interface OwnProps {
   isActive?: boolean;
@@ -143,7 +144,7 @@ function SettingsAbout({
             </>
           )}
           <h3 className={buildClassName(styles.text, styles.heading)}>
-            <i className={buildClassName(styles.github, 'icon-github')} aria-hidden /> {lang('Is it open source?')}
+            <img src={githubSvg} className={styles.github} alt="GitHub" /> {lang('Is it open source?')}
           </h3>
           <p className={styles.text}>
             {lang('$about_wallet_github', {
