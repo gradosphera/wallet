@@ -8,7 +8,7 @@
     },
     {
       "source": "/toncenter/(.*)",
-      "destination": "https://toncenter.mytonwallet.org/$1"
+      "destination": "https://toncenter-ws-proxy.dao-f7d.workers.dev/$1"
     },
     {
       "source": "/toncenter-testnet/(.*)",
