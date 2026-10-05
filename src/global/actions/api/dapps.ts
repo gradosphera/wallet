@@ -572,7 +572,7 @@ function applyGradospheraCatalog(
   const cleanLeagueSite: ApiSite = {
     url: 'https://t.me/iligarubot/app',
     name: 'Чистая Лига',
-    icon: 'https://raw.githubusercontent.com/gradosphera/clean-league/main/public/logo.png',
+    icon: cleanLeagueIcon,
     description: 'Проект Чистая Лига',
     manifestUrl: '',
     canBeRestricted: false,
