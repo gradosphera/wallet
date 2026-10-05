@@ -1,7 +1,7 @@
 import type { ApiActivity, ApiNetwork } from '../../../types';
 import type { ActionsSocketMessage, AddressBook, AnyAction, ClientSocketMessage, ServerSocketMessage } from './types';
 
-import { TONCENTER_ACTIONS_VERSION, TONCENTER_MAINNET_URL, TONCENTER_TESTNET_URL } from '../../../../config';
+import { TONCENTER_ACTIONS_VERSION, TONCENTER_MAINNET_URL, TONCENTER_STREAMING_TESTNET_WS_URL, TONCENTER_STREAMING_WS_URL, TONCENTER_TESTNET_URL } from '../../../../config';
 import { findDifference } from '../../../../util/iteratees';
 import ReconnectingWebSocket, { type InMessageCallback } from '../../../../util/reconnectingWebsocket';
 import safeExec from '../../../../util/safeExec';
@@ -368,6 +368,12 @@ export function isActivityUpdateFinal(update: ActivitiesUpdate) {
 }
 
 function getSocketUrl(network: ApiNetwork) {
+  const customWsUrl = network === 'testnet' ? TONCENTER_STREAMING_TESTNET_WS_URL : TONCENTER_STREAMING_WS_URL;
+  if (customWsUrl) {
+    const url = new URL(customWsUrl);
+    addBackendHeadersToSocketUrl(url);
+    return url;
+  }
   const url = new URL(network === 'testnet' ? TONCENTER_TESTNET_URL : TONCENTER_MAINNET_URL);
   url.protocol = 'wss:';
   url.pathname = `${url.pathname.replace(/\/+$/, '')}/api/streaming/v1/ws`;
