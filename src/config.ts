@@ -138,6 +138,11 @@ export const TONCENTER_TESTNET_URL = resolveApiUrl(
   '/toncenter-testnet',
   'https://toncenter-testnet.mytonwallet.org',
 );
+
+// Streaming WebSocket can't go through the same-origin HTTP proxy, so it may be pointed at a
+// dedicated WSS relay (e.g. a Cloudflare Worker) via env. Empty means "derive it from the HTTP URL".
+export const TONCENTER_STREAMING_WS_URL = process.env.TONCENTER_STREAMING_WS_URL || '';
+export const TONCENTER_STREAMING_TESTNET_WS_URL = process.env.TONCENTER_STREAMING_TESTNET_WS_URL || '';
 export const TONCENTER_TESTNET_KEY = process.env.TONCENTER_TESTNET_KEY;
 export const ELECTRON_TONCENTER_TESTNET_KEY = process.env.ELECTRON_TONCENTER_TESTNET_KEY;
 export const TONAPIIO_TESTNET_URL = resolveApiUrl(

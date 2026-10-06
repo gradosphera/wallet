@@ -10,6 +10,11 @@ import {
   GRADOSPHERA_VOTE_SITE,
   IS_CAPACITOR,
 } from '../../../config';
+
+// `config.ts` is also evaluated outside the browser bundle, so local icons can't be referenced
+// from `GRADOSPHERA_VOTE_SITE`. They're attached here, after the config object is spread.
+import voteIcon from '../../../assets/icons/vote.svg';
+import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
 import { areDeepEqual } from '../../../util/areDeepEqual';
 import { getDoesUsePinPad } from '../../../util/biometrics';
 import { getDappConnectionUniqueId } from '../../../util/getDappConnectionUniqueId';
@@ -562,6 +567,7 @@ function applyGradospheraCatalog(
 
   const voteSite: ApiSite = {
     ...GRADOSPHERA_VOTE_SITE,
+    icon: voteIcon,
     manifestUrl: '',
     canBeRestricted: false,
     isExternal: false,
