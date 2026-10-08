@@ -12,11 +12,12 @@ import type {
   ApiTonWallet,
   ApiViewAccount,
 } from '../types';
-import { ApiCommonError } from '../types';
+import { ApiAuthError, ApiCommonError } from '../types';
 
 import { DEFAULT_WALLET_VERSION, IS_BIP39_MNEMONIC_ENABLED, IS_CORE_WALLET } from '../../config';
 import { parseAccountId } from '../../util/account';
 import isMnemonicPrivateKey from '../../util/isMnemonicPrivateKey';
+import { logDebugError } from '../../util/logs';
 import { createTaskQueue } from '../../util/schedulers';
 import chains from '../chains';
 import { toBase64Address } from '../chains/ton/util/tonCore';
@@ -38,7 +39,7 @@ import {
 } from '../common/mnemonic';
 import { tokenRepository } from '../db';
 import { getEnvironment } from '../environment';
-import { handleServerError } from '../errors';
+import { ApiServerError, handleServerError } from '../errors';
 import { storage } from '../storages';
 import { activateAccount, deactivateAllAccounts } from './accounts';
 import { removeAccountDapps, removeAllDapps, removeNetworkDapps } from './dapps';
@@ -82,7 +83,7 @@ export async function importMnemonic(
   const isTonMnemonic = await ton.validateMnemonic(mnemonic);
 
   if (!isPrivateKey && !isTonMnemonic && (!isBip39Mnemonic || !IS_BIP39_MNEMONIC_ENABLED)) {
-    throw new Error('Invalid mnemonic');
+    return { error: ApiAuthError.InvalidMnemonic };
   }
 
   const mnemonicEncrypted = await encryptMnemonic(mnemonic, password);
@@ -141,7 +142,14 @@ export async function importMnemonic(
       secondNetworkAccount,
     };
   } catch (err) {
-    return handleServerError(err);
+    if (err instanceof ApiServerError) {
+      return handleServerError(err);
+    }
+
+    // Never let a non-API error (e.g. a JSON parsing failure) escape here,
+    // otherwise the main thread shows a generic "Unexpected" dialog instead
+    logDebugError('importMnemonic', err);
+    return { error: ApiCommonError.ServerError };
   }
 }
 

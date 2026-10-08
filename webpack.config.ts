@@ -98,7 +98,7 @@ const CSP = `
   manifest-src 'self';
   connect-src 'self' blob: ${cspConnectSrcHosts} ${cspConnectSrcExtra};
   script-src 'self' 'wasm-unsafe-eval' ${cspScriptSrcExtra};
-  style-src 'self' https://fonts.googleapis.com/;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/;
   img-src 'self' data: blob: https: ${cspImageSrcHosts};
   media-src 'self' data: https://static.mytonwallet.org/;
   object-src 'none';

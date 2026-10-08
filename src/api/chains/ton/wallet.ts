@@ -7,6 +7,7 @@ import type { TonWallet } from './util/tonCore';
 import { DEFAULT_WALLET_VERSION } from '../../../config';
 import { parseAccountId } from '../../../util/account';
 import { extractKey, findLast } from '../../../util/iteratees';
+import { logDebugError } from '../../../util/logs';
 import withCacheAsync from '../../../util/withCacheAsync';
 import { fetchJettonBalances } from './util/tonapiio';
 import {
@@ -135,9 +136,14 @@ export async function pickBestWallet(network: ApiNetwork, publicKey: Uint8Array)
 
   // Workaround for NOT holders who do not have transactions
   const v4Wallet = allWallets.find(({ version }) => version === 'v4R2')!;
-  const v4JettonBalances = await fetchJettonBalances(network, v4Wallet.address);
-  if (v4JettonBalances.length > 0) {
-    return v4Wallet;
+  try {
+    const v4JettonBalances = await fetchJettonBalances(network, v4Wallet.address);
+    if (v4JettonBalances.length > 0) {
+      return v4Wallet;
+    }
+  } catch (err) {
+    // Best-effort check, don't fail wallet derivation if the external balance API is unavailable
+    logDebugError('pickBestWallet', err);
   }
 
   return defaultWallet;

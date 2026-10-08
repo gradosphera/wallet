@@ -37,7 +37,13 @@ export async function fetchJson(url: string | URL, data?: QueryParams, init?: Re
 
   const response = await fetchWithRetry(urlObject, init);
 
-  return response.json();
+  try {
+    return await response.json();
+  } catch (err) {
+    // A successful (2xx) response with a non-JSON body (e.g. an HTML error page)
+    // must not surface as a raw parsing error and break the caller with an arbitrary error
+    throw new ApiServerError(`Invalid JSON response from ${urlObject.toString()}`);
+  }
 }
 
 export async function fetchWithRetry(url: string | URL, init?: RequestInit, options?: {
