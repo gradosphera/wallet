@@ -6,15 +6,11 @@ import {
   ANIMATION_END_DELAY,
   GRADOSPHERA_DAO_CATEGORY_ID,
   GRADOSPHERA_DAO_CATEGORY_NAME,
-  GRADOSPHERA_KEEP_CATEGORY_NAMES,
+  GRADOSPHERA_TOOLS_CATEGORY_ID,
+  GRADOSPHERA_TOOLS_CATEGORY_NAME,
   GRADOSPHERA_VOTE_SITE,
   IS_CAPACITOR,
 } from '../../../config';
-
-// `config.ts` is also evaluated outside the browser bundle, so local icons can't be referenced
-// from `GRADOSPHERA_VOTE_SITE`. They're attached here, after the config object is spread.
-import voteIcon from '../../../assets/icons/vote.svg';
-import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
 import { areDeepEqual } from '../../../util/areDeepEqual';
 import { getDoesUsePinPad } from '../../../util/biometrics';
 import { getDappConnectionUniqueId } from '../../../util/getDappConnectionUniqueId';
@@ -48,6 +44,11 @@ import { switchAccount } from './auth';
 import { getIsPortrait } from '../../../hooks/useDeviceScreen';
 
 import { CLOSE_DURATION, CLOSE_DURATION_PORTRAIT } from '../../../components/ui/Modal';
+
+import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
+// `config.ts` is also evaluated outside the browser bundle, so local icons can't be referenced
+// from `GRADOSPHERA_VOTE_SITE`. They're attached here, after the config object is spread.
+import voteIcon from '../../../assets/icons/vote.svg';
 
 const GET_DAPPS_PAUSE = 250;
 
@@ -532,42 +533,15 @@ addActionHandler('apiUpdateDappCloseLoading', async (global, actions, { connecti
   setGlobal(global);
 });
 
-function applyGradospheraCatalog(
-  exploreData?: { categories: ApiSiteCategory[]; sites: ApiSite[] },
-): { categories: ApiSiteCategory[]; sites: ApiSite[] } {
-  const serverCategories = exploreData?.categories || [];
-  const serverSites = exploreData?.sites || [];
-
-  const keptCategories = serverCategories.filter(({ name }) => GRADOSPHERA_KEEP_CATEGORY_NAMES.includes(name));
-  const keptCategoryIds = new Set(keptCategories.map(({ id }) => id));
-
-  let keptSites = serverSites
-    .filter((site) => site.categoryId !== undefined && keptCategoryIds.has(site.categoryId))
-    .map((site) => ({ ...site, isFeatured: false }));
-
-  // Фильтрация по категориям Gradosphera
-  const dyorCategory = keptCategories.find((c) => c.name === "DYOR");
-  const utilsCategory = keptCategories.find((c) => c.name === "Utilities");
-  keptSites = keptSites.filter((site) => {
-    if (dyorCategory && site.categoryId === dyorCategory.id) {
-      const url = site.url || "";
-      const name = site.name || "";
-      return url.includes("tonviewer") || url.includes("tonscan") || name.toLowerCase().includes("tonviewer") || name.toLowerCase().includes("tonscan");
-    }
-    if (utilsCategory && site.categoryId === utilsCategory.id) {
-      const url = site.url || "";
-      const name = site.name || "";
-      return url.toLowerCase().includes("ton.domains") || name.toLowerCase().includes("domain") || name.toLowerCase().includes("domains");
-    }
-    return true;
-  });
-
+function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSite[] } {
   const daoCategory: ApiSiteCategory = { id: GRADOSPHERA_DAO_CATEGORY_ID, name: GRADOSPHERA_DAO_CATEGORY_NAME };
-  const toolsCategory: ApiSiteCategory = { id: 101, name: 'Инструменты' };
+  const toolsCategory: ApiSiteCategory = { id: GRADOSPHERA_TOOLS_CATEGORY_ID, name: GRADOSPHERA_TOOLS_CATEGORY_NAME };
 
   const voteSite: ApiSite = {
-    ...GRADOSPHERA_VOTE_SITE,
+    url: GRADOSPHERA_VOTE_SITE.url,
+    name: GRADOSPHERA_VOTE_SITE.name,
     icon: voteIcon,
+    description: GRADOSPHERA_VOTE_SITE.description,
     manifestUrl: '',
     canBeRestricted: false,
     isExternal: false,
@@ -584,24 +558,23 @@ function applyGradospheraCatalog(
     canBeRestricted: false,
     isExternal: false,
     isFeatured: false,
-    categoryId: 101,
+    categoryId: GRADOSPHERA_TOOLS_CATEGORY_ID,
   };
 
-  // Убираем лишние папки — оставляем только DAO и Инструменты (и сайты, отфильтрованные выше)
   return {
-    categories: [...keptCategories, daoCategory, toolsCategory].filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i),
-    sites: [...keptSites, voteSite, cleanLeagueSite],
+    categories: [daoCategory, toolsCategory],
+    sites: [voteSite, cleanLeagueSite],
   };
 }
 
-addActionHandler('loadExploreSites', async (global, _, { isLandscape }) => {
-  const exploreData = await callApi('loadExploreSites', { isLandscape });
+addActionHandler('loadExploreSites', (global) => {
+  const exploreData = getGradospheraCatalog();
   global = getGlobal();
   if (areDeepEqual(exploreData, global.exploreData)) {
     return;
   }
 
-  global = { ...global, exploreData: applyGradospheraCatalog(exploreData) };
+  global = { ...global, exploreData };
   setGlobal(global);
 });
 

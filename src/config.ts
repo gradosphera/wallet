@@ -251,17 +251,17 @@ export const EMBEDDED_DAPP_BRIDGE_CHANNEL = 'embedded-dapp-bridge';
 
 export const GRADOSPHERA_DAO_CATEGORY_ID = 100;
 export const GRADOSPHERA_DAO_CATEGORY_NAME = 'ДАО';
+export const GRADOSPHERA_TOOLS_CATEGORY_ID = 101;
+export const GRADOSPHERA_TOOLS_CATEGORY_NAME = 'Инструменты';
 // Название на экране блокировки (поле ввода пароля и биометрия).
 // Отдельное от APP_NAME, чтобы не менять брендинг в остальных разделах.
 export const APP_LOCKED_SCREEN_NAME = 'Кошелёк';
 export const GRADOSPHERA_VOTE_SITE = {
   url: 'https://blago-vote.vercel.app',
   name: 'Голос',
-  icon: 'https://raw.githubusercontent.com/gradosphera/blago-vote/refs/heads/main/public/vote.png',
   description: 'Голосование',
 };
 export const GRADOSPHERA_GITHUB_URL = 'https://github.com/gradosphera';
-export const GRADOSPHERA_KEEP_CATEGORY_NAMES = ['DYOR', 'Utilities'];
 
 export const NFT_FRAGMENT_COLLECTIONS = [
   '0:0e41dc1dc3c9067ed24248580e12b3359818d83dee0304fabcf80845eafafdb2', // Anonymous Telegram Numbers
