@@ -72,19 +72,23 @@ export const walletClassMap: Record<ApiTonWalletVersion, TonWalletType> = {
 export function getTonClient(network: ApiNetwork = 'mainnet') {
   if (!clientByNetwork) {
     const { apiHeaders, toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
+    // The public `toncenter.com` doesn't allow the project-specific headers in CORS preflight,
+    // so only send them to the MyTONWallet-compatible backend.
+    const mainnetHeaders = TONCENTER_MAINNET_URL.startsWith('https://toncenter.com') ? undefined : apiHeaders;
+    const testnetHeaders = TONCENTER_TESTNET_URL.startsWith('https://toncenter.com') ? undefined : apiHeaders;
 
     clientByNetwork = {
       mainnet: new TonClient({
         endpoint: `${TONCENTER_MAINNET_URL}/api/v2/jsonRPC`,
         timeout: DEFAULT_TIMEOUT,
         apiKey: toncenterMainnetKey,
-        headers: apiHeaders,
+        headers: mainnetHeaders,
       }),
       testnet: new TonClient({
         endpoint: `${TONCENTER_TESTNET_URL}/api/v2/jsonRPC`,
         timeout: DEFAULT_TIMEOUT,
         apiKey: toncenterTestnetKey,
-        headers: apiHeaders,
+        headers: testnetHeaders,
       }),
     };
   }
