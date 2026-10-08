@@ -96,7 +96,7 @@ export const GLOBAL_STATE_CACHE_KEY = IS_CORE_WALLET ? 'tonwallet-global-state' 
 export const ANIMATION_LEVEL_MIN = 0;
 export const ANIMATION_LEVEL_MED = 1;
 export const ANIMATION_LEVEL_MAX = 2;
-export const ANIMATION_LEVEL_DEFAULT = ANIMATION_LEVEL_MAX;
+export const ANIMATION_LEVEL_DEFAULT = ANIMATION_LEVEL_MIN;
 export const THEME_DEFAULT = 'system';
 
 export const MAIN_ACCOUNT_ID = '0-ton-mainnet';
