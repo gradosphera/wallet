@@ -24,7 +24,7 @@
     },
     {
       "source": "/mtw-api/(.*)",
-      "destination": "/api/mtw/$1"
+      "destination": "https://api.mytonwallet.org/$1"
     },
     {
       "source": "/tronapi/(.*)",
