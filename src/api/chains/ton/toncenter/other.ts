@@ -51,7 +51,7 @@ export async function getWalletInfos(network: ApiNetwork, addresses: string[]): 
   const { wallets: states, address_book: addressBook } = await callToncenterV3<{
     address_book: AddressBook;
     wallets: WalletState[];
-  }>(network, '/walletStates', { address: addresses.join(',') });
+  }>(network, '/walletStates', { address: addresses.map(toRawAddress).join(',') });
 
   const walletInfoByRawAddress = Object.fromEntries(states.map((state) => [
     state.address.toLowerCase(),
@@ -88,9 +88,9 @@ export async function getAccountStates(network: ApiNetwork, addresses: string[])
   const { accounts: states } = await callToncenterV3<{
     addressBook: AddressBook;
     accounts: AccountState[];
-  }>(network, '/accountStates', { address: addresses.join(',') });
+  }>(network, '/accountStates', { address: addresses.map(toRawAddress).join(',') });
 
-  const addressByRaw = Object.fromEntries(addresses.map((address) => [toRawAddress(address), address]));
+  const addressByRaw = Object.fromEntries(addresses.map((address) => [toRawAddress(address).toLowerCase(), address]));
   for (const state of states) {
     state.address = addressByRaw[state.address.toLowerCase()];
   }

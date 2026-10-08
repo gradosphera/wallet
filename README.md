@@ -2,7 +2,7 @@
 
 ---
 
-# GradospheraWallet · Кошелёк ДАО Градосфера
+# GradospheraWallet · Кошелёк
 
 Форк [MyTonWallet](https://mytonwallet.io) — web-кошелёк и браузерное расширение для сети [TON](https://ton.org),
 поддерживающее жетоны, NFT, TON DNS и TON Sites.
@@ -30,13 +30,15 @@ The wallet is **self-custodial and safe**. The developers **do not** have access
 
 ## Table of contents
 
-- [Requirements](#requirements)
-- [Local Setup](#local-setup)
-- [Dev Mode](#dev-mode)
-- [Linux](#linux-desktop-troubleshooting)
-- [Electron](./docs/electron.md)
-- [Verifying GPG Signatures](./docs/gpg-check.md)
-- [Support Us](#support-us)
+- [GradospheraWallet · Кошелёк](#gradospherawallet--кошелёк)
+  - [Брендинг](#брендинг)
+- [MyTonWallet · mytonwallet.io](#mytonwallet--mytonwalletio)
+  - [Table of contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Local Setup](#local-setup)
+    - [NPM Local Setup](#npm-local-setup)
+  - [Dev Mode](#dev-mode)
+  - [Linux Desktop Troubleshooting](#linux-desktop-troubleshooting)
 
 ## Requirements
 
@@ -48,7 +50,9 @@ To build on **Windows**, you will also need:
 - A zip utility (for several commands)
 
 ## Local Setup
+
 ### NPM Local Setup
+
 ```sh
 cp .env.example .env
 

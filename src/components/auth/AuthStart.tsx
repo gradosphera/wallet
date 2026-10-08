@@ -91,13 +91,13 @@ function AuthStart({
         <img
           ref={logoRef}
           src={logoPath}
-          alt="Кошелёк ДАО Градосфера"
+          alt="Кошелёк"
           className={styles.logo}
           onLoad={markLogoReady}
         />
       )}
 
-      <div className={buildClassName(styles.appName, 'rounded-font')}>Кошелёк ДАО Градосфера</div>
+      <div className={buildClassName(styles.appName, 'rounded-font')}>Кошелёк</div>
       <div className={styles.info}>
         {renderText(lang('$auth_intro'))}
       </div>
