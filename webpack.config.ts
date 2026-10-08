@@ -407,6 +407,8 @@ export default function createConfig(
         TEST_SESSION: '',
         TONCENTER_MAINNET_URL: '',
         TONCENTER_MAINNET_KEY: '',
+        TONCENTER_STREAMING_WS_URL: '',
+        TONCENTER_STREAMING_TESTNET_WS_URL: '',
         TONCENTER_TESTNET_URL: '',
         TONCENTER_TESTNET_KEY: '',
         TONAPIIO_MAINNET_URL: '',
