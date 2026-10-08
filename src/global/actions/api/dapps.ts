@@ -45,9 +45,6 @@ import { getIsPortrait } from '../../../hooks/useDeviceScreen';
 
 import { CLOSE_DURATION, CLOSE_DURATION_PORTRAIT } from '../../../components/ui/Modal';
 
-import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
-// `config.ts` is also evaluated outside the browser bundle, so local icons can't be referenced
-// from `GRADOSPHERA_VOTE_SITE`. They're attached here, after the config object is spread.
 import voteIcon from '../../../assets/icons/vote.svg';
 
 const GET_DAPPS_PAUSE = 250;
@@ -552,7 +549,7 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
   const cleanLeagueSite: ApiSite = {
     url: 'https://t.me/iligarubot/app',
     name: 'Чистая Лига',
-    icon: cleanLeagueIcon,
+    icon: 'https://raw.githubusercontent.com/gradosphera/brand-assets/refs/heads/main/cleanliga/logo.svg',
     description: 'Проект Чистая Лига',
     manifestUrl: '',
     canBeRestricted: false,
