@@ -13,20 +13,23 @@ let apiByNetwork: Record<ApiNetwork, Api<unknown>> | undefined;
 
 function getApi(network: ApiNetwork) {
   if (!apiByNetwork) {
-    const headers = {
-      ...getEnvironment().apiHeaders,
+    const { apiHeaders } = getEnvironment();
+    // The public `tonapi.io` doesn't allow the project-specific headers in CORS preflight,
+    // so only send them to the MyTONWallet-compatible backend.
+    const getHeaders = (baseUrl: string) => ({
+      ...(!baseUrl.startsWith('https://tonapi.io') ? apiHeaders : undefined),
       'Content-Type': 'application/json',
-    };
+    });
 
     apiByNetwork = {
       mainnet: new Api(new HttpClient({
         baseUrl: TONAPIIO_MAINNET_URL,
-        baseApiParams: { headers },
+        baseApiParams: { headers: getHeaders(TONAPIIO_MAINNET_URL) },
         customFetch: fetchWithRetry as typeof fetch,
       })),
       testnet: new Api(new HttpClient({
         baseUrl: TONAPIIO_TESTNET_URL,
-        baseApiParams: { headers },
+        baseApiParams: { headers: getHeaders(TONAPIIO_TESTNET_URL) },
         customFetch: fetchWithRetry as typeof fetch,
       })),
     };

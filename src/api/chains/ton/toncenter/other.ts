@@ -113,10 +113,14 @@ export function callToncenterV3<T = any>(network: ApiNetwork, path: string, data
 export function getToncenterHeaders(network: ApiNetwork) {
   const { apiHeaders, toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
   const apiKey = network === 'testnet' ? toncenterTestnetKey : toncenterMainnetKey;
+  const baseUrl = network === 'testnet' ? TONCENTER_TESTNET_URL : TONCENTER_MAINNET_URL;
+  // The public abstractions (`toncenter.com`) don't allow the project-specific headers
+  // in CORS preflight, so only send them to the MyTONWallet-compatible backend.
+  const usesPublicHost = baseUrl.startsWith('https://toncenter.com');
 
   return {
-    ...apiHeaders,
+    ...(!usesPublicHost ? apiHeaders : undefined),
     ...(apiKey && { 'X-Api-Key': apiKey }),
-    'X-Actions-Version': TONCENTER_ACTIONS_VERSION,
+    ...(!usesPublicHost ? { 'X-Actions-Version': TONCENTER_ACTIONS_VERSION } : undefined),
   };
 }

@@ -102,8 +102,10 @@ export const THEME_DEFAULT = 'system';
 export const MAIN_ACCOUNT_ID = '0-ton-mainnet';
 
 // The API services hosted on `*.mytonwallet.org` only allow CORS for `https://mytonwallet.app`.
-// For plain-web deployments on other domains we route API requests through a same-origin reverse
-// proxy (see `vercel.json`) so the CORS restriction doesn't apply.
+// For plain-web deployments on other domains, services that must use `mytonwallet.org` hosts are
+// routed through a same-origin reverse proxy (see `vercel.json`) so the CORS restriction doesn't
+// apply. TON / TONAPI endpoints, instead, can speak to the public CORS-friendly hosts
+// (`toncenter.com`, `tonapi.io`) directly, which also avoids dependence on deployed functions.
 const IS_PLAIN_WEB_APP = !IS_CORE_WALLET && !IS_EXTENSION && !IS_PACKAGED_ELECTRON && !IS_CAPACITOR || IS_TELEGRAM_APP;
 const PLAIN_WEB_ORIGIN = IS_PLAIN_WEB_APP
   ? typeof window !== 'undefined'
@@ -113,9 +115,9 @@ const PLAIN_WEB_ORIGIN = IS_PLAIN_WEB_APP
       : undefined
   : undefined;
 
-function resolveApiUrl(envValue: string | undefined, proxyPath: string, fallbackUrl: string) {
+function resolveApiUrl(envValue: string | undefined, proxyPath: string, fallbackUrl: string, directUrl?: string) {
   if (IS_PLAIN_WEB_APP) {
-    return PLAIN_WEB_ORIGIN ? `${PLAIN_WEB_ORIGIN}${proxyPath}` : fallbackUrl;
+    return directUrl || (PLAIN_WEB_ORIGIN ? `${PLAIN_WEB_ORIGIN}${proxyPath}` : fallbackUrl);
   }
   return envValue || fallbackUrl;
 }
@@ -124,6 +126,7 @@ export const TONCENTER_MAINNET_URL = resolveApiUrl(
   process.env.TONCENTER_MAINNET_URL,
   '/toncenter',
   'https://toncenter.mytonwallet.org',
+  'https://toncenter.com',
 );
 export const TONCENTER_MAINNET_KEY = process.env.TONCENTER_MAINNET_KEY;
 export const ELECTRON_TONCENTER_MAINNET_KEY = process.env.ELECTRON_TONCENTER_MAINNET_KEY;
@@ -131,6 +134,7 @@ export const TONAPIIO_MAINNET_URL = resolveApiUrl(
   process.env.TONAPIIO_MAINNET_URL,
   '/tonapiio',
   'https://tonapiio.mytonwallet.org',
+  'https://tonapi.io',
 );
 
 export const TONCENTER_TESTNET_URL = resolveApiUrl(
@@ -141,7 +145,11 @@ export const TONCENTER_TESTNET_URL = resolveApiUrl(
 
 // Streaming WebSocket can't go through the same-origin HTTP proxy, so it may be pointed at a
 // dedicated WSS relay (e.g. a Cloudflare Worker) via env. Empty means "derive it from the HTTP URL".
-export const TONCENTER_STREAMING_WS_URL = process.env.TONCENTER_STREAMING_WS_URL || '';
+// On plain-web builds mainnet talks to the public `toncenter.com` which has no streaming endpoint,
+// so point at MyTONWallet-compatible streaming relay directly (WebSockets are not affected by the
+// `*.mytonwallet.org` CORS restriction).
+export const TONCENTER_STREAMING_WS_URL = process.env.TONCENTER_STREAMING_WS_URL
+  || (IS_PLAIN_WEB_APP ? 'wss://toncenter.mytonwallet.org/api/streaming/v1/ws' : '');
 export const TONCENTER_STREAMING_TESTNET_WS_URL = process.env.TONCENTER_STREAMING_TESTNET_WS_URL || '';
 export const TONCENTER_TESTNET_KEY = process.env.TONCENTER_TESTNET_KEY;
 export const ELECTRON_TONCENTER_TESTNET_KEY = process.env.ELECTRON_TONCENTER_TESTNET_KEY;
