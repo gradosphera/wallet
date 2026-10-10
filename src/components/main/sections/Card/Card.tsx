@@ -8,7 +8,7 @@ import { isCustomizationUnlocked } from '../../../../global/helpers';
 import type { ApiBaseCurrency, ApiNft, ApiStakingState } from '../../../../api/types';
 import type { UserToken } from '../../../../global/types';
 
-import { IS_CORE_WALLET } from '../../../../config';
+import { BLAGO, BLAGO_CURRENCY, IS_CORE_WALLET } from '../../../../config';
 import {
   selectAccountStakingStates,
   selectCurrentAccountSettings,
@@ -18,6 +18,7 @@ import {
 } from '../../../../global/selectors';
 import buildClassName from '../../../../util/buildClassName';
 import captureEscKeyListener from '../../../../util/captureEscKeyListener';
+import { toDecimal } from '../../../../util/decimals';
 import { formatCurrency, getShortCurrencySymbol } from '../../../../util/formatNumber';
 import { IS_IOS, IS_SAFARI } from '../../../../util/windowEnvironment';
 import { getCardThemeClassName } from '../../helpers/cardThemes';
@@ -81,7 +82,8 @@ function Card({
   isViewMode,
 }: OwnProps & StateProps) {
   const amountRef = useRef<HTMLDivElement>();
-  const shortBaseSymbol = getShortCurrencySymbol(baseCurrency);
+  const isBlagoCurrency = baseCurrency === BLAGO_CURRENCY;
+  const shortBaseSymbol = isBlagoCurrency ? 'Благо' : getShortCurrencySymbol(baseCurrency);
   const [customCardClassName, setCustomCardClassName] = useState<string | undefined>(undefined);
   const [withTextGradient, setWithTextGradient] = useState<boolean>(false);
 
@@ -96,6 +98,9 @@ function Card({
   const currentToken = useMemo(() => {
     return tokens ? tokens.find((token) => token.slug === currentTokenSlug) : undefined;
   }, [currentTokenSlug, tokens]);
+  const blagoToken = useMemo(() => {
+    return tokens ? tokens.find((token) => token.slug === BLAGO.slug) : undefined;
+  }, [tokens]);
   const renderedToken = useCurrentOrPrev(currentToken, true);
   const {
     shouldRender: shouldRenderTokenCard,
@@ -132,11 +137,19 @@ function Card({
     primaryValue, primaryWholePart, primaryFractionPart, changePrefix, changePercent, changeValue,
   } = values || {};
 
+  const blagoValue = isBlagoCurrency
+    ? (blagoToken ? toDecimal(blagoToken.amount, blagoToken.decimals, true) : '0')
+    : undefined;
+  const [blagoWholePart, blagoFractionPart] = blagoValue ? blagoValue.split('.') : [];
+  const renderedPrimaryValue = blagoValue ?? primaryValue;
+  const renderedWholePart = blagoValue ? blagoWholePart : primaryWholePart;
+  const renderedFractionPart = blagoValue ? blagoFractionPart : primaryFractionPart;
+
   useLayoutEffect(() => {
-    if (primaryValue !== undefined) {
+    if (renderedPrimaryValue !== undefined) {
       updateFontScale();
     }
-  }, [primaryFractionPart, primaryValue, primaryWholePart, shortBaseSymbol, updateFontScale, screenWidthDep]);
+  }, [renderedFractionPart, renderedPrimaryValue, renderedWholePart, shortBaseSymbol, updateFontScale, screenWidthDep]);
 
   function renderLoader() {
     return (
@@ -184,10 +197,10 @@ function Card({
                 onClick={!isSensitiveDataHidden ? openCurrencyMenu : undefined}
               >
                 {shortBaseSymbol.length === 1 && <span className={styles.currencySymbol}>{shortBaseSymbol}</span>}
-                <AnimatedCounter isDisabled={noAnimationCounter} text={primaryWholePart ?? ''} />
-                {primaryFractionPart && (
+                <AnimatedCounter isDisabled={noAnimationCounter} text={renderedWholePart ?? ''} />
+                {renderedFractionPart && (
                   <span className={styles.primaryFractionPart}>
-                    <AnimatedCounter isDisabled={noAnimationCounter} text={`.${primaryFractionPart}`} />
+                    <AnimatedCounter isDisabled={noAnimationCounter} text={`.${renderedFractionPart}`} />
                   </span>
                 )}
                 {shortBaseSymbol.length > 1 && (
@@ -199,7 +212,7 @@ function Card({
           </SensitiveData>
         </Transition>
         <CurrencySwitcherMenu isOpen={isCurrencyMenuOpen} menuPositionX="right" onClose={closeCurrencyMenu} />
-        {primaryValue !== '0' && (
+        {!isBlagoCurrency && renderedPrimaryValue !== '0' && (
           <SensitiveData
             isActive={isSensitiveDataHidden}
             maskSkin={sensitiveDataMaskSkin}

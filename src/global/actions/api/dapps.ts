@@ -49,6 +49,7 @@ import voteIcon from '../../../assets/icons/vote.svg';
 import tonviewerIcon from '../../../assets/icons/tonviewer.svg';
 import gradospheraDaoIcon from '../../../assets/icons/gradosphera_dao.svg';
 import greenHomeIcon from '../../../assets/icons/green_home.svg';
+import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
 
 const GET_DAPPS_PAUSE = 250;
 
@@ -552,7 +553,7 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
   const cleanLeagueSite: ApiSite = {
     url: 'https://t.me/iligarubot/app',
     name: 'Чистая Лига',
-    icon: 'https://raw.githubusercontent.com/gradosphera/brand-assets/refs/heads/main/cleanliga/logo.svg',
+    icon: cleanLeagueIcon,
     description: 'Проект Чистая Лига',
     manifestUrl: '',
     canBeRestricted: false,

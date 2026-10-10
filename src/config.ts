@@ -551,7 +551,10 @@ export const SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY = IS_CORE_WALLET;
 export const PORTRAIT_MIN_ASSETS_TAB_VIEW = 4;
 export const LANDSCAPE_MIN_ASSETS_TAB_VIEW = 6;
 
-export const DEFAULT_PRICE_CURRENCY: ApiBaseCurrency = TONCOIN.symbol;
+export const BLAGO_CURRENCY: ApiBaseCurrency = 'BLAGO';
+export const PRICE_CURRENCY_FALLBACK: ApiBaseCurrency = 'USD';
+
+export const DEFAULT_PRICE_CURRENCY: ApiBaseCurrency = BLAGO_CURRENCY;
 export const CURRENCIES: Record<ApiBaseCurrency, { name: string; decimals: number; shortSymbol?: string }> = {
   USD: { name: 'US Dollar', decimals: 2, shortSymbol: '$' },
   EUR: { name: 'Euro', decimals: 2, shortSymbol: '€' },
@@ -559,6 +562,7 @@ export const CURRENCIES: Record<ApiBaseCurrency, { name: string; decimals: numbe
   CNY: { name: 'Yuan', decimals: 2, shortSymbol: '¥' },
   BTC: { name: 'Bitcoin', decimals: 9 },
   [TONCOIN.symbol]: { name: 'GRAM', decimals: 9, shortSymbol: GRAM_SYMBOL },
+  [BLAGO_CURRENCY]: { name: 'Благо', decimals: 0, shortSymbol: 'Благо' },
 };
 
 export const BURN_ADDRESS = 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ';

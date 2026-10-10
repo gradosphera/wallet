@@ -27,7 +27,7 @@ import { tryUpdateKnownAddresses } from '../common/addresses';
 import { callBackendGet, callBackendPost } from '../common/backend';
 import { setBackendConfigCache } from '../common/cache';
 import { pollingLoop } from '../common/polling/utils';
-import { getBaseCurrency } from '../common/prices';
+import { getApiBaseCurrency, getBaseCurrency } from '../common/prices';
 import { getTokensCache, loadTokensCache, tokensPreload, updateTokens } from '../common/tokens';
 import { MINUTE, SEC } from '../constants';
 import { resolveDataPreloadPromise } from './preload';
@@ -104,8 +104,9 @@ function setupCommonBackendPolling() {
 export async function tryUpdateTokens() {
   try {
     const baseCurrency = await getBaseCurrency();
+    const apiBaseCurrency = getApiBaseCurrency(baseCurrency);
 
-    const tokens = await callBackendGet<ApiTokenWithPrice[]>('/assets', { base: baseCurrency });
+    const tokens = await callBackendGet<ApiTokenWithPrice[]>('/assets', { base: apiBaseCurrency });
     for (const token of tokens) {
       token.isFromBackend = true;
     }
@@ -122,7 +123,7 @@ export async function tryUpdateTokens() {
 
     // POST is used to retrieve data due to the potentially large number of addresses
     const nonBackendTokenDetails = nonBackendTokenAddresses.length
-      ? await callBackendPost<ApiTokenDetails[]>(`/assets?base=${baseCurrency}`, {
+      ? await callBackendPost<ApiTokenDetails[]>(`/assets?base=${apiBaseCurrency}`, {
         assets: nonBackendTokenAddresses.slice(0, MAX_POST_TOKENS),
       }) : undefined;
 

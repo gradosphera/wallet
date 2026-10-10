@@ -292,7 +292,7 @@ export type ApiLocalTransactionParams = Omit<
   status?: ApiTransactionActivity['status'];
 };
 
-export type ApiBaseCurrency = 'USD' | 'EUR' | 'RUB' | 'CNY' | 'BTC' | 'TON';
+export type ApiBaseCurrency = 'USD' | 'EUR' | 'RUB' | 'CNY' | 'BTC' | 'TON' | 'BLAGO';
 
 export enum ApiLiquidUnstakeMode {
   Default,

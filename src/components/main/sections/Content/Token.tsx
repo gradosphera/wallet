@@ -6,7 +6,7 @@ import type { LangFn } from '../../../../hooks/useLang';
 import type { Layout } from '../../../../hooks/useMenuPosition';
 import type { StakingStateStatus } from '../../../../util/staking';
 
-import { ANIMATED_STICKER_TINY_ICON_PX, IS_CORE_WALLET, TOKEN_WITH_LABEL, TON_USDE } from '../../../../config';
+import { ANIMATED_STICKER_TINY_ICON_PX, BLAGO_CURRENCY, IS_CORE_WALLET, TOKEN_WITH_LABEL, TON_USDE } from '../../../../config';
 import { Big } from '../../../../lib/big.js';
 import buildClassName from '../../../../util/buildClassName';
 import { calcChangeValue } from '../../../../util/calcChangeValue';
@@ -103,7 +103,7 @@ function Token({
   let buttonRef = useRef<HTMLButtonElement>();
   const menuRef = useRef<HTMLDivElement>();
   const isVesting = Boolean(vestingStatus?.length);
-  const isPriceless = getIsPricelessToken(token);
+  const isPriceless = getIsPricelessToken(token) || baseCurrency === BLAGO_CURRENCY;
   const renderedAmount = amount ?? toDecimal(tokenAmount, decimals, true);
   const value = Big(renderedAmount).mul(price).toString();
   const changeClassName = change > 0 ? styles.change_up : change < 0 ? styles.change_down : undefined;

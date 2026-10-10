@@ -2,6 +2,7 @@ import type { ApiBaseCurrency, ApiHistoryList, ApiPriceHistoryPeriod } from '../
 
 import { DEFAULT_PRICE_CURRENCY, TONCOIN } from '../../config';
 import { callBackendGet } from '../common/backend';
+import { getApiBaseCurrency } from '../common/prices';
 import { tokensPreload } from '../common/tokens';
 import { getTokenBySlug } from './tokens';
 
@@ -22,7 +23,7 @@ export async function fetchPriceHistory(
   const assetId = token.chain === TONCOIN.chain && token.tokenAddress ? token.tokenAddress : token.symbol;
 
   return callBackendGet(`/prices/chart/${assetId}`, {
-    base: baseCurrency,
+    base: getApiBaseCurrency(baseCurrency),
     period,
   });
 }

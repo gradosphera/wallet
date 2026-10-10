@@ -1,6 +1,6 @@
 import type { ApiBaseCurrency, ApiTokenWithPrice } from '../api/types';
 
-import { CURRENCIES, DEFAULT_PRICE_CURRENCY, WHOLE_PART_DELIMITER } from '../config';
+import { BLAGO_CURRENCY, CURRENCIES, DEFAULT_PRICE_CURRENCY, PRICE_CURRENCY_FALLBACK, WHOLE_PART_DELIMITER } from '../config';
 import { Big } from '../lib/big.js';
 import { bigintAbs } from './bigint';
 import { toDecimal } from './decimals';
@@ -74,6 +74,7 @@ function addCurrency(value: number | string, currency: string) {
 
 export function getShortCurrencySymbol(currency?: ApiBaseCurrency) {
   if (!currency) currency = DEFAULT_PRICE_CURRENCY;
+  if (currency === BLAGO_CURRENCY) currency = PRICE_CURRENCY_FALLBACK;
   return CURRENCIES[currency].shortSymbol ?? currency;
 }
 
