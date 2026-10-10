@@ -47,6 +47,8 @@ import { CLOSE_DURATION, CLOSE_DURATION_PORTRAIT } from '../../../components/ui/
 
 import voteIcon from '../../../assets/icons/vote.svg';
 import tonviewerIcon from '../../../assets/icons/tonviewer.svg';
+import gradospheraDaoIcon from '../../../assets/icons/gradosphera_dao.svg';
+import greenHomeIcon from '../../../assets/icons/green_home.svg';
 
 const GET_DAPPS_PAUSE = 250;
 
@@ -571,9 +573,33 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
     categoryId: GRADOSPHERA_TOOLS_CATEGORY_ID,
   };
 
+  const gradospheraDaoSite: ApiSite = {
+    url: 'https://t.me/gradosphera',
+    name: 'ДАО Градосфера',
+    icon: gradospheraDaoIcon,
+    description: 'Это децентрализованная автономная организация на блокчейне, где токены воплощают общественное благо, волонтерство и голосование за городские изменения.',
+    manifestUrl: '',
+    canBeRestricted: false,
+    isExternal: false,
+    isFeatured: false,
+    categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
+  };
+
+  const greenHomeSite: ApiSite = {
+    url: 'https://t.me/the_green_home',
+    name: 'Зеленый дом',
+    icon: greenHomeIcon,
+    description: 'Проект «Зеленый дом» представляет собой комплексную инициативу по формированию экологического сознания среди детей и подростков через практическую работу в области городского огородничества, гидропоники и вторичной переработки.',
+    manifestUrl: '',
+    canBeRestricted: false,
+    isExternal: false,
+    isFeatured: false,
+    categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
+  };
+
   return {
     categories: [daoCategory, toolsCategory],
-    sites: [voteSite, cleanLeagueSite, tonViewerSite],
+    sites: [voteSite, cleanLeagueSite, tonViewerSite, gradospheraDaoSite, greenHomeSite],
   };
 }
 
