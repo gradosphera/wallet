@@ -67,7 +67,7 @@ export function formatCurrencySimple(value: number | bigint | string, currency: 
 }
 
 function addCurrency(value: number | string, currency: string) {
-  return SHORT_SYMBOLS.has(currency)
+  return SHORT_SYMBOLS.has(currency) && currency.length === 1
     ? `${currency}${value}`.replace(`${currency}-`, `-${currency}`)
     : `${value} ${currency}`;
 }

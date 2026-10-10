@@ -46,6 +46,7 @@ import { getIsPortrait } from '../../../hooks/useDeviceScreen';
 import { CLOSE_DURATION, CLOSE_DURATION_PORTRAIT } from '../../../components/ui/Modal';
 
 import voteIcon from '../../../assets/icons/vote.svg';
+import tonviewerIcon from '../../../assets/icons/tonviewer.svg';
 
 const GET_DAPPS_PAUSE = 250;
 
@@ -558,9 +559,21 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
     categoryId: GRADOSPHERA_TOOLS_CATEGORY_ID,
   };
 
+  const tonViewerSite: ApiSite = {
+    url: 'https://tonviewer.com/',
+    name: 'TonViewer',
+    icon: tonviewerIcon,
+    description: 'Просмотр транзакций',
+    manifestUrl: '',
+    canBeRestricted: false,
+    isExternal: false,
+    isFeatured: false,
+    categoryId: GRADOSPHERA_TOOLS_CATEGORY_ID,
+  };
+
   return {
     categories: [daoCategory, toolsCategory],
-    sites: [voteSite, cleanLeagueSite],
+    sites: [voteSite, cleanLeagueSite, tonViewerSite],
   };
 }
 
