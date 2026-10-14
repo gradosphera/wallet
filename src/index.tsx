@@ -19,6 +19,7 @@ import { initFocusScrollController } from './util/focusScroll';
 import { forceLoadFonts } from './util/fonts';
 import { logDebug, logSelfXssWarnings } from './util/logs';
 import { initMultitab } from './util/multitab';
+import { initTelegramWalletConnection } from './util/openTelegramWallet';
 import { initTelegramApp } from './util/telegram';
 import {
   IS_DELEGATED_BOTTOM_SHEET, IS_DELEGATING_BOTTOM_SHEET, IS_ELECTRON, IS_IOS_APP, IS_LEDGER_EXTENSION_TAB,
@@ -73,6 +74,8 @@ void (async () => {
   } else {
     logDebug('API was not initialized because it was connected from a detached tab');
   }
+
+  void initTelegramWalletConnection();
 
   if (IS_CAPACITOR) {
     await processCapacitorLaunchDeeplink();

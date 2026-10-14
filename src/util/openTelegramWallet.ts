@@ -4,6 +4,7 @@ import TonConnect from '@tonconnect/sdk';
 
 import { TONCONNECT_MANIFEST_URL } from '../config';
 import { getActions, getGlobal } from '../global';
+import { logDebugError } from './logs';
 import { openUrl } from './openUrl';
 import { randomBytes } from './random';
 
@@ -93,5 +94,20 @@ export async function openTelegramWallet() {
 
   if (typeof connectionUrl === 'string') {
     await openUrl(connectionUrl);
+  }
+}
+
+/**
+ * Restores a pending TonConnect session after the app was reloaded (for example, when returning from the Telegram
+ * Wallet, which replaces the mini app WebView and thus reloads the page). Without it the connection result, delivered
+ * by the bridge, would never be handled.
+ */
+export async function initTelegramWalletConnection() {
+  attachWalletListener();
+
+  try {
+    await getTonConnect().restoreConnection();
+  } catch (err) {
+    logDebugError('initTelegramWalletConnection', err);
   }
 }
