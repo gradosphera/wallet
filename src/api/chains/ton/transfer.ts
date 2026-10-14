@@ -61,6 +61,7 @@ import { checkHasTransaction, fetchNewestActionId } from './activities';
 import { resolveAddress } from './address';
 import { fetchKeyPair, fetchPrivateKey } from './auth';
 import { ATTEMPTS, FEE_FACTOR, TRANSFER_TIMEOUT_SEC } from './constants';
+import { TelegramWallet } from './contracts/TelegramWallet';
 import { emulateTransaction } from './emulation';
 import {
   buildTokenTransfer,
@@ -577,6 +578,11 @@ async function signTransaction({
   shouldEncrypt?: boolean;
   seqno?: number;
 }) {
+  // WalletTg signing is not implemented, and narrowing it out keeps the `wallet.createTransfer` calls below typed.
+  if (wallet instanceof TelegramWallet) {
+    throw new Error('Telegram wallet transfers are not supported');
+  }
+
   seqno ??= (await getWalletInfo(network, wallet)).seqno;
 
   if (!privateKey) {
@@ -874,6 +880,11 @@ async function signMultiTransaction({
   expireAt?: number;
   withW5Gasless?: boolean;
 }) {
+  // WalletTg signing is not implemented, and narrowing it out keeps the `wallet.createTransfer` calls below typed.
+  if (wallet instanceof TelegramWallet) {
+    throw new Error('Telegram wallet transfers are not supported');
+  }
+
   const { seqno } = await getWalletInfo(network, wallet);
 
   if (!privateKey) {

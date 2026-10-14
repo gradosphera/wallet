@@ -1,4 +1,4 @@
-import { beginCell, Cell, storeStateInit } from '@ton/core';
+import { Address, beginCell, Cell, storeStateInit } from '@ton/core';
 
 import type { ApiNetwork, ApiTonWallet, ApiWalletInfo, ApiWalletWithVersionInfo } from '../../types';
 import type { ApiTonWalletVersion, ContractInfo } from './types';
@@ -11,8 +11,13 @@ import { logDebugError } from '../../../util/logs';
 import withCacheAsync from '../../../util/withCacheAsync';
 import { fetchJettonBalances } from './util/tonapiio';
 import {
-  getTonClient, toBase64Address, walletClassMap,
+  getTonClient, getWalletPublicKey, toBase64Address, walletClassMap,
 } from './util/tonCore';
+import {
+  getTelegramWalletDefaultSubwalletId,
+  TELEGRAM_WALLET_TRAMPOLINE_CODE_HASH,
+  TelegramWallet,
+} from './contracts/TelegramWallet';
 import { fetchStoredTonWallet } from '../../common/accounts';
 import { base64ToBytes, hexToBytes, sha256 } from '../../common/utils';
 import { ALL_WALLET_VERSIONS, ContractType, KnownContracts, WORKCHAIN } from './constants';
@@ -34,13 +39,35 @@ export function publicKeyToAddress(
   publicKey: Uint8Array,
   walletVersion: ApiTonWalletVersion,
 ) {
-  const wallet = buildWallet(publicKey, walletVersion);
+  const isTestnetSubwalletId = walletVersion === 'telegram' ? network === 'testnet' : undefined;
+  const wallet = buildWallet(publicKey, walletVersion, isTestnetSubwalletId);
   return toBase64Address(wallet.address, false, network);
 }
 
-export function buildWallet(publicKey: Uint8Array | string, walletVersion: ApiTonWalletVersion): TonWallet {
+/**
+ * Some TON wallet contracts (W5 and Telegram Wallet) encode the target network in their wallet/subwallet id, so one
+ * key gives different addresses on mainnet and testnet. This picks the variant `network` needs; other versions ignore
+ * the network, hence `undefined`.
+ */
+function getIsTestnetSubwalletId(network: ApiNetwork, version: ApiTonWalletVersion) {
+  return (version === 'W5' || version === 'telegram') && network === 'testnet' ? true : undefined;
+}
+
+export function buildWallet(
+  publicKey: Uint8Array | string,
+  walletVersion: ApiTonWalletVersion,
+  isTestnetSubwalletId?: boolean,
+): TonWallet {
   if (typeof publicKey === 'string') {
     publicKey = hexToBytes(publicKey);
+  }
+
+  if (walletVersion === 'telegram') {
+    return TelegramWallet.create({
+      publicKey: Buffer.from(publicKey),
+      workchain: WORKCHAIN,
+      subwalletId: getTelegramWalletDefaultSubwalletId(isTestnetSubwalletId),
+    });
   }
 
   const WalletClass = walletClassMap[walletVersion];
@@ -60,6 +87,49 @@ export async function getWalletInfo(network: ApiNetwork, walletOrAddress: TonWal
     : toBase64Address(walletOrAddress.address, undefined, network);
 
   return (await getWalletInfos(network, [address]))[address];
+}
+
+async function getTelegramWalletSubwalletId(network: ApiNetwork, address: string) {
+  const { stack, exit_code } = await getTonClient(network).runMethodWithError(
+    Address.parse(address),
+    'get_subwallet_id',
+  );
+  if (exit_code !== 0) return undefined;
+
+  return Number(stack.readBigNumber());
+}
+
+/**
+ * Validates an address as an active WalletTg (Telegram Wallet) account: the trampoline code, the subwallet ID, and,
+ * when `expectedPublicKey` is given, the current on-chain signing key. A local phrase describes the anchor key (and
+ * the signing key for a 12-word phrase); after a key rotation the on-chain key differs from the anchor, which is what
+ * `isPublicKeyMismatch` reports.
+ */
+export async function getTelegramWalletInfo(
+  network: ApiNetwork,
+  address: string,
+  expectedPublicKey?: Uint8Array,
+  isTestnetSubwalletId?: boolean,
+) {
+  const [{ codeHash, isInitialized }, publicKey, subwalletId] = await Promise.all([
+    getContractInfo(network, address),
+    getWalletPublicKey(network, address),
+    getTelegramWalletSubwalletId(network, address),
+  ]);
+
+  const expectedSubwalletId = getTelegramWalletDefaultSubwalletId(isTestnetSubwalletId);
+
+  return {
+    isTelegramWallet: isInitialized
+      && codeHash === TELEGRAM_WALLET_TRAMPOLINE_CODE_HASH
+      && subwalletId === expectedSubwalletId
+      && !!publicKey,
+    publicKey,
+    subwalletId,
+    isPublicKeyMismatch: !!expectedPublicKey
+      && !!publicKey
+      && !Buffer.from(publicKey).equals(Buffer.from(expectedPublicKey)),
+  };
 }
 
 export async function getContractInfo(network: ApiNetwork, address: string): Promise<{
@@ -216,5 +286,7 @@ export async function getTonWallet(accountId: string, tonWallet?: ApiTonWallet) 
     throw new Error('Public key is missing');
   }
 
-  return buildWallet(publicKey, version);
+  const { network } = parseAccountId(accountId);
+
+  return buildWallet(publicKey, version, getIsTestnetSubwalletId(network, version));
 }

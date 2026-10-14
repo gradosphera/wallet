@@ -26,6 +26,7 @@ import { JettonStakingOpCodes } from '../contracts/JettonStaking/imports/constan
 import { StakeWallet } from '../contracts/JettonStaking/StakeWallet';
 import { StakingPool } from '../contracts/JettonStaking/StakingPool';
 import { JettonWallet } from '../contracts/JettonWallet';
+import type { TelegramWallet } from '../contracts/TelegramWallet';
 import { hexToBytes } from '../../../common/utils';
 import { getEnvironment } from '../../../environment';
 import { DEFAULT_IS_BOUNCEABLE, JettonOpCode, LiquidStakingOpCode, OpCode } from '../constants';
@@ -51,13 +52,14 @@ export type TonWallet = WalletContractV1R1
   | WalletContractV3R1
   | WalletContractV3R2
   | WalletContractV4
-  | WalletContractV5R1;
+  | WalletContractV5R1
+  | TelegramWallet;
 
 const TON_MAX_COMMENT_BYTES = 127;
 
 let clientByNetwork: Record<ApiNetwork, TonClient> | undefined;
 
-export const walletClassMap: Record<ApiTonWalletVersion, TonWalletType> = {
+export const walletClassMap: Partial<Record<ApiTonWalletVersion, TonWalletType>> = {
   simpleR1: WalletContractV1R1,
   simpleR2: WalletContractV1R2,
   simpleR3: WalletContractV1R3,

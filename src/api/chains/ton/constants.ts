@@ -227,6 +227,14 @@ export const KnownContracts: Record<ContractName, ContractInfo> = {
     hash: '7e94eaaeaaa423b9396e79747038c42edc4fe98dce65094071f0e0ad2df22fd5',
     type: ContractType.Wallet,
   },
+  telegram: {
+    name: 'telegram',
+    // Every Telegram wallet deploys the same immutable trampoline, so this hash identifies the wallet but says
+    // nothing about its logic: that lives in the blockchain config, under key -123, and is replaced by validator
+    // voting.
+    hash: '9149ae51c1e4689710cebf7830297b16acfbadb363a920a537893e7ffeeca768',
+    type: ContractType.Wallet,
+  },
   highloadV2: {
     name: 'highloadV2',
     hash: 'fcd7d1f3b3847f0b9bd44bc64a2256c03450979dd1646a24fbc874b075392d6e',

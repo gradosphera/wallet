@@ -81,8 +81,14 @@ export async function importMnemonic(
   const isPrivateKey = isMnemonicPrivateKey(mnemonic);
   let isBip39Mnemonic = validateBip39Mnemonic(mnemonic);
   const isTonMnemonic = await ton.validateMnemonic(mnemonic);
+  // A Telegram Wallet phrase is either 12 BIP-39 words or a 24-word rotation mnemonic whose two halves each pass the
+  // BIP-39 checksum. It must be importable even when the native TON and plain BIP-39 checks don't both match.
+  const isTelegramCandidate = (mnemonic.length === 12 && isBip39Mnemonic)
+    || (mnemonic.length === 24
+      && validateBip39Mnemonic(mnemonic.slice(0, 12))
+      && validateBip39Mnemonic(mnemonic.slice(12)));
 
-  if (!isPrivateKey && !isTonMnemonic && (!isBip39Mnemonic || !IS_BIP39_MNEMONIC_ENABLED)) {
+  if (!isPrivateKey && !isTelegramCandidate && !isTonMnemonic && (!isBip39Mnemonic || !IS_BIP39_MNEMONIC_ENABLED)) {
     return { error: ApiAuthError.InvalidMnemonic };
   }
 
@@ -100,34 +106,63 @@ export async function importMnemonic(
   let tonWallet: ApiTonWallet & { lastTxId?: string } | undefined;
 
   try {
-    if (isBip39Mnemonic && isTonMnemonic) {
-      tonWallet = await ton.getWalletFromMnemonic(mnemonic, network, version);
-      if (tonWallet.lastTxId) {
-        isBip39Mnemonic = false;
-      }
-    }
+    // Try the Telegram Wallet (WalletTg) contract first: a 12-word phrase can be both a Telegram Wallet and a plain
+    // BIP-39/native TON one, and only the on-chain check tells them apart. Deriving the Telegram address needs the
+    // WalletTg contract rather than the native/BIP-39 address, so it takes precedence when it validates.
+    const telegramWallet = !isPrivateKey
+      ? await ton.getWalletFromTelegramMnemonic(network, mnemonic)
+      : undefined;
 
-    if (isBip39Mnemonic) {
-      const tronWallet = tron.getWalletFromBip39Mnemonic(network, mnemonic);
-      tonWallet = await ton.getWalletFromBip39Mnemonic(network, mnemonic);
-
-      account = {
-        type: 'bip39',
-        mnemonicEncrypted,
-        tron: tronWallet,
-        ton: tonWallet,
-      };
-    } else {
-      if (!tonWallet) {
-        tonWallet = isPrivateKey
-          ? await ton.getWalletFromPrivateKey(mnemonic[0], network, version)
-          : await ton.getWalletFromMnemonic(mnemonic, network, version);
-      }
+    if (telegramWallet) {
       account = {
         type: 'ton',
         mnemonicEncrypted,
-        ton: tonWallet,
+        ton: telegramWallet,
       };
+    } else {
+      // A phrase can be valid both as a native TON mnemonic and as a BIP39 multichain one, and the two
+      // derivations produce different addresses. Prefer the native TON wallet: that is the address created by
+      // TON-focused wallets (Telegram Wallet, MyTONWallet, Tonkeeper, ...) for such a phrase. The BIP39
+      // multichain derivation is only used when the phrase is not a valid TON mnemonic, or when the
+      // BIP39-derived TON address is the funded one while the native one has no on-chain history.
+      if (isTonMnemonic) {
+        tonWallet = await ton.getWalletFromMnemonic(mnemonic, network, version);
+
+        if (isBip39Mnemonic && !tonWallet.lastTxId) {
+          const bip39TonWallet = await ton.getWalletFromBip39Mnemonic(
+            network,
+            mnemonic,
+          ) as ApiTonWallet & { lastTxId?: string };
+          if (!bip39TonWallet.lastTxId) {
+            isBip39Mnemonic = false;
+          }
+        } else {
+          isBip39Mnemonic = false;
+        }
+      }
+
+      if (isBip39Mnemonic) {
+        const tronWallet = tron.getWalletFromBip39Mnemonic(network, mnemonic);
+        tonWallet = await ton.getWalletFromBip39Mnemonic(network, mnemonic);
+
+        account = {
+          type: 'bip39',
+          mnemonicEncrypted,
+          tron: tronWallet,
+          ton: tonWallet,
+        };
+      } else {
+        if (!tonWallet) {
+          tonWallet = isPrivateKey
+            ? await ton.getWalletFromPrivateKey(mnemonic[0], network, version)
+            : await ton.getWalletFromMnemonic(mnemonic, network, version);
+        }
+        account = {
+          type: 'ton',
+          mnemonicEncrypted,
+          ton: tonWallet,
+        };
+      }
     }
 
     const accountId = await addAccount(network, account);
@@ -164,10 +199,17 @@ export async function createAccountWithSecondNetwork(options: {
     mnemonic, version, mnemonicEncrypted,
   } = options;
   const { network, accountId } = options;
-  const tonWallet = await ton.getWalletFromMnemonic(mnemonic, network, version);
-
   const secondNetwork = network === 'testnet' ? 'mainnet' : 'testnet';
-  tonWallet.address = toBase64Address(tonWallet.address, false, secondNetwork);
+
+  const telegramWallet = await ton.getWalletFromTelegramMnemonic(secondNetwork, mnemonic);
+  let tonWallet: ApiTonWallet;
+  if (telegramWallet) {
+    tonWallet = telegramWallet;
+  } else {
+    tonWallet = await ton.getWalletFromMnemonic(mnemonic, network, version);
+    tonWallet.address = toBase64Address(tonWallet.address, false, secondNetwork);
+  }
+
   const account: ApiTonAccount = {
     type: 'ton',
     mnemonicEncrypted,

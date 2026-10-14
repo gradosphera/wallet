@@ -5,6 +5,7 @@ export {
   fetchPrivateKey,
   getWalletFromBip39Mnemonic,
   getWalletFromMnemonic,
+  getWalletFromTelegramMnemonic,
   getWalletFromPrivateKey,
   getWalletFromAddress,
   getOtherVersionWallet,

@@ -19,7 +19,8 @@ export type ApiTonWalletVersion = 'simpleR1'
   | 'v3R1'
   | 'v3R2'
   | 'v4R2'
-  | 'W5';
+  | 'W5'
+  | 'telegram';
 
 export type AnyPayload = string | Cell | Uint8Array;
 

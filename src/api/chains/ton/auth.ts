@@ -14,11 +14,14 @@ import { omitUndefined } from '../../../util/iteratees';
 import { logDebugError } from '../../../util/logs';
 import { getWalletPublicKey, toBase64Address } from './util/tonCore';
 import { fetchStoredAccount } from '../../common/accounts';
-import { getMnemonic } from '../../common/mnemonic';
+import { getMnemonic, validateBip39Mnemonic } from '../../common/mnemonic';
 import { bytesToHex, hexToBytes } from '../../common/utils';
 import { resolveAddress } from './address';
 import { TON_BIP39_PATH } from './constants';
-import { buildWallet, getWalletInfo, pickBestWallet, publicKeyToAddress } from './wallet';
+import { buildWallet, getTelegramWalletInfo, getWalletInfo, pickBestWallet, publicKeyToAddress } from './wallet';
+
+const TELEGRAM_ROTATION_HALF_WORD_COUNT = 12;
+const TELEGRAM_ROTATION_WORD_COUNT = TELEGRAM_ROTATION_HALF_WORD_COUNT * 2;
 
 export function generateMnemonic() {
   return tonWebMnemonic.generateMnemonic();
@@ -55,6 +58,13 @@ export async function fetchKeyPair(accountId: string, password: string, account?
 
     if (isMnemonicPrivateKey(mnemonic)) {
       return privateKeyHexToKeyPair(mnemonic[0]);
+    } else if (account.ton.version === 'telegram') {
+      // WalletTg signs with the last 12-word half of a rotation mnemonic, or with the single 12-word pair otherwise.
+      const signingWords = mnemonic.length === TELEGRAM_ROTATION_WORD_COUNT
+        ? mnemonic.slice(TELEGRAM_ROTATION_HALF_WORD_COUNT)
+        : mnemonic.slice(0, TELEGRAM_ROTATION_HALF_WORD_COUNT);
+
+      return bip39MnemonicToKeyPair(signingWords);
     } else if (account.type === 'bip39') {
       return bip39MnemonicToKeyPair(mnemonic);
     } else {
@@ -103,6 +113,59 @@ export function getWalletFromPrivateKey(
 ): Promise<ApiTonWallet> {
   const { publicKey } = privateKeyHexToKeyPair(privateKey);
   return getWalletFromKeys(publicKey, network, version);
+}
+
+export function isTelegramRotationMnemonic(mnemonic: string[]) {
+  return mnemonic.length === TELEGRAM_ROTATION_WORD_COUNT
+    && validateBip39Mnemonic(mnemonic.slice(0, TELEGRAM_ROTATION_HALF_WORD_COUNT))
+    && validateBip39Mnemonic(mnemonic.slice(TELEGRAM_ROTATION_HALF_WORD_COUNT));
+}
+
+/**
+ * Derives the WalletTg (Telegram Wallet) account for a phrase, if the phrase belongs to one. A 12-word BIP-39 phrase
+ * derives a single key pair used as both the address anchor and the signing key. A 24-word rotation mnemonic derives
+ * its first 12 words as the anchor (the address) and its last 12 words as the current signing key. The account is
+ * validated on-chain (trampoline code, subwallet ID, and signing key), so `undefined` means the phrase is not a
+ * WalletTg phrase or its account is missing on this network.
+ */
+export async function getWalletFromTelegramMnemonic(
+  network: ApiNetwork,
+  mnemonic: string[],
+): Promise<ApiTonWallet | undefined> {
+  const is12Word = mnemonic.length === TELEGRAM_ROTATION_HALF_WORD_COUNT && validateBip39Mnemonic(mnemonic);
+  const isRotation = isTelegramRotationMnemonic(mnemonic);
+  if (!is12Word && !isRotation) {
+    return undefined;
+  }
+
+  const anchorKeyPair = bip39MnemonicToKeyPair(mnemonic.slice(0, TELEGRAM_ROTATION_HALF_WORD_COUNT));
+  const signingKeyPair = isRotation
+    ? bip39MnemonicToKeyPair(mnemonic.slice(TELEGRAM_ROTATION_HALF_WORD_COUNT))
+    : anchorKeyPair;
+  const isTestnetSubwalletId = network === 'testnet';
+  const wallet = buildWallet(anchorKeyPair.publicKey, 'telegram', isTestnetSubwalletId);
+  const address = toBase64Address(wallet.address, false, network);
+
+  const telegramInfo = await getTelegramWalletInfo(
+    network,
+    address,
+    signingKeyPair.publicKey,
+    isTestnetSubwalletId,
+  );
+  if (!telegramInfo.isTelegramWallet || telegramInfo.isPublicKeyMismatch) {
+    return undefined;
+  }
+
+  // The stored public key is the address anchor: it keeps the state init (and therefore the address) reconstructible
+  // without the mnemonic. The signing key is re-derived from the phrase when needed.
+  return {
+    type: 'ton',
+    address,
+    publicKey: bytesToHex(anchorKeyPair.publicKey),
+    version: 'telegram',
+    index: 0,
+    isInitialized: true,
+  };
 }
 
 async function getWalletFromKeys(
