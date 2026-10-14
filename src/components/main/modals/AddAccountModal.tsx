@@ -8,7 +8,7 @@ import { IS_CORE_WALLET } from '../../../config';
 import { selectIsPasswordPresent, selectNetworkAccounts } from '../../../global/selectors';
 import { getHasInMemoryPassword, getInMemoryPassword } from '../../../util/authApi/inMemoryPasswordStore';
 import buildClassName from '../../../util/buildClassName';
-import { openTelegramWallet } from '../../../util/openTelegramWallet';
+import { openTelegramWallet, subscribeTelegramWalletConnection } from '../../../util/openTelegramWallet';
 import resolveSlideTransitionName from '../../../util/resolveSlideTransitionName';
 import { IS_LEDGER_SUPPORTED } from '../../../util/windowEnvironment';
 
@@ -72,6 +72,11 @@ function AddAccountModal({
   const [renderingKey, setRenderingKey] = useState<RenderingState>(RenderingState.Initial);
 
   const [isNewAccountImporting, setIsNewAccountImporting] = useState<boolean>(false);
+  const [isTelegramConnecting, setIsTelegramConnecting] = useState<boolean>(false);
+
+  useEffect(() => {
+    return subscribeTelegramWalletConnection(setIsTelegramConnecting);
+  }, []);
 
   const handleBackClick = useLastCallback(() => {
     setRenderingKey(RenderingState.Initial);
@@ -161,11 +166,6 @@ function AddAccountModal({
     openSettingsWithState({ state: SettingsState.WalletVersion });
   });
 
-  const handleOpenTelegramWallet = useLastCallback(() => {
-    closeAddAccountModal();
-    void openTelegramWallet();
-  });
-
   function renderSelector() {
     return (
       <>
@@ -175,7 +175,8 @@ function AddAccountModal({
           <ListItem
             icon="telegram-filled"
             label="Открыть Кошелёк Telegram"
-            onClick={handleOpenTelegramWallet}
+            isLoading={isTelegramConnecting}
+            onClick={!isTelegramConnecting ? openTelegramWallet : undefined}
           />
         </div>
 

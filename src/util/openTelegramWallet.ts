@@ -1,6 +1,5 @@
-import type { Wallet } from '@tonconnect/sdk';
 import { Address } from '@ton/core';
-import TonConnect from '@tonconnect/sdk';
+import { TonConnectUI } from '@tonconnect/ui';
 
 import { TONCONNECT_MANIFEST_URL } from '../config';
 import { getActions, getGlobal } from '../global';
@@ -15,13 +14,29 @@ const TELEGRAM_WALLET_INFO = {
 
 const TON_PROOF_PAYLOAD_BYTE_SIZE = 16;
 
-let tonConnect: TonConnect | undefined;
+const tonConnectUi = new TonConnectUI({
+  manifestUrl: TONCONNECT_MANIFEST_URL,
+  restoreConnection: false,
+});
+
 let isWalletListenerAttached = false;
 let handledWalletAddress: string | undefined;
 
-function getTonConnect() {
-  tonConnect ??= new TonConnect({ manifestUrl: TONCONNECT_MANIFEST_URL });
-  return tonConnect;
+const connectionCallbacks = new Set<(isConnecting: boolean) => void>();
+
+/**
+ * Subscribes to the "waiting for the Telegram Wallet response" state, so the UI can show a loading indicator.
+ * Returns an unsubscribe function.
+ */
+export function subscribeTelegramWalletConnection(callback: (isConnecting: boolean) => void) {
+  connectionCallbacks.add(callback);
+  return () => {
+    connectionCallbacks.delete(callback);
+  };
+}
+
+function setConnecting(isConnecting: boolean) {
+  connectionCallbacks.forEach((callback) => callback(isConnecting));
 }
 
 function createTonProofPayload() {
@@ -48,8 +63,7 @@ function hasAccountWithTonAddress(address: string) {
   });
 }
 
-function handleConnectedWallet(wallet: Wallet) {
-  const connector = getTonConnect();
+function handleConnectedWallet(wallet: { account: { address: string } }) {
   const address = normalizeTonAddress(wallet.account.address);
 
   if (handledWalletAddress !== address) {
@@ -60,7 +74,8 @@ function handleConnectedWallet(wallet: Wallet) {
     }
   }
 
-  void connector.disconnect();
+  setConnecting(false);
+  void tonConnectUi.disconnect();
 }
 
 function attachWalletListener() {
@@ -69,7 +84,7 @@ function attachWalletListener() {
   }
 
   isWalletListenerAttached = true;
-  getTonConnect().onStatusChange(
+  tonConnectUi.onStatusChange(
     (wallet) => {
       if (wallet) {
         handleConnectedWallet(wallet);
@@ -77,6 +92,7 @@ function attachWalletListener() {
     },
     (error) => {
       logDebugError('openTelegramWallet: connect error', error);
+      setConnecting(false);
     },
   );
 }
@@ -101,20 +117,21 @@ function tryOpenTelegramLink(url: string) {
 }
 
 export async function openTelegramWallet() {
-  const connector = getTonConnect();
   attachWalletListener();
   handledWalletAddress = undefined;
 
   try {
-    if (connector.connected) {
-      await connector.disconnect();
+    if (tonConnectUi.connected) {
+      await tonConnectUi.disconnect();
     }
 
-    const connectionUrl = connector.connect({
+    setConnecting(true);
+
+    const connectionUrl = tonConnectUi.connector.connect({
       bridgeUrl: TELEGRAM_WALLET_INFO.bridgeUrl,
       universalLink: TELEGRAM_WALLET_INFO.universalLink,
     }, {
-      request: { tonProof: createTonProofPayload() },
+      tonProof: createTonProofPayload(),
     });
 
     if (typeof connectionUrl === 'string') {
@@ -124,6 +141,7 @@ export async function openTelegramWallet() {
     }
   } catch (err) {
     logDebugError('openTelegramWallet', err);
+    setConnecting(false);
   }
 }
 
@@ -136,7 +154,7 @@ export async function initTelegramWalletConnection() {
   attachWalletListener();
 
   try {
-    await getTonConnect().restoreConnection();
+    await tonConnectUi.connector.restoreConnection();
   } catch (err) {
     logDebugError('initTelegramWalletConnection', err);
   }

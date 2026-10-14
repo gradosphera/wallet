@@ -81,6 +81,8 @@ const cspConnectSrcHosts = [
   TRON_TESTNET_API_URL,
   ensureTrailingSlash(IPFS_GATEWAY_BASE_URL),
   ensureTrailingSlash(SSE_BRIDGE_URL),
+  'https://tonbridge.telegram.org',
+  'https://raw.githubusercontent.com/ton-blockchain/wallets-list/',
 ].join(' ');
 
 const cspImageSrcHosts = [

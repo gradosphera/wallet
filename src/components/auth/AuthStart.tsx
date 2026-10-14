@@ -1,4 +1,4 @@
-import React, { memo } from '../../lib/teact/teact';
+import React, { memo, useEffect, useState } from '../../lib/teact/teact';
 import { getActions, withGlobal } from '../../global';
 
 import { type Theme } from '../../global/types';
@@ -6,7 +6,7 @@ import { type Theme } from '../../global/types';
 import { APP_NAME, IS_CORE_WALLET } from '../../config';
 import renderText from '../../global/helpers/renderText';
 import buildClassName from '../../util/buildClassName';
-import { openTelegramWallet } from '../../util/openTelegramWallet';
+import { openTelegramWallet, subscribeTelegramWalletConnection } from '../../util/openTelegramWallet';
 import { IS_LEDGER_SUPPORTED } from '../../util/windowEnvironment';
 import { ANIMATED_STICKERS_PATHS } from '../ui/helpers/animatedAssets';
 
@@ -53,6 +53,11 @@ function AuthStart({
   const logoPath = appTheme === 'light' ? logoLightPath : logoDarkPath;
   const [isLogoReady, markLogoReady] = useFlag();
   const logoRef = useMediaTransition<HTMLImageElement>(isLogoReady);
+  const [isTelegramConnecting, setIsTelegramConnecting] = useState(false);
+
+  useEffect(() => {
+    return subscribeTelegramWalletConnection(setIsTelegramConnecting);
+  }, []);
 
   function renderSimpleImportForm() {
     return (
@@ -116,7 +121,8 @@ function AuthStart({
       <div className={buildClassName(styles.importButtonsBlock, IS_CORE_WALLET && styles.importButtonsBlockSimple)}>
         <Button
           className={buildClassName(styles.btn, styles.btn_wide, styles.btn_single)}
-          onClick={!isLoading ? openTelegramWallet : undefined}
+          isLoading={isTelegramConnecting}
+          onClick={!isLoading && !isTelegramConnecting ? openTelegramWallet : undefined}
         >
           <i className={buildClassName('icon-telegram-filled', styles.telegramIcon)} aria-hidden />
           Открыть Кошелёк Telegram
