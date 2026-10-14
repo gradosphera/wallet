@@ -257,6 +257,8 @@ export const NOMINATORS_STAKING_MIN_AMOUNT = 10_000n * ONE_TON;
 export const MIN_ACTIVE_STAKING_REWARDS = 100_000_000n; // 0.1 MY
 
 export const TONCONNECT_APP_NAME = process.env.TONCONNECT_APP_NAME || 'gradospherawallet';
+export const TONCONNECT_MANIFEST_URL =
+  process.env.TONCONNECT_MANIFEST_URL || 'https://wallet.gradosphera.org/tonconnect-manifest.json';
 export const TONCONNECT_PROTOCOL_VERSION = 2;
 export const TONCONNECT_WALLET_JSBRIDGE_KEY =
   process.env.TONCONNECT_WALLET_JSBRIDGE_KEY || (IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet');

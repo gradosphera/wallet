@@ -8,6 +8,7 @@ import { IS_CORE_WALLET } from '../../../config';
 import { selectIsPasswordPresent, selectNetworkAccounts } from '../../../global/selectors';
 import { getHasInMemoryPassword, getInMemoryPassword } from '../../../util/authApi/inMemoryPasswordStore';
 import buildClassName from '../../../util/buildClassName';
+import { openTelegramWallet } from '../../../util/openTelegramWallet';
 import resolveSlideTransitionName from '../../../util/resolveSlideTransitionName';
 import { IS_LEDGER_SUPPORTED } from '../../../util/windowEnvironment';
 
@@ -167,10 +168,9 @@ function AddAccountModal({
 
         <div className={buildClassName(styles.actionsSection, styles.actionsSectionShift)}>
           <ListItem
-            icon="telegram"
-            label={lang('Open Telegram Wallet')}
-            onClick={handleImportAccountClick}
-            isLoading={isNewAccountImporting && isLoading}
+            icon="telegram-filled"
+            label="Открыть Кошелёк Telegram"
+            onClick={openTelegramWallet}
           />
         </div>
 
