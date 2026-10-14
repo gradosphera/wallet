@@ -167,6 +167,15 @@ function AddAccountModal({
 
         <div className={buildClassName(styles.actionsSection, styles.actionsSectionShift)}>
           <ListItem
+            icon="telegram"
+            label={lang('Open Telegram Wallet')}
+            onClick={handleImportAccountClick}
+            isLoading={isNewAccountImporting && isLoading}
+          />
+        </div>
+
+        <div className={buildClassName(styles.actionsSection, styles.actionsSectionShift)}>
+          <ListItem
             icon="wallet-add"
             label={lang('Create New Wallet')}
             onClick={handleNewAccountClick}

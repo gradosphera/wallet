@@ -114,6 +114,12 @@ function AuthStart({
       )}
       <div className={buildClassName(styles.importButtonsBlock, IS_CORE_WALLET && styles.importButtonsBlockSimple)}>
         <Button
+          className={buildClassName(styles.btn, styles.btn_wide, styles.btn_single)}
+          onClick={!isLoading ? startImportingWallet : undefined}
+        >
+          {lang('Open Telegram Wallet')}
+        </Button>
+        <Button
           isPrimary
           className={buildClassName(
             styles.btn,
