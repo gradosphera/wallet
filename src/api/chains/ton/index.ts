@@ -42,6 +42,7 @@ export {
   pickBestWallet,
   publicKeyToAddress,
   getWalletStateInit,
+  getWalletCurrentPublicKey,
   getWalletBalance,
   getWalletSeqno,
   isAddressInitialized,

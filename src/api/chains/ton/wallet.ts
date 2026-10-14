@@ -19,7 +19,7 @@ import {
   TelegramWallet,
 } from './contracts/TelegramWallet';
 import { fetchStoredTonWallet } from '../../common/accounts';
-import { base64ToBytes, hexToBytes, sha256 } from '../../common/utils';
+import { base64ToBytes, bytesToHex, hexToBytes, sha256 } from '../../common/utils';
 import { ALL_WALLET_VERSIONS, ContractType, KnownContracts, WORKCHAIN } from './constants';
 import { getWalletInfos } from './toncenter';
 
@@ -130,6 +130,25 @@ export async function getTelegramWalletInfo(
       && !!publicKey
       && !Buffer.from(publicKey).equals(Buffer.from(expectedPublicKey)),
   };
+}
+
+/**
+ * TON Connect must advertise the current on-chain signing public key. For WalletTg the stored key is the address
+ * anchor: it stays valid for `walletStateInit` (which never changes), but after a key rotation the on-chain signing
+ * key differs from it, so read the current key from the `get_public_key` getter instead.
+ */
+export async function getWalletCurrentPublicKey(
+  accountId: string,
+  wallet: ApiTonWallet,
+): Promise<string | undefined> {
+  if (wallet.version !== 'telegram') {
+    return wallet.publicKey;
+  }
+
+  const { network } = parseAccountId(accountId);
+  const publicKey = await getWalletPublicKey(network, wallet.address);
+
+  return publicKey ? bytesToHex(publicKey) : wallet.publicKey;
 }
 
 export async function getContractInfo(network: ApiNetwork, address: string): Promise<{

@@ -659,12 +659,15 @@ async function buildTonAddressReplyItem(accountId: string, wallet: ApiTonWallet)
   const { publicKey, address } = wallet;
 
   const stateInit = await ton.getWalletStateInit(accountId, wallet);
+  // WalletTg advertises the current on-chain signing key (which changes on rotation), while `walletStateInit` keeps
+  // the original address anchor. So the proof can be verified against the getter key.
+  const currentPublicKey = await ton.getWalletCurrentPublicKey(accountId, wallet);
 
   return {
     name: 'ton_addr',
     address: toRawAddress(address),
     network: network === 'mainnet' ? CHAIN.MAINNET : CHAIN.TESTNET,
-    publicKey: publicKey!,
+    publicKey: (currentPublicKey ?? publicKey)!,
     walletStateInit: stateInit
       .toBoc({ idx: true, crc32: true })
       .toString('base64'),
