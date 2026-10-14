@@ -11,14 +11,14 @@ const VALID_PROTOCOLS = new Set(['http:', 'https:']);
 // The configuration does not contain data for NFT addresses, they must be configured separately
 const EXPLORER_CONFIGURATIONS = {
   ton: {
-    name: 'Tonscan',
+    name: 'Tonviewer',
     base: {
-      mainnet: 'https://tonscan.org/',
-      testnet: 'https://testnet.tonscan.org/',
+      mainnet: 'https://tonviewer.com/',
+      testnet: 'https://testnet.tonviewer.com/',
     },
-    address: '{base}address/{address}',
-    explorer: '{base}jetton/{address}',
-    transaction: '{base}tx/{hash}',
+    address: '{base}{address}',
+    explorer: '{base}{address}',
+    transaction: '{base}transaction/{hash}',
   },
   tron: {
     name: 'Tronscan',
@@ -92,13 +92,13 @@ export function getExplorerAddressUrl(chain: ApiChain, address?: string, isTestn
 export function getExplorerNftCollectionUrl(nftCollectionAddress?: string, isTestnet?: boolean) {
   if (!nftCollectionAddress) return undefined;
 
-  return `${getExplorerBaseUrl('ton', isTestnet)}nft/${nftCollectionAddress}`;
+  return `${getExplorerBaseUrl('ton', isTestnet)}${nftCollectionAddress}`;
 }
 
 export function getExplorerNftUrl(nftAddress?: string, isTestnet?: boolean) {
   if (!nftAddress) return undefined;
 
-  return `${getExplorerBaseUrl('ton', isTestnet)}nft/${nftAddress}`;
+  return `${getExplorerBaseUrl('ton', isTestnet)}${nftAddress}`;
 }
 
 export function getExplorerTokenUrl(chain: ApiChain, slug?: string, address?: string, isTestnet?: boolean) {

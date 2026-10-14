@@ -25,7 +25,7 @@ interface StateProps {
 type MenuHandler = 'reload' | 'openInBrowser' | 'copyUrl' | 'share' | 'close';
 
 const TITLES = {
-  'tonscan.org': 'TON Explorer',
+  'tonviewer.com': 'TON Explorer',
   'multisend.mytonwallet.io': 'Multi-Send',
   'localhost:4323': 'Multi-Send',
 };

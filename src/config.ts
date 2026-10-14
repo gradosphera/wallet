@@ -211,7 +211,12 @@ export const GETGEMS_BASE_MAINNET_URL = 'https://getgems.io/';
 export const GETGEMS_BASE_TESTNET_URL = 'https://testnet.getgems.io/';
 export const EMPTY_HASH_VALUE = 'NOHASH';
 
-export const IFRAME_WHITELIST = ['http://localhost:*', 'https://tonscan.org', 'https://blago-vote.vercel.app'];
+export const IFRAME_WHITELIST = [
+  'http://localhost:*',
+  'https://tonviewer.com',
+  'https://testnet.tonviewer.com',
+  'https://blago-vote.vercel.app',
+];
 export const SUBPROJECT_URL_MASK = 'https://*.gradosphera.org';
 
 export const CHANGELLY_SUPPORT_EMAIL = 'support@changelly.com';
