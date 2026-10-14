@@ -1,6 +1,7 @@
 import React, { memo, useMemo, useRef, useState } from '../../../../lib/teact/teact';
 import { getActions, withGlobal } from '../../../../global';
 
+import type { ApiTonWalletVersion } from '../../../../api/chains/ton/types';
 import type { ApiChain } from '../../../../api/types';
 import type { Account, AccountType, IAnchorPosition } from '../../../../global/types';
 import type { Layout } from '../../../../hooks/useMenuPosition';
@@ -12,6 +13,7 @@ import { handleUrlClick, openUrl } from '../../../../util/openUrl';
 import { shortenAddress } from '../../../../util/shortenAddress';
 import getChainNetworkIcon from '../../../../util/swap/getChainNetworkIcon';
 import { getExplorerAddressUrl, getExplorerName } from '../../../../util/url';
+import { getWalletContractName } from '../../../../util/walletContractName';
 import { IS_TOUCH_ENV } from '../../../../util/windowEnvironment';
 
 import { useDeviceScreen } from '../../../../hooks/useDeviceScreen';
@@ -31,12 +33,13 @@ interface StateProps {
   isTestnet?: boolean;
   accountType?: AccountType;
   withTextGradient?: boolean;
+  walletVersion?: ApiTonWalletVersion;
 }
 
 const MOUSE_LEAVE_TIMEOUT = 150;
 
 function CardAddress({
-  addressByChain, domainByChain, isTestnet, accountType, withTextGradient,
+  addressByChain, domainByChain, isTestnet, accountType, withTextGradient, walletVersion,
 }: StateProps) {
   const { showNotification } = getActions();
 
@@ -120,6 +123,13 @@ function CardAddress({
     preferredPositionX: 'left' as const,
     doNotCoverTrigger: isPortrait,
   }));
+
+  function renderContractBadge() {
+    const contractName = getWalletContractName(walletVersion);
+    if (!contractName) return undefined;
+
+    return <span className={styles.addressLabel}>{contractName}</span>;
+  }
 
   function renderAddressMenu() {
     return (
@@ -207,6 +217,7 @@ function CardAddress({
           </span>
         )}
         {isHardwareAccount && <i className={buildClassName(styles.icon, 'icon-ledger')} aria-hidden />}
+        {renderContractBadge()}
         <button
           type="button"
           className={buildClassName(styles.address, withTextGradient && 'gradientText')}
@@ -244,6 +255,7 @@ function CardAddress({
         </span>
       )}
       {isHardwareAccount && <i className={buildClassName(styles.icon, 'icon-ledger')} aria-hidden />}
+      {renderContractBadge()}
       <button
         type="button"
         className={buildClassName(styles.address, withTextGradient && 'gradientText')}
@@ -277,5 +289,6 @@ export default memo(withGlobal((global): StateProps => {
     domainByChain,
     isTestnet: global.settings.isTestnet,
     accountType,
+    walletVersion: global.walletVersions?.currentVersion,
   };
 })(CardAddress));
