@@ -69,11 +69,35 @@ function attachWalletListener() {
   }
 
   isWalletListenerAttached = true;
-  getTonConnect().onStatusChange((wallet) => {
-    if (wallet) {
-      handleConnectedWallet(wallet);
-    }
-  });
+  getTonConnect().onStatusChange(
+    (wallet) => {
+      if (wallet) {
+        handleConnectedWallet(wallet);
+      }
+    },
+    (error) => {
+      logDebugError('openTelegramWallet: connect error', error);
+    },
+  );
+}
+
+/**
+ * Opens a `t.me` link inside the Telegram WebView. A plain `window.open` / `location.href` navigation to a `t.me` URL
+ * is ignored there, so the official SDK method must be used instead. Returns `true` when the link was opened.
+ */
+function tryOpenTelegramLink(url: string) {
+  const webApp = window.Telegram?.WebApp as unknown as {
+    initData?: string;
+    openTelegramLink?: (link: string) => void;
+  } | undefined;
+
+  const isInsideTelegram = Boolean(webApp?.initData) || window.location.hash.includes('tgWebAppData=');
+  if (!isInsideTelegram || typeof webApp?.openTelegramLink !== 'function') {
+    return false;
+  }
+
+  webApp.openTelegramLink(url);
+  return true;
 }
 
 export async function openTelegramWallet() {
@@ -81,19 +105,25 @@ export async function openTelegramWallet() {
   attachWalletListener();
   handledWalletAddress = undefined;
 
-  if (connector.connected) {
-    await connector.disconnect();
-  }
+  try {
+    if (connector.connected) {
+      await connector.disconnect();
+    }
 
-  const connectionUrl = connector.connect({
-    bridgeUrl: TELEGRAM_WALLET_INFO.bridgeUrl,
-    universalLink: TELEGRAM_WALLET_INFO.universalLink,
-  }, {
-    request: { tonProof: createTonProofPayload() },
-  });
+    const connectionUrl = connector.connect({
+      bridgeUrl: TELEGRAM_WALLET_INFO.bridgeUrl,
+      universalLink: TELEGRAM_WALLET_INFO.universalLink,
+    }, {
+      request: { tonProof: createTonProofPayload() },
+    });
 
-  if (typeof connectionUrl === 'string') {
-    await openUrl(connectionUrl);
+    if (typeof connectionUrl === 'string') {
+      if (!tryOpenTelegramLink(connectionUrl)) {
+        await openUrl(connectionUrl);
+      }
+    }
+  } catch (err) {
+    logDebugError('openTelegramWallet', err);
   }
 }
 

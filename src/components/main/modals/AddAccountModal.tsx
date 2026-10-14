@@ -161,6 +161,11 @@ function AddAccountModal({
     openSettingsWithState({ state: SettingsState.WalletVersion });
   });
 
+  const handleOpenTelegramWallet = useLastCallback(() => {
+    closeAddAccountModal();
+    void openTelegramWallet();
+  });
+
   function renderSelector() {
     return (
       <>
@@ -170,7 +175,7 @@ function AddAccountModal({
           <ListItem
             icon="telegram-filled"
             label="Открыть Кошелёк Telegram"
-            onClick={openTelegramWallet}
+            onClick={handleOpenTelegramWallet}
           />
         </div>
 
