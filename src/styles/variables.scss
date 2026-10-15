@@ -6,25 +6,25 @@
   --color-default-accent: #0088CC;
   --color-default-accent-hover: #0088CCCC;
   --color-accent: #0088CC;
-  --color-black: #2C333E;
-  --color-gray-1: #616770;
-  --color-gray-2: #8B8F96;
-  --color-gray-3: #A5A8AD;
-  --color-gray-3-desktop: #B7B9BD;
+  --color-black: #000000;
+  --color-gray-1: #7B7B85;
+  --color-gray-2: #8A8A93;
+  --color-gray-3: #A9A9B2;
+  --color-gray-3-desktop: #B4B4BC;
   --color-gray-4: #C8CACD;
-  --color-green: #2CD36F;
-  --color-red: #F35B5B;
-  --color-purple-1: #5E6BDE;
-  --color-purple-2: #6875E9;
-  --color-yellow: #DC7C00;
+  --color-green: #4BB34B;
+  --color-red: #E64646;
+  --color-purple-1: #735CE6;
+  --color-purple-2: #836FF0;
+  --color-yellow: #FFA800;
   --color-accent-10o: #0088CC1A;
 
   --color-background-first: #FFFFFF;
-  --color-background-first-disabled: #FAFAFA;
-  --color-background-second: #F3F4F5;
-  --color-background-window: #F3F4F5;
+  --color-background-first-disabled: #F3F3F5;
+  --color-background-second: #F3F3F5;
+  --color-background-window: #F3F3F5;
   --color-background-drop-down: #FFFFFF;
-  --color-background-tab-bar: #F3F4F5CC;
+  --color-background-tab-bar: #FFFFFFBF;
   --color-background-lock: rgba(255, 255, 255, 0.8);
   --color-background-purple-1: #F9FAFE;
   --color-background-purple-2: #DFE1FE;
@@ -33,9 +33,9 @@
   --color-background-yellow: #F2E7D8;
   --color-app-background: var(--color-background-second);
 
-  --color-input-button-text: #616770;
-  --color-input-button-background: #F4F5F6;
-  --color-input-button-background-hover: #E8E8EA;
+  --color-input-button-text: #7B7B85;
+  --color-input-button-background: #FAFAFC;
+  --color-input-button-background-hover: #F3F3F5;
   --color-input-button-background-purple-rest: #E8EAFE;
   --color-input-button-background-purple-hover: #DFE1FE;
 
@@ -46,13 +46,13 @@
 
   --color-red-button-text: #FFFFFF;
   --color-red-button-text-hover: #FFFFFF;
-  --color-red-button-background: #F35B5B;
-  --color-red-button-background-hover: #FF7070;
+  --color-red-button-background: #E64646;
+  --color-red-button-background-hover: #D73838;
 
   --color-green-button-text: #FFFFFF;
   --color-green-button-text-hover: #FFFFFF;
-  --color-green-button-background: #1EC160;
-  --color-green-button-background-hover: #26D76D;
+  --color-green-button-background: #4BB34B;
+  --color-green-button-background-hover: #57BD57;
 
   --color-secondary-button-text: #007FBE;
   --color-secondary-button-text-hover: #007FBE;
@@ -63,74 +63,74 @@
   --color-red-warning-text: #FFFFFF;
   --color-red-warning-text-70: rgba(255, 255, 255, 0.7);
   --color-red-warning-text-hover: rgba(255, 255, 255, 0.85);
-  --color-red-warning-background: rgba(243, 91, 91, 0.9);
+  --color-red-warning-background: rgba(230, 70, 70, 0.9);
   --color-red-warning-button-background: rgba(255, 255, 255, 0.3);
   --color-red-warning-button-background-hover: rgba(255, 255, 255, 0.4);
 
-  --color-gray-button-text: #3F4650;
-  --color-gray-button-text-hover: #353A43;
-  --color-gray-button-background: #E2E3E5;
-  --color-gray-button-background-hover: #D7D7DA;
-  --color-gray-button-background-light: #E5E6E8;
-  --color-gray-button-background-light-hover: #D9DBDE;
-  --color-gray-button-desktop-text: #2D4C5C;
-  --color-gray-button-desktop-text-hover: #486371;
-  --color-gray-button-desktop-background: #EDEEEF;
-  --color-gray-button-desktop-background-hover: #E3E3E5;
+  --color-gray-button-text: #000000;
+  --color-gray-button-text-hover: #000000;
+  --color-gray-button-background: #E5E5EA;
+  --color-gray-button-background-hover: #D9D9DF;
+  --color-gray-button-background-light: #ECECF1;
+  --color-gray-button-background-light-hover: #DFE0E6;
+  --color-gray-button-desktop-text: #000000;
+  --color-gray-button-desktop-text-hover: #000000;
+  --color-gray-button-desktop-background: #F3F3F5;
+  --color-gray-button-desktop-background-hover: #E5E5EA;
 
   --color-purple-button-text: #FFFFFF;
   --color-purple-button-text-hover: #FFFFFF;
-  --color-purple-button-background: #6875E9;
-  --color-purple-button-background-hover: #707EFF;
-  --color-gpurple-button-text-rest: #5E6BDE;
-  --color-gpurple-button-text-hover: #3D46D2;
-  --color-gpurple-button-background-rest: #D0D2FE;
-  --color-gpurple-button-background-hover: #C0C2FE;
+  --color-purple-button-background: #735CE6;
+  --color-purple-button-background-hover: #836FF0;
+  --color-gpurple-button-text-rest: #735CE6;
+  --color-gpurple-button-text-hover: #5B44CC;
+  --color-gpurple-button-background-rest: #E4DEFB;
+  --color-gpurple-button-background-hover: #D6CCF9;
 
-  --color-close-button-text: #8399AE;
-  --color-close-button-text-hover: #616770;
-  --color-close-button-background: #E5E6E8;
-  --color-close-button-background-hover: #D7D7DA;
+  --color-close-button-text: #A9A9B2;
+  --color-close-button-text-hover: #7B7B85;
+  --color-close-button-background: #ECECF1;
+  --color-close-button-background-hover: #DFE0E6;
 
   --color-activity-icon: #FFFFFF;
   --color-activity-blue: #007FBE;
   --color-activity-blue-background: #E7F2F7;
-  --color-activity-gray-text: #616770;
-  --color-activity-gray-background: #F1F1F3;
-  --color-activity-green-text: #10B853;
-  --color-activity-green-text-2: #83AE94;
-  --color-activity-green-background: #EBF7F1;
-  --color-activity-purple-text: #5E6BDE;
-  --color-activity-purple-background: #EFF1F9;
-  --color-activity-red-text: #E64F4F;
-  --color-activity-red-text-2: #CD9595;
-  --color-activity-red-background: #F9EFF0;
+  --color-activity-gray-text: #7B7B85;
+  --color-activity-gray-background: #F3F3F5;
+  --color-activity-green-text: #4BB34B;
+  --color-activity-green-text-2: #89C196;
+  --color-activity-green-background: #E8F6E8;
+  --color-activity-purple-text: #735CE6;
+  --color-activity-purple-background: #F0ECFD;
+  --color-activity-red-text: #E64646;
+  --color-activity-red-text-2: #D99A9A;
+  --color-activity-red-background: #FDECEC;
 
   --color-transaction-amount-text: #007FBE;
   --color-transaction-amount-bg: #D6E7F0;
-  --color-transaction-amount-purple-text: #5E6BDE;
-  --color-transaction-amount-purple-bg: #E2E5F4;
-  --color-transaction-amount-green-text: #10B853;
-  --color-transaction-amount-green-bg: #DBF0E5;
-  --color-transaction-amount-red-text: #E64F4F;
-  --color-transaction-amount-red-bg: #F3E2E3;
-  --color-transaction-amount-gray-text: #3F4650;
-  --color-transaction-amount-gray-bg: #E5E6E8;
+  --color-transaction-amount-purple-text: #735CE6;
+  --color-transaction-amount-purple-bg: #ECE7FD;
+  --color-transaction-amount-green-text: #4BB34B;
+  --color-transaction-amount-green-bg: #E4F4E4;
+  --color-transaction-amount-red-text: #E64646;
+  --color-transaction-amount-red-bg: #FBE3E3;
+  --color-transaction-amount-gray-text: #000000;
+  --color-transaction-amount-gray-bg: #ECECF1;
 
-  --color-separator: rgba(44, 51, 62, 0.12);
-  --color-separator-input-stroke: rgba(32, 51, 62, 0.12);
+  --color-separator: rgba(19, 19, 20, 0.16);
+  --color-separator-input-stroke: rgba(19, 19, 20, 0.16);
   --color-linear-effect-1: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
   --color-skeleton-shimmer: rgba(255, 255, 255, 0.62);
 
-  --color-interactive-item-hover: #FAFAFA;
-  --color-interactive-input-text-hover-active: #8B8F96;
-  --color-interactive-popup-menu-hover: #F0F6FB;
-  --color-interactive-popup-menu-descructive-hover: #FEF4F4;
-  --color-interactive-drop-down-menu-hover: #F9F9F9;
-  --color-interactive-drop-down-menu-active: #F2F2F3;
+  --color-interactive-item-hover: #F3F3F5;
+  --color-interactive-input-text-hover-active: #8A8A93;
+  --color-interactive-popup-menu-hover: #F3F3F5;
+  --color-interactive-popup-menu-descructive-hover: #FFF2F2;
+  --color-interactive-drop-down-menu-hover: #F3F3F5;
+  --color-interactive-drop-down-menu-active: #ECECF1;
 
   --color-tint: rgba(0, 0, 0, 0.32);
-  --color-tint-lock: rgba(243, 244, 245, 0.4);
+  --color-tint-lock: rgba(243, 243, 245, 0.4);
 
   --color-card-text: #FFFFFF;
   --color-card-text-hover: rgba(255, 255, 255, 0.7);
@@ -144,13 +144,13 @@
   --color-card-apy-background: rgba(86, 233, 145, 0.7);
   --color-card-connected-bg: rgba(0, 0, 0, 0.16);
 
-  --color-add-wallet-text: #616770;
-  --color-add-wallet-text-hover: #434953;
-  --color-add-wallet-background: #F4F5F6;
-  --color-add-wallet-background-hover: #E8E8EA;
+  --color-add-wallet-text: #7B7B85;
+  --color-add-wallet-text-hover: #000000;
+  --color-add-wallet-background: #F3F3F5;
+  --color-add-wallet-background-hover: #ECECF1;
 
-  --color-apy-text: #10B853;
-  --color-apy-background: #EBF7F1;
+  --color-apy-text: #4BB34B;
+  --color-apy-background: #E8F6E8;
   --color-apy-active-text: #FFFFFF;
   --color-apy-active-background: #8892EB;
 
@@ -169,8 +169,8 @@
   --color-vesting-text: #007FBE;
   --color-vesting-background: #B4DBF0;
 
-  --color-gradient-main-blue2-green: linear-gradient(81.88deg, #0088CC 19.42%, #1EC160 71.55%);
-  --color-gradient-main-gray2-green: linear-gradient(90deg, #8B8F96 25%, #10B853 75%);
+  --color-gradient-main-blue2-green: linear-gradient(81.88deg, #0088CC 19.42%, #4BB34B 71.55%);
+  --color-gradient-main-gray2-green: linear-gradient(90deg, #7B7B85 25%, #4BB34B 75%);
   --color-gradient-activity-gray-green-bg: linear-gradient(135deg, #EAFBF1 13.89%, #EDF1F6 86.11%);
 
   --default-shadow: 0 0 1.5625rem 0 #00000026;
@@ -255,114 +255,114 @@
     --color-default-accent: #469CEC;
     --color-default-accent-hover: #469CECCC;
     --color-accent: #469CEC;
-    --color-black: #F6F7F8;
-    --color-gray-1: #BFC0C2;
-    --color-gray-2: #89898B;
-    --color-gray-3: #626363;
-    --color-gray-3-desktop: #89898B;
-    --color-gray-4: #515252;
-    --color-purple-1: #95A0FE;
-    --color-purple-2: #7986F7;
-    --color-yellow: #E49329;
+    --color-black: #E5E5EA;
+    --color-gray-1: #7D7D85;
+    --color-gray-2: #8C8C93;
+    --color-gray-3: #606066;
+    --color-gray-3-desktop: #8C8C93;
+    --color-gray-4: #4A4A52;
+    --color-purple-1: #937FF5;
+    --color-purple-2: #8268E8;
+    --color-yellow: #FFA800;
     --color-accent-10o: #469CEC1A;
 
-    --color-background-first: #1C1C1E;
-    --color-background-first-disabled: #141415;
-    --color-background-second: #000000;
-    --color-background-window: #0E0E0F;
-    --color-background-drop-down: #222224;
-    --color-background-tab-bar: #1C1C1EE5;
-    --color-background-lock: rgba(28, 28, 30, 0.8);
+    --color-background-first: #131314;
+    --color-background-first-disabled: #0F0F10;
+    --color-background-second: #09090A;
+    --color-background-window: #09090A;
+    --color-background-drop-down: #343438;
+    --color-background-tab-bar: #09090A99;
+    --color-background-lock: rgba(19, 19, 20, 0.8);
     --color-background-purple-1: #191D2A;
     --color-background-purple-2: #292F46;
     --color-background-blue-first: #0B1E29;
     --color-background-blue-second: #123245;
     --color-background-yellow: #221A10;
 
-    --color-input-button-text: #BFC0C2;
-    --color-input-button-background: #2E2F30;
-    --color-input-button-background-hover: #252525;
+    --color-input-button-text: #7D7D85;
+    --color-input-button-background: #1E1E1F;
+    --color-input-button-background-hover: #262629;
     --color-input-button-background-purple-rest: #252B40;
     --color-input-button-background-purple-hover: #292F46;
 
     --color-accent-button-background: #469CEC;
     --color-accent-button-background-hover: #51A7F7;
 
-    --color-red-button-background: #D74A4A;
-    --color-red-button-background-hover: #F35B5B;
-    --color-red-warning-background: rgba(215, 74, 74, 0.9);
+    --color-red-button-background: #FF5C5C;
+    --color-red-button-background-hover: #FF7676;
+    --color-red-warning-background: rgba(255, 92, 92, 0.9);
 
-    --color-gray-button-text: #D8DADC;
-    --color-gray-button-text-hover: #ECEEF0;
+    --color-gray-button-text: #E5E5EA;
+    --color-gray-button-text-hover: #FFFFFF;
     --color-gray-button-background: #1E1E1F;
-    --color-gray-button-background-hover: #2E2F30;
+    --color-gray-button-background-hover: #2E2E32;
     --color-gray-button-background-light: #161617;
-    --color-gray-button-background-light-hover: #1F1F21;
-    --color-gray-button-desktop-text: #C7D7E6;
-    --color-gray-button-desktop-text-hover: #DCEDFF;
-    --color-gray-button-desktop-background: #2E2F30;
-    --color-gray-button-desktop-background-hover: #3A3A3B;
+    --color-gray-button-background-light-hover: #1F1F22;
+    --color-gray-button-desktop-text: #E5E5EA;
+    --color-gray-button-desktop-text-hover: #FFFFFF;
+    --color-gray-button-desktop-background: #2E2E32;
+    --color-gray-button-desktop-background-hover: #3A3A3E;
 
     --color-purple-button-text: #FFFFFF;
     --color-purple-button-text-hover: #FFFFFF;
-    --color-purple-button-background: #7986F7;
-    --color-purple-button-background-hover: #8591FB;
-    --color-gpurple-button-text-rest: #95A0FE;
-    --color-gpurple-button-text-hover: #ACB5FE;
-    --color-gpurple-button-background-rest: #3A456C;
-    --color-gpurple-button-background-hover: #475484;
+    --color-purple-button-background: #937FF5;
+    --color-purple-button-background-hover: #A08DFF;
+    --color-gpurple-button-text-rest: #937FF5;
+    --color-gpurple-button-text-hover: #B4A6FF;
+    --color-gpurple-button-background-rest: #332C57;
+    --color-gpurple-button-background-hover: #443A70;
 
-    --color-close-button-text: #89898B;
-    --color-close-button-text-hover: #BFC0C2;
+    --color-close-button-text: #606066;
+    --color-close-button-text-hover: #8C8C93;
     --color-close-button-background: #1E1E1F;
-    --color-close-button-background-hover: #2E2F30;
+    --color-close-button-background-hover: #2E2E32;
 
     --color-activity-blue: #58AFFF;
     --color-activity-blue-background: #1B2D3B;
-    --color-activity-gray-text: #BFC0C2;
-    --color-activity-gray-background: #2D2D2D;
-    --color-activity-green-text: #2CD36F;
-    --color-activity-green-text-2: #79A28B;
-    --color-activity-green-background: #163623;
-    --color-activity-purple-text: #95A0FE;
-    --color-activity-purple-background: #25273D;
-    --color-activity-red-text: #FF7A7A;
-    --color-activity-red-text-2: #A97B7B;
-    --color-activity-red-background: #3C2020;
+    --color-activity-gray-text: #7D7D85;
+    --color-activity-gray-background: #1E1E1F;
+    --color-activity-green-text: #4BB34B;
+    --color-activity-green-text-2: #7FA98A;
+    --color-activity-green-background: #16301B;
+    --color-activity-purple-text: #937FF5;
+    --color-activity-purple-background: #221F33;
+    --color-activity-red-text: #FF5C5C;
+    --color-activity-red-text-2: #B08585;
+    --color-activity-red-background: #33191C;
 
     --color-transaction-amount-text: #58AFFF;
     --color-transaction-amount-bg: #0D1E2D;
-    --color-transaction-amount-purple-text: #95A0FE;
-    --color-transaction-amount-purple-bg: #17192F;
-    --color-transaction-amount-green-text: #2BC469;
-    --color-transaction-amount-green-bg: #082815;
-    --color-transaction-amount-red-text: #FF7A7A;
-    --color-transaction-amount-red-bg: #2E1111;
-    --color-transaction-amount-gray-text: #D8DADC;
+    --color-transaction-amount-purple-text: #937FF5;
+    --color-transaction-amount-purple-bg: #1A1630;
+    --color-transaction-amount-green-text: #4BB34B;
+    --color-transaction-amount-green-bg: #0C2310;
+    --color-transaction-amount-red-text: #FF5C5C;
+    --color-transaction-amount-red-bg: #2B1414;
+    --color-transaction-amount-gray-text: #E5E5EA;
     --color-transaction-amount-gray-bg: #1E1E1F;
 
-    --color-separator: rgba(246, 247, 248, 0.12);
-    --color-separator-input-stroke: rgba(246, 247, 248, 0.12);
-    --color-linear-effect-1: linear-gradient(90deg, rgba(28, 28, 30, 0) 0%, #1C1C1E 100%);
+    --color-separator: rgba(229, 229, 234, 0.2);
+    --color-separator-input-stroke: rgba(229, 229, 234, 0.2);
+    --color-linear-effect-1: linear-gradient(90deg, rgba(19, 19, 20, 0) 0%, #131314 100%);
     --color-skeleton-shimmer: rgba(255, 255, 255, 0.052);
 
-    --color-interactive-item-hover: #222224;
-    --color-interactive-input-text-hover-active: #89898B;
-    --color-interactive-popup-menu-hover: #253A4D;
-    --color-interactive-popup-menu-descructive-hover: #353543;
-    --color-interactive-drop-down-menu-hover: #28292A;
-    --color-interactive-drop-down-menu-active: #2E2F30;
+    --color-interactive-item-hover: #1E1E1F;
+    --color-interactive-input-text-hover-active: #606066;
+    --color-interactive-popup-menu-hover: #1E1E1F;
+    --color-interactive-popup-menu-descructive-hover: #33191C;
+    --color-interactive-drop-down-menu-hover: #262629;
+    --color-interactive-drop-down-menu-active: #2E2E32;
 
     --color-tint: rgba(0, 0, 0, 0.64);
     --color-tint-lock: rgba(0, 20, 0, 0.4);
 
-    --color-add-wallet-text: #BFC0C2;
-    --color-add-wallet-text-hover: #D7D8D9;
-    --color-add-wallet-background: #2E2F30;
-    --color-add-wallet-background-hover: #414244;
+    --color-add-wallet-text: #7D7D85;
+    --color-add-wallet-text-hover: #8C8C93;
+    --color-add-wallet-background: #1E1E1F;
+    --color-add-wallet-background-hover: #2E2E32;
 
-    --color-apy-text: #2BC469;
-    --color-apy-background: #163623;
+    --color-apy-text: #4BB34B;
+    --color-apy-background: #16301B;
     --color-apy-active-text: #FFFFFF;
     --color-apy-active-background: #6B78D9;
 
@@ -375,8 +375,8 @@
 
     --color-beidge-background: #1A2938;
 
-    --color-gradient-main-blue2-green: linear-gradient(81.88deg, #469CEC 19.42%, #2CD36F 71.55%);
-    --color-gradient-main-gray2-green: linear-gradient(90deg, #89898B 25%, #2CD36F 75%);
+    --color-gradient-main-blue2-green: linear-gradient(81.88deg, #469CEC 19.42%, #4BB34B 71.55%);
+    --color-gradient-main-gray2-green: linear-gradient(90deg, #7D7D85 25%, #4BB34B 75%);
     --color-gradient-activity-gray-green-bg: linear-gradient(135deg, #1F3838 13.89%, #2E3947 86.11%);
 
     --color-secondary-button-text: #58AFFF;
