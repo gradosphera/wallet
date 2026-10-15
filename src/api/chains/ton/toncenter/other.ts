@@ -22,6 +22,8 @@ const VERSION_MAP: Record<WalletVersion, ApiTonWalletVersion> = {
   'wallet v4 r2': 'v4R2',
   // 'wallet v5 beta': '', // Not used in production, wrapper is missing
   'wallet v5 r1': 'W5',
+  // WalletTg (Telegram Wallet) is the trampoline contract reported by Toncenter as `tg-wallet`
+  'tg-wallet': 'telegram',
 };
 
 export async function fetchAddressBook(network: ApiNetwork, addresses: string[]): Promise<AddressBook> {

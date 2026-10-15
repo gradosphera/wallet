@@ -125,7 +125,7 @@ function AuthStart({
           onClick={!isLoading && !isTelegramConnecting ? openTelegramWallet : undefined}
         >
           <i className={buildClassName('icon-telegram-filled', styles.telegramIcon)} aria-hidden />
-          Открыть Кошелёк Telegram
+          Подключить Telegram кошелёк
         </Button>
         <Button
           isPrimary

@@ -13,7 +13,7 @@ import { handleUrlClick, openUrl } from '../../../../util/openUrl';
 import { shortenAddress } from '../../../../util/shortenAddress';
 import getChainNetworkIcon from '../../../../util/swap/getChainNetworkIcon';
 import { getExplorerAddressUrl, getExplorerName } from '../../../../util/url';
-import { getWalletContractName } from '../../../../util/walletContractName';
+import { getWalletContractName, TELEGRAM_WALLET_VERSION } from '../../../../util/walletContractName';
 import { IS_TOUCH_ENV } from '../../../../util/windowEnvironment';
 
 import { useDeviceScreen } from '../../../../hooks/useDeviceScreen';
@@ -26,6 +26,7 @@ import menuStyles from '../../../ui/Dropdown.module.scss';
 import styles from './Card.module.scss';
 
 import multichainIconSrc from '../../../../assets/multichain_account.svg';
+import telegramWalletIconSrc from '../../../../assets/font-icons/telegram.svg';
 
 interface StateProps {
   addressByChain?: Account['addressByChain'];
@@ -54,6 +55,7 @@ function CardAddress({
   const chains = useMemo(() => Object.keys(addressByChain || {}) as ApiChain[], [addressByChain]);
   const isHardwareAccount = accountType === 'hardware';
   const isViewAccount = accountType === 'view';
+  const isTelegramWallet = walletVersion === TELEGRAM_WALLET_VERSION;
   const explorerTitle = lang('View on Explorer');
   const chainDropdownItems = useMemo(() => {
     const hasDomain = chains[0] && domainByChain?.[chains[0]];
@@ -129,6 +131,10 @@ function CardAddress({
     if (!contractName) return undefined;
 
     return <span className={styles.addressLabel}>{contractName}</span>;
+  }
+
+  function getAccountChainIcon(chain: ApiChain) {
+    return isTelegramWallet ? telegramWalletIconSrc : getChainNetworkIcon(chain);
   }
 
   function renderAddressMenu() {
@@ -227,7 +233,7 @@ function CardAddress({
         >
           {chains.length > 1
             ? <img src={multichainIconSrc} alt="" className={styles.multichainIcon} />
-            : <img src={getChainNetworkIcon(chain)} alt="" className={styles.chainIcon} />}
+            : <img src={getAccountChainIcon(chain)} alt="" className={styles.chainIcon} />}
 
           <span className={buildClassName(styles.itemName, 'itemName')}>
             {buttonText}
@@ -262,7 +268,7 @@ function CardAddress({
         aria-label={lang('Copy wallet address')}
         onClick={() => handleCopyAddress(address)}
       >
-        <img src={getChainNetworkIcon(chain)} alt="" className={styles.chainIcon} />
+        <img src={getAccountChainIcon(chain)} alt="" className={styles.chainIcon} />
         {displayText}
         <i className={buildClassName(styles.icon, 'icon-copy')} aria-hidden />
       </button>
