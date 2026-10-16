@@ -268,6 +268,8 @@ export const GRADOSPHERA_DAO_CATEGORY_ID = 100;
 export const GRADOSPHERA_DAO_CATEGORY_NAME = 'ДАО';
 export const GRADOSPHERA_TOOLS_CATEGORY_ID = 101;
 export const GRADOSPHERA_TOOLS_CATEGORY_NAME = 'Инструменты';
+export const GRADOSPHERA_CHANNELS_CATEGORY_ID = 102;
+export const GRADOSPHERA_CHANNELS_CATEGORY_NAME = 'Каналы';
 // Название на экране блокировки (поле ввода пароля и биометрия).
 // Отдельное от APP_NAME, чтобы не менять брендинг в остальных разделах.
 export const APP_LOCKED_SCREEN_NAME = 'Кошелёк';

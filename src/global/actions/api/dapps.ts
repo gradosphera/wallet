@@ -4,6 +4,8 @@ import { DappConnectState, SignDataState, TransferState } from '../../types';
 
 import {
   ANIMATION_END_DELAY,
+  GRADOSPHERA_CHANNELS_CATEGORY_ID,
+  GRADOSPHERA_CHANNELS_CATEGORY_NAME,
   GRADOSPHERA_DAO_CATEGORY_ID,
   GRADOSPHERA_DAO_CATEGORY_NAME,
   GRADOSPHERA_TOOLS_CATEGORY_ID,
@@ -537,6 +539,10 @@ addActionHandler('apiUpdateDappCloseLoading', async (global, actions, { connecti
 function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSite[] } {
   const daoCategory: ApiSiteCategory = { id: GRADOSPHERA_DAO_CATEGORY_ID, name: GRADOSPHERA_DAO_CATEGORY_NAME };
   const toolsCategory: ApiSiteCategory = { id: GRADOSPHERA_TOOLS_CATEGORY_ID, name: GRADOSPHERA_TOOLS_CATEGORY_NAME };
+  const channelsCategory: ApiSiteCategory = {
+    id: GRADOSPHERA_CHANNELS_CATEGORY_ID,
+    name: GRADOSPHERA_CHANNELS_CATEGORY_NAME,
+  };
 
   const voteSite: ApiSite = {
     url: GRADOSPHERA_VOTE_SITE.url,
@@ -576,14 +582,14 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
 
   const gradospheraDaoSite: ApiSite = {
     url: 'https://t.me/gradosphera',
-    name: 'ДАО Градосфера',
+    name: 'Градосфера',
     icon: gradospheraDaoIcon,
     description: 'Это децентрализованная автономная организация на блокчейне, где токены воплощают общественное благо, волонтерство и голосование за городские изменения.',
     manifestUrl: '',
     canBeRestricted: false,
     isExternal: false,
     isFeatured: false,
-    categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
+    categoryId: GRADOSPHERA_CHANNELS_CATEGORY_ID,
   };
 
   const greenHomeSite: ApiSite = {
@@ -595,11 +601,11 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
     canBeRestricted: false,
     isExternal: false,
     isFeatured: false,
-    categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
+    categoryId: GRADOSPHERA_CHANNELS_CATEGORY_ID,
   };
 
   return {
-    categories: [daoCategory, toolsCategory],
+    categories: [daoCategory, channelsCategory, toolsCategory],
     sites: [voteSite, cleanLeagueSite, tonViewerSite, gradospheraDaoSite, greenHomeSite],
   };
 }
