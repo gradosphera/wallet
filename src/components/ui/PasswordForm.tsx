@@ -390,7 +390,7 @@ function PasswordForm({
             ariaLabel={lang('Close')}
             onClick={onCancel}
           >
-            <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
+            <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
           </Button>
         )}
         <div className={styles.pinPadHeader}>
@@ -508,7 +508,7 @@ function PasswordForm({
             onClick={handleOpenLogOutModal}
           >
             {lang('Exit all wallets')}
-            <i className={buildClassName('icon-chevron-right', styles.detailsIcon)} aria-hidden />
+            <i className={buildClassName('icon-chevronright', styles.detailsIcon)} aria-hidden />
           </span>
         </div>
       )}

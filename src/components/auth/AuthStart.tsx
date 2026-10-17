@@ -80,7 +80,7 @@ function AuthStart({
     <div className={buildClassName(styles.container, 'custom-scroll')}>
       {hasAccounts && (
         <Button isSimple isText onClick={resetAuth} className={styles.headerBack}>
-          <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+          <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
           <span>{lang('Back')}</span>
         </Button>
       )}
@@ -115,7 +115,7 @@ function AuthStart({
           onClick={openAbout}
         >
           Подробнее о Кошельке
-          <i className="icon-chevron-right" aria-hidden />
+          <i className="icon-chevronright" aria-hidden />
         </Button>
       )}
       <div className={buildClassName(styles.importButtonsBlock, IS_CORE_WALLET && styles.importButtonsBlockSimple)}>
@@ -124,7 +124,7 @@ function AuthStart({
           isLoading={isTelegramConnecting}
           onClick={!isLoading && !isTelegramConnecting ? openTelegramWallet : undefined}
         >
-          <i className={buildClassName('icon-telegram-filled', styles.telegramIcon)} aria-hidden />
+          <i className={buildClassName('icon-telegram', styles.telegramIcon)} aria-hidden />
           Подключить Telegram кошелёк
         </Button>
         <Button

@@ -46,7 +46,7 @@
     "mobile:build:production": "npm run mobile:build",
     "mobile:run:android": "npm run mobile:build:dev && cap run android",
     "mobile:run:ios": "npm run mobile:build:dev && cap run ios",
-    "build:icons": "fantasticon",
+    "build:icons": "fantasticon && fantasticon -c .fantasticonrc.android.js",
     "check": "tsc && stylelint \"**/*.{css,scss}\" && eslint .",
     "check:fix": "stylelint \"**/*.{css,scss}\" --fix && eslint . --fix",
     "test": "cross-env APP_ENV=test jest --verbose --forceExit",

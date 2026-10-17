@@ -35,7 +35,7 @@ function AuthCreateBackup({ isActive }: OwnProps) {
       <div className={buildClassName(styles.container, 'custom-scroll')}>
         <div className={styles.header}>
           <Button isSimple isText onClick={resetAuth} className={styles.headerBackBlock}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}> </span>

@@ -238,7 +238,7 @@ function CardAddress({
           <span className={buildClassName(styles.itemName, 'itemName')}>
             {buttonText}
           </span>
-          <i className={buildClassName(styles.icon, 'icon-caret-down')} aria-hidden />
+          <i className={buildClassName(styles.icon, 'icon-chevrondown')} aria-hidden />
         </button>
         {renderAddressMenu()}
       </div>

@@ -282,7 +282,7 @@ function AddressInput({
                 onClick={handleQrScanClick}
                 ariaLabel={lang('Scan QR Code')}
               >
-                <i className="icon-qr-scanner-alt" aria-hidden />
+                <i className="icon-scan" aria-hidden />
               </Button>
             )}
             {withPasteButton && (

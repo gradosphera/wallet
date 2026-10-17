@@ -29,7 +29,7 @@ function ListItem({
         isLoading ? (
           <Spinner className={buildClassName(styles.rightItem, styles.spinner)} />
         ) : (
-          <i className={buildClassName(styles.rightItem, 'icon-chevron-right')} aria-hidden />
+          <i className={buildClassName(styles.rightItem, 'icon-chevronright')} aria-hidden />
         )
       }
     </button>

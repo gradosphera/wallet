@@ -352,7 +352,7 @@ export default function createConfig(
           },
           {
             name: 'Icon font generation',
-            files: 'src/assets/font-icons/*.svg',
+            files: ['src/assets/font-icons/*.svg', 'src/assets/font-icons-android/*.svg'],
             action: 'npm run build:icons',
             sharedAction: true,
           },

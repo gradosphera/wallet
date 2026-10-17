@@ -53,7 +53,7 @@ function CardPros({ type, price, balance, isAvailable }: OwnProps) {
 
         <dt className={styles.term}>
           {lang('Transferable')}
-          <i className={buildClassName(styles.icon, 'icon-swap')} aria-hidden />
+          <i className={buildClassName(styles.icon, 'icon-circlearrowswapfill')} aria-hidden />
         </dt>
         <dd className={styles.data}>{lang('Easily send your upgraded card to any of your friends.')}</dd>
 

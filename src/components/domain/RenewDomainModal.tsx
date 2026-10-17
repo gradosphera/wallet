@@ -125,7 +125,7 @@ function RenewDomainModal({
           )}
         </div>
         <Button isRound className={modalStyles.closeButton} ariaLabel={lang('Close')} onClick={cancelDomainsRenewal}>
-          <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
+          <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
         </Button>
       </div>
     );

@@ -45,7 +45,7 @@ function ExploreSearchSuggestions({
       {searchSuggestions?.history?.map((url) => (
         <MenuItem key={`history-${url}`} className={styles.suggestion} onClick={onSiteClick} clickArg={url}>
           <i
-            className={buildClassName(styles.suggestionIcon, searchValue.length ? 'icon-search' : 'icon-globe')}
+            className={buildClassName(styles.suggestionIcon, searchValue.length ? 'icon-ic_search' : 'icon-globe')}
             aria-hidden
           />
           <span className={styles.suggestionAddress}>{getHostnameFromUrl(url)}</span>
@@ -58,7 +58,7 @@ function ExploreSearchSuggestions({
             onMouseDown={(e) => onSiteClear(e, url)}
             onClick={stopEvent}
           >
-            <i className="icon-close" aria-hidden />
+            <i className="icon-cancel" aria-hidden />
           </button>
         </MenuItem>
       ))}

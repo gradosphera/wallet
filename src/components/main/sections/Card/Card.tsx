@@ -162,7 +162,7 @@ function Card({
   function renderBalance() {
     const iconCaretClassNames = buildClassName(
       'icon',
-      'icon-caret-down',
+      'icon-chevrondown',
       primaryFractionPart || shortBaseSymbol.length > 1 ? styles.iconCaretFraction : styles.iconCaret,
     );
     const noAnimationCounter = !isUpdating || IS_SAFARI || IS_IOS;
@@ -229,7 +229,7 @@ function Card({
                   <i
                     className={buildClassName(
                       styles.changePrefix,
-                      changePrefix === 'up' ? 'icon-arrow-up' : 'icon-arrow-down',
+                      changePrefix === 'up' ? 'icon-arrowup' : 'icon-arrowdown',
                     )}
                     aria-hidden
                   />

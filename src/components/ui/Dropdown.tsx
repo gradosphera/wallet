@@ -106,7 +106,7 @@ function Dropdown<T extends string>({
       <i
         className={buildClassName(
           styles.buttonIcon,
-          arrow === 'chevron' ? 'icon-chevron-down' : 'icon-caret-down',
+          arrow === 'chevron' ? 'icon-chevrondown' : 'icon-chevrondown',
         )}
         aria-hidden
       />

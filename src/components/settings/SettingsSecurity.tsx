@@ -390,7 +390,7 @@ function SettingsSecurity({
         ) : (
           <div className={buildClassName(styles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
             <Button isSimple isText onClick={handleBackToSettingsClick} className={styles.headerBack}>
-              <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+              <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
               <span>{lang('Back')}</span>
             </Button>
             <span className={styles.headerTitle}>{lang('Security')}</span>
@@ -406,7 +406,7 @@ function SettingsSecurity({
                 <img className={styles.menuIcon} src={backupImg} alt={lang('$back_up_security')} />
                 {lang('$back_up_security')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
               </div>
             </div>
           )}
@@ -577,7 +577,7 @@ function SettingsSecurity({
             ) : (
               <div className={styles.header}>
                 <Button isSimple isText onClick={handleBackToSettingsClick} className={styles.headerBack}>
-                  <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
                   <span>{lang('Back')}</span>
                 </Button>
                 <span className={styles.headerTitle}>{lang('Enter Password')}</span>
@@ -608,7 +608,7 @@ function SettingsSecurity({
             ) : (
               <div className={styles.header}>
                 <Button isSimple isText onClick={openSettingsSlide} className={styles.headerBack}>
-                  <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
                   <span>{lang('Back')}</span>
                 </Button>
                 <span className={styles.headerTitle}>{lang('Change Password')}</span>
@@ -651,7 +651,7 @@ function SettingsSecurity({
             ) : (
               <div className={styles.header}>
                 <Button isSimple isText onClick={openSettingsSlide} className={styles.headerBack}>
-                  <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
                   <span>{lang('Back')}</span>
                 </Button>
               </div>
@@ -697,7 +697,7 @@ function SettingsSecurity({
             ) : (
               <div className={styles.header}>
                 <Button isSimple isText onClick={openSettingsSlide} className={styles.headerBack}>
-                  <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
                   <span>{lang('Back')}</span>
                 </Button>
               </div>

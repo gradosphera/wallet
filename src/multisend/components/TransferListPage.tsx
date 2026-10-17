@@ -230,7 +230,7 @@ function TransferListPage({
                     />
                   )}
                   <i
-                    className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')}
+                    className={buildClassName(styles.iconChevronRight, 'icon-chevronright')}
                     aria-hidden
                   />
                 </div>

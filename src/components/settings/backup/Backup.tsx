@@ -58,7 +58,7 @@ function Backup({
       ) : (
         <div className={styles.header}>
           <Button isSimple isText onClick={openSettingsSlide} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('$back_up_security')}</span>
@@ -76,7 +76,7 @@ function Backup({
                 <img className={styles.menuIcon} src={secretWordsImg} alt={lang('View Secret Words')} />
                 {lang('View Secret Words')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
               </div>
             </div>
             {isMultichainAccount && (
@@ -94,7 +94,7 @@ function Backup({
                 <img className={styles.menuIcon} src={privateKeyImg} alt={lang('View TON Private Key')} />
                 {lang('View TON Private Key')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
               </div>
             </div>
             <p className={styles.blockDescription}>

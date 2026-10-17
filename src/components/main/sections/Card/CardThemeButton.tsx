@@ -20,7 +20,7 @@ function CardThemeButton() {
         title={lang('Card Palette')}
         onClick={openPicker}
       >
-        <i className="icon-pen" aria-hidden />
+        <i className="icon-penci" aria-hidden />
       </button>
       <CardThemePicker isOpen={isOpen} onClose={closePicker} />
     </>

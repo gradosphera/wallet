@@ -65,7 +65,7 @@ function ModalHeader<T extends string>({
     >
       {onBackButtonClick && (
         <Button isSimple isText onClick={onBackButtonClick} className={modalStyles.header_back}>
-          <i className={buildClassName(modalStyles.header_backIcon, 'icon-chevron-left')} aria-hidden />
+          <i className={buildClassName(modalStyles.header_backIcon, 'icon-chevronleft')} aria-hidden />
           <span>{lang('Back')}</span>
         </Button>
       )}
@@ -78,7 +78,7 @@ function ModalHeader<T extends string>({
           ariaLabel={lang('Menu')}
           onClick={handleMenuButtonClick}
         >
-          <i className={buildClassName(modalStyles.menuIcon, 'icon-menu-dots')} aria-hidden />
+          <i className={buildClassName(modalStyles.menuIcon, 'icon-more')} aria-hidden />
         </Button>
       )}
       {onClose && (
@@ -88,7 +88,7 @@ function ModalHeader<T extends string>({
           ariaLabel={lang('Close')}
           onClick={onClose}
         >
-          <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
+          <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
         </Button>
       )}
       {hasMenu && (

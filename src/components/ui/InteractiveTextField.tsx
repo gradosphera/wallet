@@ -266,7 +266,7 @@ function InteractiveTextField({
       const iconClassName = buildClassName(
         styles.icon,
         styles.iconCaretDown,
-        'icon-caret-down',
+        'icon-chevrondown',
         isScam && styles.scam,
       );
 
@@ -309,7 +309,7 @@ function InteractiveTextField({
               className={buildClassName(
                 styles.icon,
                 styles.iconStar,
-                isAddressAlreadySaved ? 'icon-star-filled' : 'icon-star',
+                isAddressAlreadySaved ? 'icon-stars' : 'icon-star',
               )}
               aria-hidden
             />
@@ -455,7 +455,7 @@ function useDropdownMenu(
     if (withSavedAddresses) {
       items.push({
         name: isAddressAlreadySaved ? 'Remove From Saved' : 'Save Address',
-        fontIcon: isAddressAlreadySaved ? 'star-filled' : 'star',
+        fontIcon: isAddressAlreadySaved ? 'stars' : 'star',
         value: 'addressBook',
       });
     }
@@ -463,7 +463,7 @@ function useDropdownMenu(
     if (isTransaction || withShare) {
       items.push({
         name: 'Share Link',
-        fontIcon: IS_IOS ? 'share-ios' : 'share-android',
+        fontIcon: IS_IOS ? 'ic_share' : 'share-android',
         value: 'share',
       });
     }

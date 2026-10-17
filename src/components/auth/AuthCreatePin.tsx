@@ -54,7 +54,7 @@ const AuthCreatePin = ({
   return (
     <div className={buildClassName(styles.container, styles.containerFullSize)}>
       <Button isSimple isText onClick={resetAuth} className={styles.headerBack}>
-        <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+        <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
         <span>{lang('Back')}</span>
       </Button>
 

@@ -150,7 +150,7 @@ function SettingsAssets({
       ) : (
         <div className={buildClassName(styles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
           <Button isSimple isText onClick={onBack} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('Assets & Activity')}</span>
@@ -218,7 +218,7 @@ function SettingsAssets({
                 {lang('Hidden NFTs')}
                 <div className={styles.itemInfo}>
                   {hiddenNftsCount}
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
                 </div>
               </div>
             </div>

@@ -30,7 +30,7 @@ function AppLockButton() {
       ariaLabel={lang('App Lock')}
       onClick={handleManualLock}
     >
-      <i className="icon-manual-lock" aria-hidden />
+      <i className="icon-lock" aria-hidden />
     </Button>
   );
 }

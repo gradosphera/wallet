@@ -260,7 +260,7 @@ function NftCollectionHeader({
         className={styles.backButton}
         onClick={closeNftCollection}
       >
-        <i className={buildClassName(styles.backIcon, 'icon-chevron-left')} aria-hidden />
+        <i className={buildClassName(styles.backIcon, 'icon-chevronleft')} aria-hidden />
       </Button>
 
       <div className={styles.content}>
@@ -271,7 +271,7 @@ function NftCollectionHeader({
       </div>
 
       <Button isSimple ref={ref} className={styles.menuButton} onClick={handleMenuOpen} ariaLabel={lang('Open Menu')}>
-        <i className="icon-menu-dots" aria-hidden />
+        <i className="icon-more" aria-hidden />
       </Button>
       <DropdownMenu
         isOpen={isMenuOpen}

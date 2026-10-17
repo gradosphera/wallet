@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "{{ name }}";
+    src: {{{ fontSrc }}};
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+{{# each codepoints }}
+html.is-android .{{ ../prefix }}-{{ @key }}::before {
+    font-family: "{{ ../name }}" !important;
+    content: "\\{{ codepoint this }}";
+}
+{{/ each }}

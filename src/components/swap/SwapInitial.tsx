@@ -371,7 +371,7 @@ function SwapInitial({
         <div className={styles.priceImpactContent}>
           <span className={styles.priceImpactTitle}>
             {lang('The exchange rate is below market value!', { value: `${priceImpact}%` })}
-            <i className={buildClassName(styles.priceImpactArrow, 'icon-chevron-right')} aria-hidden />
+            <i className={buildClassName(styles.priceImpactArrow, 'icon-chevronright')} aria-hidden />
           </span>
           <span className={styles.priceImpactDescription}>
             {lang('We do not recommend to perform an exchange, try to specify a lower amount.')}
@@ -571,13 +571,13 @@ function AnimatedArrows({ onClick }: { onClick?: NoneToVoidFunction }) {
     return (
       <div className={buildClassName(styles.arrowContainer, isInverted && styles.arrowContainerInverted)}>
         <div className={styles.arrow}>
-          <i className="icon-arrow-up-swap" aria-hidden />
+          <i className="icon-arrowup" aria-hidden />
         </div>
         <div className={buildClassName(styles.arrowOld, hasAnimation && styles.animateDisappear)}>
-          <i className="icon-arrow-up-swap" aria-hidden />
+          <i className="icon-arrowup" aria-hidden />
         </div>
         <div className={buildClassName(styles.arrowNew, hasAnimation && styles.animateAppear)}>
-          <i className="icon-arrow-up-swap" aria-hidden />
+          <i className="icon-arrowup" aria-hidden />
         </div>
       </div>
     );

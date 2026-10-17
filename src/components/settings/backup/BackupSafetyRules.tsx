@@ -64,7 +64,7 @@ function BackupSafetyRules({
       ) : (
         <div className={buildClassName(settingsStyles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
           <Button isSimple isText onClick={handleBackClick} className={settingsStyles.headerBack}>
-            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={settingsStyles.headerTitle}>{lang('Safety Rules')}</span>

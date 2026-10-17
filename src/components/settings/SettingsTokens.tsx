@@ -221,7 +221,7 @@ function SettingsTokens({
         >
           <div className={buildClassName(styles.item, styles.item_small)} onClick={handleOpenAddTokenPage}>
             {lang('Add Token')}
-            <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
+            <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
           </div>
 
           {tokens?.map(renderToken)}

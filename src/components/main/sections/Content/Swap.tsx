@@ -104,7 +104,7 @@ function Swap({
     }
 
     return (
-      <i className={buildClassName('icon-swap', styles.icon, statusClass)} aria-hidden>
+      <i className={buildClassName('icon-circlearrowswapfill', styles.icon, statusClass)} aria-hidden>
         <ActivityStatusIcon
           isPending={isPending}
           isError={isError}
@@ -135,7 +135,7 @@ function Swap({
           )}
         </span>
         <i
-          className={buildClassName(styles.swapArrowRight, 'icon-chevron-right', statusClass)}
+          className={buildClassName(styles.swapArrowRight, 'icon-chevronright', statusClass)}
           aria-hidden
         />
         <span className={buildClassName(styles.swapBuy, statusClass)}>

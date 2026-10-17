@@ -60,11 +60,11 @@ function useTokenContextMenu(ref: ElementRef<HTMLButtonElement>, options: {
     const mandatoryItems: (false | DropdownItem<MenuHandler>)[] = [
       !stakingId && {
         name: 'Hide',
-        fontIcon: 'eye-closed',
+        fontIcon: 'eyecrossed',
         value: 'hide',
       } satisfies DropdownItem<MenuHandler>, {
         name: 'Manage Tokens',
-        fontIcon: 'menu-params',
+        fontIcon: 'settings-2',
         withDelimiter: !(isViewMode && stakingId),
         value: 'settings',
       } satisfies DropdownItem<MenuHandler>,
@@ -76,16 +76,16 @@ function useTokenContextMenu(ref: ElementRef<HTMLButtonElement>, options: {
 
     const result: (false | undefined | DropdownItem<MenuHandler>)[] = [!isServiceToken && {
       name: 'Add / Buy',
-      fontIcon: 'menu-plus',
+      fontIcon: 'plus',
       value: 'add',
     } satisfies DropdownItem<MenuHandler>, {
       name: 'Send',
-      fontIcon: 'menu-send',
+      fontIcon: 'sendthenonline',
       value: 'send',
     } satisfies DropdownItem<MenuHandler>,
     !isSwapDisabled && {
       name: 'Swap',
-      fontIcon: 'menu-swap',
+      fontIcon: 'circlearrowswapfill',
       value: 'swap',
     } satisfies DropdownItem<MenuHandler>];
 

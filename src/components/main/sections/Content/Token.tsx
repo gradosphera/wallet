@@ -185,7 +185,7 @@ function Token({
 
     return (
       <i
-        className={buildClassName(styles.iconArrow, change > 0 ? 'icon-arrow-up' : 'icon-arrow-down')}
+        className={buildClassName(styles.iconArrow, change > 0 ? 'icon-arrowup' : 'icon-arrowdown')}
         aria-hidden
       />
     );
@@ -204,7 +204,7 @@ function Token({
     if (stakingStatus === 'readyToClaim') {
       return (
         <i
-          className={buildClassName('icon-check-alt', styles.readyToClaim)}
+          className={buildClassName('icon-checkmarkfill', styles.readyToClaim)}
           aria-hidden
         />
       );

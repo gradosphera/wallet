@@ -253,7 +253,7 @@ function LedgerConnect({
         ) : (
           <div className={settingsStyles.header}>
             <Button isSimple isText onClick={handleClose} className={settingsStyles.headerBack}>
-              <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevron-left')} aria-hidden />
+              <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevronleft')} aria-hidden />
               <span>{lang('Back')}</span>
             </Button>
             <span className={settingsStyles.headerTitle}>{title}</span>
@@ -329,7 +329,7 @@ function LedgerConnect({
             )}
           >
             <i
-              className={buildClassName(styles.textIcon, isLedgerConnected ? 'icon-accept' : 'icon-dot')}
+              className={buildClassName(styles.textIcon, isLedgerConnected ? 'icon-checkmark' : 'icon-dot')}
               aria-hidden
             />
             {lang('Connect your Ledger')}
@@ -343,7 +343,7 @@ function LedgerConnect({
             )}
           >
             <i
-              className={buildClassName(styles.textIcon, isTonAppConnected ? 'icon-accept' : 'icon-dot')}
+              className={buildClassName(styles.textIcon, isTonAppConnected ? 'icon-checkmark' : 'icon-dot')}
               aria-hidden
             />
             {lang('Unlock it and open the TON App')}

@@ -215,7 +215,7 @@ function Explore({
   function renderSearch() {
     return (
       <form action="#" onSubmit={handleSearchSubmit} className={styles.searchContainer} autoComplete="off">
-        <i className={buildClassName(styles.searchIcon, 'icon-search')} aria-hidden />
+        <i className={buildClassName(styles.searchIcon, 'icon-ic_search')} aria-hidden />
         <input
           name="explore-search"
           className={styles.searchInput}

@@ -44,7 +44,7 @@ function MintCardButton({
       title={lang('Mint Cards')}
       onClick={() => openMintCardModal()}
     >
-      <i className={isCardMinting ? 'icon-magic-wand-loading' : 'icon-magic-wand'} aria-hidden />
+      <i className={isCardMinting ? 'icon-magic' : 'icon-magic'} aria-hidden />
       {isCardMinting && <ClockIcon className={styles.icon} noAnimation={noAnimation} />}
     </button>
   );

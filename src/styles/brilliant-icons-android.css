@@ -1,0 +1,189 @@
+@font-face {
+    font-family: "brilliant-icons-android";
+    src: url("./brilliant-icons-android.woff?a2e002b732ecd5146762c354d755e961") format("woff"),
+url("./brilliant-icons-android.woff2?a2e002b732ecd5146762c354d755e961") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+html.is-android .icon-arrowdown::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f101";
+}
+html.is-android .icon-arrowup::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f102";
+}
+html.is-android .icon-backspace::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f103";
+}
+html.is-android .icon-cancel::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f104";
+}
+html.is-android .icon-checkmark::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f105";
+}
+html.is-android .icon-checkmarkfill::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f106";
+}
+html.is-android .icon-chevrondown::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f107";
+}
+html.is-android .icon-chevronleft::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f108";
+}
+html.is-android .icon-chevronright::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f109";
+}
+html.is-android .icon-circlearrowswapfill::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10a";
+}
+html.is-android .icon-circleinfooutlined::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10b";
+}
+html.is-android .icon-copy::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10c";
+}
+html.is-android .icon-creditcard::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10d";
+}
+html.is-android .icon-diamond::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10e";
+}
+html.is-android .icon-download-filled::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f10f";
+}
+html.is-android .icon-exclamationoutlined::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f110";
+}
+html.is-android .icon-external::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f111";
+}
+html.is-android .icon-eye::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f112";
+}
+html.is-android .icon-eyecrossed::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f113";
+}
+html.is-android .icon-gift::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f114";
+}
+html.is-android .icon-ic_question::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f115";
+}
+html.is-android .icon-ic_search::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f116";
+}
+html.is-android .icon-ic_share::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f117";
+}
+html.is-android .icon-key::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f118";
+}
+html.is-android .icon-laptop::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f119";
+}
+html.is-android .icon-link::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11a";
+}
+html.is-android .icon-lock::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11b";
+}
+html.is-android .icon-more::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11c";
+}
+html.is-android .icon-paste::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11d";
+}
+html.is-android .icon-penci::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11e";
+}
+html.is-android .icon-plus::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f11f";
+}
+html.is-android .icon-qr::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f120";
+}
+html.is-android .icon-sendthenonline::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f121";
+}
+html.is-android .icon-settings-2::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f122";
+}
+html.is-android .icon-settings::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f123";
+}
+html.is-android .icon-share-android::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f124";
+}
+html.is-android .icon-snow::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f125";
+}
+html.is-android .icon-sort::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f126";
+}
+html.is-android .icon-star::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f127";
+}
+html.is-android .icon-stars::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f128";
+}
+html.is-android .icon-tag::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f129";
+}
+html.is-android .icon-ton::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f12a";
+}
+html.is-android .icon-trash::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f12b";
+}
+html.is-android .icon-wallet::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f12c";
+}
+html.is-android .icon-windows-close::before {
+    font-family: "brilliant-icons-android" !important;
+    content: "\f12d";
+}

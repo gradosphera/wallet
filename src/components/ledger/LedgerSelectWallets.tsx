@@ -159,7 +159,7 @@ function LedgerSelectWallets({
       ) : (
         <div className={settingsStyles.header}>
           <Button isSimple isText onClick={onClose} className={settingsStyles.headerBack}>
-            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={settingsStyles.headerTitle}>{title}</span>

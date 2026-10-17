@@ -99,7 +99,7 @@ function CardRoster({ cardsInfo, tonBalance }: OwnProps & StateProps) {
           ariaLabel={lang('Close')}
           onClick={closeMintCardModal}
         >
-          <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
+          <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
         </Button>
         <button
           className={buildClassName(styles.navigation, styles.navigationLeft)}
@@ -107,7 +107,7 @@ function CardRoster({ cardsInfo, tonBalance }: OwnProps & StateProps) {
           aria-label={lang('Prev')}
           onClick={() => showPrevSlide()}
         >
-          <i className={buildClassName(styles.navigationIcon, 'icon-chevron-left')} aria-hidden />
+          <i className={buildClassName(styles.navigationIcon, 'icon-chevronleft')} aria-hidden />
         </button>
         <button
           className={buildClassName(styles.navigation, styles.navigationRight)}
@@ -115,7 +115,7 @@ function CardRoster({ cardsInfo, tonBalance }: OwnProps & StateProps) {
           onClick={() => showNextSlide()}
           aria-label={lang('Next')}
         >
-          <i className={buildClassName(styles.navigationIcon, 'icon-chevron-right')} aria-hidden />
+          <i className={buildClassName(styles.navigationIcon, 'icon-chevronright')} aria-hidden />
         </button>
       </>
     );

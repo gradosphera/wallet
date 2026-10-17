@@ -42,7 +42,7 @@ function QrScannerButton({ isViewMode }: OwnProps) {
       ariaLabel={lang('Scan QR Code')}
       onClick={handleQrScanClick}
     >
-      <i className="icon-qr-scanner" aria-hidden />
+      <i className="icon-qr" aria-hidden />
     </Button>
   );
 }

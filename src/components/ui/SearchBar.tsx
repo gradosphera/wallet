@@ -19,7 +19,7 @@ function SearchBar({ className, onFocus, onBlur }: OwnProps) {
   return (
     <div className={buildClassName(styles.wrapper, className)}>
       <div className={styles.iconAddon}>
-        <i className={buildClassName(styles.icon, 'icon-search')} aria-hidden />
+        <i className={buildClassName(styles.icon, 'icon-ic_search')} aria-hidden />
       </div>
       <input className={styles.input} onFocus={onFocus} onBlur={onBlur} placeholder={lang('Search...')} />
     </div>

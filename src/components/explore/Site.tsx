@@ -54,7 +54,7 @@ function Site({
           {name}
 
           {!isTrending && isTelegramUrl(url) && (
-            <i className={buildClassName(styles.telegram, 'icon-telegram-filled')} aria-hidden />
+            <i className={buildClassName(styles.telegram, 'icon-telegram')} aria-hidden />
           )}
           {isInList && badgeText && <div className={styles.badgeLabel}>{badgeText}</div>}
         </b>

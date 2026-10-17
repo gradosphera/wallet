@@ -73,7 +73,7 @@ function BackupSecretWords({
       ) : (
         <div className={buildClassName(settingsStyles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
           <Button isSimple isText className={settingsStyles.headerBack} onClick={onBackClick}>
-            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(settingsStyles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={settingsStyles.headerTitle}>{lang('%1$d Secret Words', wordsCount) as string}</span>

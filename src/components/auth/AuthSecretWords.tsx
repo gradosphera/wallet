@@ -30,7 +30,7 @@ const AuthSecretWords = ({ isActive, mnemonic }: OwnProps) => {
 
         <div className={styles.header}>
           <Button isSimple isText onClick={openAuthBackupWalletModal} className={styles.headerBackBlock}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('%1$d Secret Words', wordsCount) as string}</span>

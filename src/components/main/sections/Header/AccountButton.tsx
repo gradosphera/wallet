@@ -90,7 +90,7 @@ function AccountButton({
 
       {isActive && canEditAccount && (
         <div className={styles.edit} onClick={handleEditClick}>
-          <i className="icon-pen" aria-hidden />
+          <i className="icon-penci" aria-hidden />
         </div>
       )}
     </div>

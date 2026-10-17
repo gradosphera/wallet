@@ -124,7 +124,7 @@ function NftAttributesModal({ nft, dnsExpiration }: StateProps) {
           className={buildClassName(
             styles.icon,
             styles.actionIcon,
-            isPortrait && !(IS_ELECTRON && IS_MAC_OS) ? 'icon-chevron-left' : 'icon-close',
+            isPortrait && !(IS_ELECTRON && IS_MAC_OS) ? 'icon-chevronleft' : 'icon-cancel',
           )}
           aria-hidden
         />
@@ -166,7 +166,7 @@ function NftAttributesModal({ nft, dnsExpiration }: StateProps) {
           {renderedNft.collectionName && (
             <div className={styles.collectionName} onClick={handleCollectionClick} tabIndex={0} role="button">
               {renderedNft.collectionName}
-              <i className={buildClassName(styles.collectionNameIcon, 'icon-chevron-right')} aria-hidden />
+              <i className={buildClassName(styles.collectionNameIcon, 'icon-chevronright')} aria-hidden />
             </div>
           )}
         </div>
@@ -196,7 +196,7 @@ function NftAttributesModal({ nft, dnsExpiration }: StateProps) {
             {isFolded && (
               <a href="#" className={styles.expandButton} onClick={handleExpand}>
                 {lang('Show All')}
-                <i className={buildClassName(styles.expandButtonIcon, 'icon-chevron-down')} aria-hidden />
+                <i className={buildClassName(styles.expandButtonIcon, 'icon-chevrondown')} aria-hidden />
               </a>
             )}
           </>

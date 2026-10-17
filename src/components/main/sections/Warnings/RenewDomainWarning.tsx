@@ -127,13 +127,13 @@ function RenewDomainWarning({ orderedAddresses, byAddress, dnsExpiration }: Stat
         {renderPreview()}
         <div>
           {(renderedNftForRenewal ?? []).length === 1 ? lang('Renew Domain') : lang('Renew Domains')}
-          <i className={buildClassName(styles.icon, 'icon-chevron-right')} aria-hidden />
+          <i className={buildClassName(styles.icon, 'icon-chevronright')} aria-hidden />
           <p className={buildClassName(styles.text, styles.light)}>
             {renderWarningMessage()}
           </p>
         </div>
         <button type="button" className={styles.closeButton} aria-label={lang('Close')} onClick={handleClose}>
-          <i className="icon-close" aria-hidden />
+          <i className="icon-cancel" aria-hidden />
         </button>
       </div>
     </Collapsible>

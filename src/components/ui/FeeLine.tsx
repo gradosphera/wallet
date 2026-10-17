@@ -92,7 +92,7 @@ export function FeeLineContainer({
           onClick={() => onDetailsClick()}
         >
           {lang('Details')}
-          <i className={buildClassName('icon-chevron-right', styles.detailsIcon)} aria-hidden />
+          <i className={buildClassName('icon-chevronright', styles.detailsIcon)} aria-hidden />
         </span>
       )}
     </Transition>
