@@ -88,8 +88,26 @@ $iconGapSize: 1rem;
   color: var(--color-gray-3);
 }
 
-.balanceCurrencyPrefix {
-  margin-inline-end: 0.125rem;
+.balanceInner {
+  display: flex;
+  align-items: baseline;
+}
+
+.balanceLogo {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-inline-end: 0.25rem;
+
+  background-color: currentColor;
+
+  -webkit-mask-image: var(--balance-logo-url);
+  mask-image: var(--balance-logo-url);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 
 .container {

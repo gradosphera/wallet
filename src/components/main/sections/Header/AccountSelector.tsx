@@ -2,21 +2,18 @@ import React, { memo, useEffect, useMemo } from '../../../../lib/teact/teact';
 import { getActions, withGlobal } from '../../../../global';
 
 import type { ApiTonWalletVersion } from '../../../../api/chains/ton/types';
-import type { ApiBaseCurrency } from '../../../../api/types';
 import type { Account, AccountSettings, AccountType, UserToken } from '../../../../global/types';
-import { type ApiStakingState } from '../../../../api/types';
 import { SettingsState } from '../../../../global/types';
 
-import { IS_CORE_WALLET } from '../../../../config';
+import { BLAGO, IS_CORE_WALLET } from '../../../../config';
 import {
-  selectAccountStakingStates,
   selectCurrentAccountTokens,
   selectNetworkAccounts,
 } from '../../../../global/selectors';
 import { getAccountTitle } from '../../../../util/account';
 import buildClassName from '../../../../util/buildClassName';
 import captureEscKeyListener from '../../../../util/captureEscKeyListener';
-import { getShortCurrencySymbol } from '../../../../util/formatNumber';
+import { toDecimal } from '../../../../util/decimals';
 import { vibrate } from '../../../../util/haptics';
 import trapFocus from '../../../../util/trapFocus';
 
@@ -30,11 +27,12 @@ import Button from '../../../ui/Button';
 import Portal from '../../../ui/Portal';
 import SensitiveData from '../../../ui/SensitiveData';
 import Transition from '../../../ui/Transition';
-import { calculateFullBalance } from '../Card/helpers/calculateFullBalance';
 import AccountButton from './AccountButton';
 import AccountRenameModal from './AccountRenameModal';
 
 import styles from './AccountSelector.module.scss';
+
+import blagoImage from '../../../../assets/coins/jetton_blago.svg';
 
 interface OwnProps {
   forceClose?: boolean;
@@ -51,8 +49,6 @@ interface StateProps {
   currentWalletVersion?: ApiTonWalletVersion;
   settingsByAccountId?: Record<string, AccountSettings>;
   tokens?: UserToken[];
-  baseCurrency?: ApiBaseCurrency;
-  stakingStates?: ApiStakingState[];
   isSensitiveDataHidden?: true;
 }
 
@@ -67,8 +63,6 @@ function AccountSelector({
   withAccountSelector,
   withBalance,
   tokens,
-  baseCurrency,
-  stakingStates,
   isSensitiveDataHidden,
   accounts,
   currentWalletVersion,
@@ -99,11 +93,12 @@ function AccountSelector({
 
   const accountsAmount = useMemo(() => Object.keys(accounts || {}).length, [accounts]);
 
-  const balanceValues = useMemo(() => {
-    return tokens ? calculateFullBalance(tokens, stakingStates) : undefined;
-  }, [tokens, stakingStates]);
-  const shortBaseSymbol = getShortCurrencySymbol(baseCurrency);
-  const { primaryWholePart, primaryFractionPart } = balanceValues || {};
+  const blagoToken = useMemo(() => tokens?.find((token) => token.slug === BLAGO.slug), [tokens]);
+  const blagoAmount = useMemo(
+    () => (blagoToken ? toDecimal(blagoToken.amount, blagoToken.decimals, true) : '0'),
+    [blagoToken],
+  );
+  const [primaryWholePart, primaryFractionPart] = blagoAmount.split('.');
 
   useEffect(() => {
     if (isOpen && forceClose) closeAccountSelector();
@@ -194,19 +189,17 @@ function AccountSelector({
               rows={2}
               cellSize={8.5}
             >
-              <span
-                className={styles.currencySwitcher}
-              >
-                {shortBaseSymbol.length === 1 && (
-                  <span className={buildClassName(styles.balanceCurrency, styles.balanceCurrencyPrefix)}>
-                    {shortBaseSymbol}
-                  </span>
-                )}
+              <span className={styles.balanceInner}>
+                <span
+                  className={styles.balanceLogo}
+                  style={`--balance-logo-url: url(${blagoImage})`}
+                  aria-hidden
+                />
                 {primaryWholePart}
-                {primaryFractionPart && <span className={styles.balanceFractionPart}>.{primaryFractionPart}</span>}
-                {shortBaseSymbol.length > 1 && (
-                  <span className={styles.balanceCurrency}>&nbsp;{shortBaseSymbol}</span>
+                {primaryFractionPart && (
+                  <span className={styles.balanceFractionPart}>.{primaryFractionPart}</span>
                 )}
+                <span className={styles.balanceCurrency}>&nbsp;{BLAGO.name}</span>
               </span>
             </SensitiveData>
           </div>
@@ -216,7 +209,7 @@ function AccountSelector({
             {(currentAccount && getAccountTitle(currentAccount)) ?? ''}
           </span>
           {withAccountSelector && !withBalance && (
-            <i className={buildClassName('icon icon-caret-down', styles.arrowIcon)} aria-hidden />
+            <i className={buildClassName('icon icon-chevrondown', styles.arrowIcon)} aria-hidden />
           )}
         </div>
       </Transition>
@@ -283,7 +276,6 @@ export default memo(withGlobal<OwnProps>(
       walletVersions,
       settings: {
         byAccountId: settingsByAccountId,
-        baseCurrency,
         isSensitiveDataHidden,
       },
     } = global;
@@ -292,8 +284,6 @@ export default memo(withGlobal<OwnProps>(
     const currentAccountId = global.currentAccountId!;
     const currentAccount = accounts?.[currentAccountId];
 
-    const stakingStates = selectAccountStakingStates(global, currentAccountId);
-
     return {
       currentAccountId,
       currentAccount,
@@ -301,8 +291,6 @@ export default memo(withGlobal<OwnProps>(
       currentWalletVersion: walletVersions?.currentVersion,
       settingsByAccountId,
       tokens: selectCurrentAccountTokens(global),
-      baseCurrency,
-      stakingStates,
       isSensitiveDataHidden,
     };
   },
