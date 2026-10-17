@@ -45,7 +45,7 @@ describe('processTemplateJsx', () => {
   describe('Teact component processing', () => {
     it('must insert a Teact component into the template', () => {
       const template = 'Swap %from% %icon% %to%';
-      const mockIcon = createMockElement('i', { className: 'icon-chevronright', 'aria-hidden': true });
+      const mockIcon = createMockElement('i', { className: 'icon-chevron-right', 'aria-hidden': true });
       const value = {
         from: 'TON',
         icon: mockIcon,

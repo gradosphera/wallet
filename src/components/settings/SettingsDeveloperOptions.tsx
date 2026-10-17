@@ -130,7 +130,7 @@ function SettingsDeveloperOptions({
 
           <div className={styles.itemInfo}>
             {canViewAllWalletVersions ? (
-              <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+              <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
 
             ) : (
               <>

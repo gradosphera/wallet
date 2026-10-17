@@ -35,7 +35,7 @@ const AuthCreateNativeBiometrics = ({ isActive, isLoading }: OwnProps) => {
   return (
     <div className={styles.container}>
       <Button isSimple isText onClick={resetAuth} className={styles.headerBack}>
-        <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+        <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
         <span>{lang('Back')}</span>
       </Button>
 

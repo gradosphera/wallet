@@ -93,7 +93,7 @@ function DappFeed({ dapps: dappsFromState, dappLastOpenedDatesByUrl }: StateProp
             onClick={openSettings}
           >
             <div className={buildClassName(styles.settingsIconContainer, iconWrapperClassName)}>
-              <i className="icon-settings-2" aria-hidden />
+              <i className="icon-params" aria-hidden />
             </div>
             {!isPillMode && <span className={styles.settingsLabel}>{lang('Settings')}</span>}
           </div>

@@ -54,7 +54,7 @@ function CardThemePicker({ isOpen, cardTheme, onClose }: OwnProps & StateProps) 
                 onClick={() => handleSelect(theme.id)}
               >
                 <span className={styles.swatch} aria-hidden />
-                {isSelected && <i className={buildClassName('icon-checkmark', styles.check)} aria-hidden />}
+                {isSelected && <i className={buildClassName('icon-check', styles.check)} aria-hidden />}
               </button>
             );
           })}

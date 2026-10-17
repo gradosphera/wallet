@@ -41,7 +41,7 @@ function TonActions({
       <div className={styles.actionButton} onClick={handleReceiveClick}>
         <i className={buildClassName(styles.actionIcon, 'icon-link')} aria-hidden />
         {lang('Create Deposit Link')}
-        <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+        <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
       </div>
     </div>
   );

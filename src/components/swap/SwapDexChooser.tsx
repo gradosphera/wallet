@@ -141,7 +141,7 @@ function SwapDexChooser({
         dex_name: <strong>{SWAP_DEX_LABELS[renderedCurrentDexLabel!]}</strong>,
       })}
       {renderedDexItems.length > 1 && (
-        <i className={buildClassName('icon-chevronright', styles.iconArrowRight)} aria-hidden />
+        <i className={buildClassName('icon-chevron-right', styles.iconArrowRight)} aria-hidden />
       )}
     </>
   );

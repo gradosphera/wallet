@@ -119,7 +119,7 @@ function SwapSubmitButton({
     const renderedText = textStr === '$swap_from_to'
       ? lang('$swap_from_to', {
         from: tokenIn?.symbol,
-        icon: <i className={buildClassName('icon-chevronright', styles.swapArrowIcon)} aria-hidden />,
+        icon: <i className={buildClassName('icon-chevron-right', styles.swapArrowIcon)} aria-hidden />,
         to: tokenOut?.symbol,
       })
       : textStr;

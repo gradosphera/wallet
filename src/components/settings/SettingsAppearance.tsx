@@ -160,7 +160,7 @@ function SettingsAppearance({
       ) : (
         <div className={buildClassName(styles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
           <Button isSimple isText onClick={handleBackClick} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('Appearance')}</span>

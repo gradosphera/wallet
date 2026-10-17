@@ -119,7 +119,7 @@ function VestingModal({
         {info.parts.map((part) => {
           const icon = part.status === 'frozen'
             ? 'icon-snow'
-            : (part.status === 'missed' ? 'icon-missed' : part.status === 'unfrozen' ? 'icon-checkmark' : 'icon-fire');
+            : (part.status === 'missed' ? 'icon-missed' : part.status === 'unfrozen' ? 'icon-check' : 'icon-fire');
           const title = part.status === 'frozen'
             ? 'Frozen'
             : (part.status === 'missed' ? 'Missed' : part.status === 'unfrozen' ? 'Unfrozen' : 'Ready to Unfreeze');

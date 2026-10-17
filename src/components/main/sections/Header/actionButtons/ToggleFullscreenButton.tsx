@@ -33,7 +33,7 @@ function ToggleFullscreenButton({ isFullscreen }: OwnProps) {
       ariaLabel={lang('Toggle fullscreen')}
       onClick={handleFullscreenToggle}
     >
-      <i className={isFullscreen ? 'icon-fullscreen-2' : 'icon-fullscreen'} aria-hidden />
+      <i className={isFullscreen ? 'icon-fullscreen-exit' : 'icon-fullscreen'} aria-hidden />
     </Button>
   );
 }

@@ -41,11 +41,11 @@ const MENU_ITEMS: DropdownItem<MenuHandler>[] = [{
 }, {
   value: 'copyUrl',
   name: 'Copy Link',
-  fontIcon: 'copy',
+  fontIcon: 'menu-copy',
 }, {
   value: 'close',
   name: 'Close',
-  fontIcon: 'cancel',
+  fontIcon: 'menu-close',
   withDelimiter: true,
 }];
 

@@ -141,7 +141,7 @@ function LandscapeActions({
             nonInteractive
             forceOnHeavyAnimation
             tgsUrl={stickerPaths.iconAdd}
-            iconPreviewClass="icon-plus"
+            iconPreviewClass="icon-action-add"
             onEnded={stopAddBuyAnimation}
           />
           <span className={styles.tabText}>{lang('Add')}</span>
@@ -178,7 +178,7 @@ function LandscapeActions({
                 nonInteractive
                 forceOnHeavyAnimation
                 tgsUrl={stickerPaths.iconSend}
-                iconPreviewClass="icon-sendthenonline"
+                iconPreviewClass="icon-action-send"
                 onEnded={stopSendAnimation}
               />
               <span className={styles.tabText}>{lang('Send')}</span>
@@ -206,7 +206,7 @@ function LandscapeActions({
               nonInteractive
               forceOnHeavyAnimation
               tgsUrl={stickerPaths.iconSwap}
-              iconPreviewClass="icon-circlearrowswapfill"
+              iconPreviewClass="icon-action-swap"
               onEnded={stopSwapAnimation}
             />
             <span className={styles.tabText}>{lang('Swap')}</span>

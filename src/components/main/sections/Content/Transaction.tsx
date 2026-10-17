@@ -214,11 +214,11 @@ function Transaction({
     if (isStaking) {
       iconName = 'icon-earn';
     } else if (type === 'callContract' || type === 'contractDeploy') {
-      iconName = 'icon-settings-2';
+      iconName = 'icon-cog';
     } else if (isDnsOperation) {
       iconName = buildClassName('rounded-font', styles.dnsIcon);
     } else if (type === 'mint') {
-      iconName = 'icon-magic';
+      iconName = 'icon-magic-wand';
     } else if (type === 'burn') {
       iconName = 'icon-fire';
     } else if (type === 'auctionBid') {
@@ -232,7 +232,7 @@ function Transaction({
     } else if (isIncoming) {
       iconName = 'icon-receive-alt';
     } else {
-      iconName = 'icon-sendthenonline';
+      iconName = 'icon-send-alt';
     }
 
     return (

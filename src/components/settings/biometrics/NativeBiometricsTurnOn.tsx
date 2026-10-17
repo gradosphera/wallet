@@ -76,7 +76,7 @@ function NativeBiometricsTurnOn({
       <div className={buildClassName(styles.content, styles.contentFullSize)}>
         <div className={styles.header}>
           <Button isSimple isText onClick={handleBackClick} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
         </div>

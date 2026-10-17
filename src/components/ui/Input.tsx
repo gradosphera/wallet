@@ -189,7 +189,7 @@ function Input({
           aria-label={lang('Change password visibility')}
           tabIndex={-1}
         >
-          <i className={isPasswordVisible ? 'icon-eye' : 'icon-eyecrossed'} aria-hidden />
+          <i className={isPasswordVisible ? 'icon-eye' : 'icon-eye-closed'} aria-hidden />
         </button>
       )}
       {children}

@@ -454,7 +454,7 @@ function Settings({
               onClick={handleCloseSettings}
               className={buildClassName(styles.headerBack, isPortrait && styles.hidden)}
             >
-              <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+              <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
               <span>{lang('Back')}</span>
             </Button>
             <span className={styles.headerTitle}>{lang('Settings')}</span>
@@ -495,7 +495,7 @@ function Settings({
                   <img className={styles.menuIcon} src={telegramImg} alt={lang('Open Telegram Web')} />
                   {lang('Open Telegram Web')}
 
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
               )}
               {renderHandleDeeplinkButton()}
@@ -516,20 +516,20 @@ function Settings({
               />
               {arePushNotificationsAvailable ? lang('Notifications & Sounds') : lang('Sounds')}
 
-              <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+              <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
             </div>
             <div className={styles.item} onClick={handleAppearanceOpen}>
               <img className={styles.menuIcon} src={appearanceImg} alt={lang('Appearance')} />
               {lang('Appearance')}
 
-              <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+              <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
             </div>
             {!SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY && (
               <div className={styles.item} onClick={handleAssetsOpen}>
                 <img className={styles.menuIcon} src={assetsActivityImg} alt={lang('Assets & Activity')} />
                 {lang('Assets & Activity')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
               </div>
             )}
             {isPasswordPresent && (
@@ -537,7 +537,7 @@ function Settings({
                 <img className={styles.menuIcon} src={securityImg} alt={lang('Security')} />
                 {lang('Security')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
               </div>
             )}
             {IS_DAPP_SUPPORTED && !isViewMode && (
@@ -547,7 +547,7 @@ function Settings({
 
                 <div className={styles.itemInfo}>
                   {dapps.length ? dapps.length : ''}
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
               </div>
             )}
@@ -557,7 +557,7 @@ function Settings({
                 {lang('Language')}
                 <div className={styles.itemInfo}>
                   {activeLang?.name}
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
               </div>
             )}
@@ -571,7 +571,7 @@ function Settings({
 
                 <div className={styles.itemInfo}>
                   {currentVersion}
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
               </div>
             </div>
@@ -589,7 +589,7 @@ function Settings({
                   <img className={styles.menuIcon} src={githubImg} alt={lang('Github')} />
                   {lang('Github')}
 
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </a>
                 {supportAccountsCount > 0 && (
                   <a
@@ -603,7 +603,7 @@ function Settings({
 
                     <div className={styles.itemInfo}>
                       <span className={styles.small}>@gradosphera</span>
-                      <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                      <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                     </div>
                   </a>
                 )}
@@ -616,7 +616,7 @@ function Settings({
               <img className={styles.menuIcon} src={disclaimerImg} alt={lang('Use Responsibly')} />
               {lang('Use Responsibly')}
 
-              <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+              <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
             </div>
           </div>
 
@@ -626,7 +626,7 @@ function Settings({
                 <img className={styles.menuIcon} src={installDesktopImg} alt={lang('Install on Desktop')} />
                 {lang('Install on Desktop')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
               </div>
             </div>
           )}
@@ -637,7 +637,7 @@ function Settings({
                 <img className={styles.menuIcon} src={installMobileImg} alt={lang('Install on Mobile')} />
                 {lang('Install on Mobile')}
 
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
               </div>
             </div>
           )}
@@ -650,7 +650,7 @@ function Settings({
                   <img className={styles.menuIcon} src={aboutImg} alt="" />
                   {lang('About %app_name%', { app_name: APP_NAME })}
 
-                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+                  <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                 </div>
               )}
             </div>
@@ -661,7 +661,7 @@ function Settings({
               <img className={styles.menuIcon} src={exitImg} alt={lang('Exit')} />
               {lang('Exit')}
 
-              <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+              <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
             </div>
           </div>
 

@@ -196,7 +196,7 @@ function TokenCard({
     <div ref={ref} className={buildClassName(styles.container, styles.tokenCard, classNames, color, 'token-card')}>
       <div className={styles.tokenInfo}>
         <Button className={styles.backButton} isSimple onClick={onClose} ariaLabel={lang('Back')}>
-          <i className="icon-chevronleft" aria-hidden />
+          <i className="icon-chevron-left" aria-hidden />
         </Button>
         <TokenIcon
           token={token}
@@ -227,7 +227,7 @@ function TokenCard({
               >
                 <div className={styles.currencySwitcher} role="button" tabIndex={0} onClick={openCurrencyMenu}>
                   ≈&thinsp;{formatCurrency(value, currencySymbol, undefined, true)}
-                  <i className={buildClassName('icon', 'icon-chevrondown', styles.iconCaretSmall)} aria-hidden />
+                  <i className={buildClassName('icon', 'icon-caret-down', styles.iconCaretSmall)} aria-hidden />
                 </div>
                 <CurrencySwitcherMenu
                   isOpen={isCurrencyMenuOpen}
@@ -306,7 +306,7 @@ function TokenCard({
           onClick={openHistoryMenu}
         >
           {period === 'ALL' ? 'All' : period}
-          <i className={buildClassName('icon', 'icon-chevrondown', styles.iconCaretSmall)} aria-hidden />
+          <i className={buildClassName('icon', 'icon-caret-down', styles.iconCaretSmall)} aria-hidden />
           <ChartHistorySwitcher
             isOpen={isHistoryMenuOpen}
             onChange={refreshHistory}

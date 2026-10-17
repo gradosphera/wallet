@@ -195,7 +195,7 @@ function DappTransferInitial({
             address: shortenAddress(transaction.displayedToAddress),
           })}
         </span>
-        <i className={buildClassName(styles.transactionRowChevron, 'icon-chevronright')} aria-hidden />
+        <i className={buildClassName(styles.transactionRowChevron, 'icon-chevron-right')} aria-hidden />
       </div>
     );
   }

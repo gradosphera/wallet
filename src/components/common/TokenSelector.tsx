@@ -333,7 +333,7 @@ function TokenSelector({
   function renderSearch() {
     return (
       <div className={styles.tokenSelectInputWrapper}>
-        <i className={buildClassName(styles.tokenSelectSearchIcon, 'icon-ic_search')} aria-hidden />
+        <i className={buildClassName(styles.tokenSelectSearchIcon, 'icon-search')} aria-hidden />
         <input
           ref={searchInputRef}
           name="token-search-modal"
@@ -354,7 +354,7 @@ function TokenSelector({
               aria-label={lang('Clear')}
               onClick={resetSearch}
             >
-              <i className={buildClassName(styles.tokenSelectSearchResetIcon, 'icon-cancel')} aria-hidden />
+              <i className={buildClassName(styles.tokenSelectSearchResetIcon, 'icon-close')} aria-hidden />
             </button>
           )}
         </Transition>

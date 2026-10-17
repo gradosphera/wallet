@@ -39,7 +39,7 @@ function MediaInfo({ title, description, descriptionUrl }: OwnProps & StateProps
         onClick={handleUrlClick}
       >
         <span className={styles.descriptionText}>{description}</span>
-        <i className={buildClassName('icon-circleinfooutlined', styles.tooltip)} aria-hidden />
+        <i className={buildClassName('icon-tooltip', styles.tooltip)} aria-hidden />
       </a>
     </div>
   );

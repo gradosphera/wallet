@@ -69,7 +69,7 @@ function SettingsAbout({
         )}
         >
           <Button isSimple isText onClick={handleBackClick} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('About %app_name%', { app_name: APP_NAME })}</span>

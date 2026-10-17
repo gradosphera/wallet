@@ -209,7 +209,7 @@ function AccountSelector({
             {(currentAccount && getAccountTitle(currentAccount)) ?? ''}
           </span>
           {withAccountSelector && !withBalance && (
-            <i className={buildClassName('icon icon-chevrondown', styles.arrowIcon)} aria-hidden />
+            <i className={buildClassName('icon icon-caret-down', styles.arrowIcon)} aria-hidden />
           )}
         </div>
       </Transition>

@@ -56,7 +56,7 @@ function BackupWarning({ isRequired, theme, onOpenBackupWallet }: OwnProps & Sta
       onClick={handleClick}
     >
       {lang('Wallet is not backed up')}
-      <i className={buildClassName(styles.icon, 'icon-chevronright')} aria-hidden />
+      <i className={buildClassName(styles.icon, 'icon-chevron-right')} aria-hidden />
       <p className={styles.text}>
         {lang('Back up wallet to have full access to it')}
       </p>

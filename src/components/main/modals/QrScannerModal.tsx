@@ -160,7 +160,7 @@ function QrScannerModal({ isOpen, onClose }: OwnProps) {
           tabIndex={0}
           onClick={handleClose}
         >
-          <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
+          <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
         </div>
 
         {flashlightShouldRender && (
@@ -172,7 +172,7 @@ function QrScannerModal({ isOpen, onClose }: OwnProps) {
             role="button"
             tabIndex={0}
           >
-            <i className="icon-flash" aria-hidden />
+            <i className="icon-flashlight" aria-hidden />
           </div>
         )}
 

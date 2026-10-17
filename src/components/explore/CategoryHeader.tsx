@@ -39,7 +39,7 @@ function CategoryHeader({ id, withNotch, categories }: OwnProps & StateProps) {
     )}
     >
       <Button className={styles.backButton} isSimple isText onClick={closeSiteCategory}>
-        <i className={buildClassName(styles.backIcon, 'icon-chevronleft')} aria-hidden />
+        <i className={buildClassName(styles.backIcon, 'icon-chevron-left')} aria-hidden />
         <span>{lang('Back')}</span>
       </Button>
 

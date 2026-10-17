@@ -21,7 +21,7 @@ function SettingsButton() {
       ariaLabel={lang('Main menu')}
       onClick={openSettings}
     >
-      <i className="icon-settings-2" aria-hidden />
+      <i className="icon-cog" aria-hidden />
     </Button>
   );
 }

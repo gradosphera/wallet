@@ -54,7 +54,7 @@ function PortraitActions({
           className={styles.button}
           onClick={handleAddBuyClick}
         >
-          <i className={buildClassName(styles.buttonIcon, 'icon-plus')} aria-hidden />
+          <i className={buildClassName(styles.buttonIcon, 'icon-action-add')} aria-hidden />
           {lang('Add')}
         </Button>
         <WithContextMenu
@@ -71,7 +71,7 @@ function PortraitActions({
               onClick={handleStartTransfer}
               ref={buttonProps.ref as ElementRef<HTMLButtonElement>}
             >
-              <i className={buildClassName(styles.buttonIcon, 'icon-sendthenonline')} aria-hidden />
+              <i className={buildClassName(styles.buttonIcon, 'icon-action-send')} aria-hidden />
               {lang('Send')}
             </Button>
           )}
@@ -82,7 +82,7 @@ function PortraitActions({
             className={styles.button}
             onClick={handleStartSwap}
           >
-            <i className={buildClassName(styles.buttonIcon, 'icon-circlearrowswapfill')} aria-hidden />
+            <i className={buildClassName(styles.buttonIcon, 'icon-action-swap')} aria-hidden />
             {lang('Swap')}
           </Button>
         )}

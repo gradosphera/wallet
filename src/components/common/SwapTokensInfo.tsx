@@ -83,7 +83,7 @@ function SwapTokensInfo({
           className={buildClassName(
             styles.infoSeparatorIcon,
             isError && styles.infoSeparatorIconError,
-            isError ? 'icon-cancel' : 'icon-arrowdown',
+            isError ? 'icon-close' : 'icon-arrow-down',
           )}
           aria-hidden
         />

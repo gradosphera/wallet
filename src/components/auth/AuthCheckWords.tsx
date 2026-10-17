@@ -30,7 +30,7 @@ const AuthCheckWords = ({ isActive, mnemonic, checkIndexes }: OwnProps) => {
 
         <div className={styles.header}>
           <Button isSimple isText onClick={openMnemonicPage} className={styles.headerBackBlock}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('Let\'s Check!')}</span>

@@ -62,7 +62,7 @@ function SelectTokenButton({
           )}
           <div className={styles.content}>
             <span>{tokenToRender?.symbol}</span>
-            <i className={buildClassName('icon-chevronright', styles.chevronIcon)} aria-hidden />
+            <i className={buildClassName('icon-chevron-right', styles.chevronIcon)} aria-hidden />
           </div>
         </button>
       </Transition>

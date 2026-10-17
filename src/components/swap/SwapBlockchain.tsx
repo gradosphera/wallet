@@ -220,7 +220,7 @@ function SwapBlockchain({
                 onClick={handleQrScanClick}
                 ariaLabel={lang('Scan QR Code')}
               >
-                <i className="icon-scan" aria-hidden />
+                <i className="icon-qr-scanner-alt" aria-hidden />
               </Button>
             )}
             {withPasteButton && (
@@ -237,7 +237,7 @@ function SwapBlockchain({
 
   const title = lang('$swap_from_to', {
     from: tokenIn?.symbol,
-    icon: <i className={buildClassName('icon-chevronright', styles.swapArrowIcon)} aria-hidden />,
+    icon: <i className={buildClassName('icon-chevron-right', styles.swapArrowIcon)} aria-hidden />,
     to: tokenOut?.symbol,
   }) as TeactNode[];
 

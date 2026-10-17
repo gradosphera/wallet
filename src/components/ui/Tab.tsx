@@ -74,7 +74,7 @@ function Tab({
         {icon && <i className={buildClassName(icon, styles.icon)} aria-hidden />}
         {title}
         {hasMenu && (
-          <i className={buildClassName('icon-chevrondown', styles.caretIcon)} aria-hidden />
+          <i className={buildClassName('icon-caret-down', styles.caretIcon)} aria-hidden />
         )}
       </span>
       {hasMenu && (

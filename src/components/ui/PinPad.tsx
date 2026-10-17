@@ -191,7 +191,7 @@ function PinPad({
         <PinPadButton value="9" onClick={handleClick} isDisabled={arePinButtonsDisabled} />
         {!onBiometricsClick ? <span /> : (
           <PinPadButton onClick={onBiometricsClick} isDisabled={isSuccess}>
-            <i className={buildClassName('icon', isFaceId ? 'icon-faceid-1' : 'icon-touchid')} aria-hidden />
+            <i className={buildClassName('icon', isFaceId ? 'icon-face-id' : 'icon-touch-id')} aria-hidden />
           </PinPadButton>
         )}
         <PinPadButton value="0" onClick={handleClick} isDisabled={arePinButtonsDisabled} />
@@ -204,7 +204,7 @@ function PinPad({
               className={styles.buttonDanger}
               onClick={onLogOutClick}
             >
-              <i className="icon icon-ic_lt_logout" aria-hidden />
+              <i className="icon icon-exit" aria-hidden />
             </PinPadButton>
           ) : (
             <PinPadButton

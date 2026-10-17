@@ -127,7 +127,7 @@ function NftMenu({
         aria-label={lang('NFT Menu')}
         onClick={handleButtonClick}
       >
-        <i className={buildClassName(styles.icon, 'icon-more')} aria-hidden />
+        <i className={buildClassName(styles.icon, 'icon-menu-dots')} aria-hidden />
       </button>
       <DropdownMenu
         isOpen={isOpen}

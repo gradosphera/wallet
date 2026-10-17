@@ -47,7 +47,7 @@ function SettingsTokenList({
           className={buildClassName(styles.headerBack, isInsideModal && styles.isInsideModal)}
           onClick={handleBackClick}
         >
-          <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+          <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
           <span>{lang('Back')}</span>
         </Button>
         <span className={styles.headerTitle}>{lang('Select Token')}</span>

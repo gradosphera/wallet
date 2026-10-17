@@ -173,7 +173,7 @@ function AddAccountModal({
 
         <div className={buildClassName(styles.actionsSection, styles.actionsSectionShift)}>
           <ListItem
-            icon="telegram"
+            icon="telegram-filled"
             label="Подключить Telegram кошелёк"
             isLoading={isTelegramConnecting}
             onClick={!isTelegramConnecting ? openTelegramWallet : undefined}

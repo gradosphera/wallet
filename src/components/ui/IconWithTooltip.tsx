@@ -117,7 +117,7 @@ const IconWithTooltip: FC<OwnProps> = ({
         className={buildClassName(
           commonClassName,
           styles.fontIcon,
-          type === 'warning' ? 'icon-exclamationoutlined' : 'icon-ic_question',
+          type === 'warning' ? 'icon-exclamation' : 'icon-question',
         )}
         data-tooltip-key={randomTooltipKey}
         onClick={onClick}

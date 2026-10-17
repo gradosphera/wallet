@@ -195,7 +195,7 @@ function SwapSettingsContent({
           onClick={() => onNetworkFeeClick()}
         >
           <span>{feeElement}</span>
-          <i className={buildClassName('icon-chevronright', styles.advancedLinkIcon)} aria-hidden />
+          <i className={buildClassName('icon-chevron-right', styles.advancedLinkIcon)} aria-hidden />
         </span>
       );
     }

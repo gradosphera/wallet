@@ -79,7 +79,7 @@ function SettingsWalletVersion({
               ≈&thinsp;{v.totalBalance}
             </span>
           </div>
-          <i className={buildClassName(styles.iconChevronRight, 'icon-chevronright')} aria-hidden />
+          <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
         </div>
       );
     });
@@ -97,7 +97,7 @@ function SettingsWalletVersion({
       ) : (
         <div className={buildClassName(styles.header, 'with-notch-on-scroll', isScrolled && 'is-scrolled')}>
           <Button isSimple isText onClick={handleBackClick} className={styles.headerBack}>
-            <i className={buildClassName(styles.iconChevron, 'icon-chevronleft')} aria-hidden />
+            <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
             <span>{lang('Back')}</span>
           </Button>
           <span className={styles.headerTitle}>{lang('Wallet Versions')}</span>

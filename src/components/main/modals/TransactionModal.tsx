@@ -347,7 +347,7 @@ function TransactionModal({
           ariaLabel={lang('Close')}
           onClick={handleClose}
         >
-          <i className={buildClassName(modalStyles.closeIcon, 'icon-cancel')} aria-hidden />
+          <i className={buildClassName(modalStyles.closeIcon, 'icon-close')} aria-hidden />
         </Button>
       </div>
     );

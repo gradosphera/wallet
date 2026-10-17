@@ -7,7 +7,6 @@
     "dist/*.css",
     "docs/*.css",
     "src/styles/brilliant-icons.css",
-    "src/styles/brilliant-icons-android.css",
     "coverage/**",
     "dist-electron/*.css",
     "mobile/**/public/*.css"

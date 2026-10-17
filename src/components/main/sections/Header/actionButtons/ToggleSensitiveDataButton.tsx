@@ -30,7 +30,7 @@ function ToggleSensitiveDataButton({ isSensitiveDataHidden }: OwnProps) {
       ariaLabel={lang(isSensitiveDataHidden ? 'Show Sensitive Data' : 'Hide Sensitive Data')}
       onClick={handleSensitiveDataToggle}
     >
-      <i className={isSensitiveDataHidden ? 'icon-eye' : 'icon-eyecrossed'} aria-hidden />
+      <i className={isSensitiveDataHidden ? 'icon-eye' : 'icon-eye-closed'} aria-hidden />
     </Button>
   );
 }
