@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmytonwallet=globalThis.webpackChunkmytonwallet||[]).push([[201],{5054:(e,n,t)=>{t.d(n,{SecureStoragePlugin:()=>l});const l=(0,t(6546).F3)("SecureStoragePlugin",{web:()=>t.e(196).then(t.bind(t,5196)).then((e=>new e.SecureStoragePluginWeb))})}}]);

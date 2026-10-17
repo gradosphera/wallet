@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmytonwallet=globalThis.webpackChunkmytonwallet||[]).push([[895],{3895:(e,n,l)=>{l.r(n),l.d(n,{AppLauncherWeb:()=>r});var a=l(6546);class r extends a.E_{async canOpenUrl(e){return{value:!0}}async openUrl(e){return window.open(e.url,"_blank"),{completed:!0}}}}}]);

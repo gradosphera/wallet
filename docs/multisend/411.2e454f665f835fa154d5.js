@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmytonwallet=globalThis.webpackChunkmytonwallet||[]).push([[411],{7411:(s,a,e)=>{e.r(a),e.d(a,{SplashScreenWeb:()=>h});var l=e(6546);class h extends l.E_{async show(s){}async hide(s){}}}}]);
