@@ -32,7 +32,7 @@ import AccountRenameModal from './AccountRenameModal';
 
 import styles from './AccountSelector.module.scss';
 
-import blagoImage from '../../../../assets/coins/jetton_blago.svg';
+import blagoLogo from '../../../../assets/coins/blago-logo.svg';
 
 interface OwnProps {
   forceClose?: boolean;
@@ -192,7 +192,7 @@ function AccountSelector({
               <span className={styles.balanceInner}>
                 <span
                   className={styles.balanceLogo}
-                  style={`--balance-logo-url: url(${blagoImage})`}
+                  style={`--balance-logo-url: url(${blagoLogo})`}
                   aria-hidden
                 />
                 {primaryWholePart}
