@@ -60,20 +60,26 @@ export function createPostMessageInterface(
 
 /**
  * Provides functions, defined in the main window, to an IFrame.
+ * `target` может быть функцией-геттером — тогда ответы всегда уходят в актуальный
+ * contentWindow (важно, когда слушатель вешается до загрузки iframe).
  */
 export function createReverseIFrameInterface(
   api: ApiConfig,
   targetOrigin: string,
-  target: Window,
+  target: Window | (() => Window | undefined),
   channel?: string,
 ) {
+  function resolveTarget(): Window | undefined {
+    return typeof target === 'function' ? target() : target;
+  }
+
   function sendToOrigin(data: WorkerMessageData, transferables?: Transferable[]) {
     data.channel = channel;
 
     if (transferables) {
       throw new Error('Cannot send `Transferable` to `Window`');
     } else {
-      target.postMessage(data, targetOrigin);
+      resolveTarget()?.postMessage(data, targetOrigin);
     }
   }
 
