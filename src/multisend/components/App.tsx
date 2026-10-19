@@ -4,7 +4,6 @@ import React, { memo, useEffect, useLayoutEffect, useState } from '../../lib/tea
 import type { TransferRow } from '../types';
 
 import buildClassName from '../../util/buildClassName';
-import resolveSlideTransitionName from '../../util/resolveSlideTransitionName';
 import {
   IS_ANDROID,
   IS_ANDROID_APP,
@@ -17,12 +16,9 @@ import {
 } from '../../util/windowEnvironment';
 import { handleTonConnectButtonClick, initTonConnect, tonConnect } from '../utils/tonConnect';
 
-import { useDeviceScreen } from '../../hooks/useDeviceScreen';
 import useEffectOnce from '../../hooks/useEffectOnce';
 import useLastCallback from '../../hooks/useLastCallback';
-import usePrevious2 from '../../hooks/usePrevious2';
 
-import Transition from '../../components/ui/Transition';
 import DropPage from './DropPage';
 import LoadingPage from './LoadingPage';
 import ManageTransferPage from './ManageTransferPage';
@@ -48,7 +44,6 @@ function App({ mtwWalletInfo }: OwnProps) {
   const [transferData, setTransferData] = useState<TransferRow[]>([]);
   const [editingTransfer, setEditingTransfer] = useState<TransferRow | undefined>();
   const [editingIndex, setEditingIndex] = useState<number | undefined>();
-  const { isPortrait } = useDeviceScreen();
 
   useLayoutEffect(applyDocumentClasses, []);
 
@@ -142,7 +137,7 @@ function App({ mtwWalletInfo }: OwnProps) {
     setRenderKey(PageKey.TransferList);
   });
 
-  function renderPage(isActive: boolean) {
+  function renderPage() {
     switch (renderKey) {
       case PageKey.Drop:
         return (
@@ -153,13 +148,12 @@ function App({ mtwWalletInfo }: OwnProps) {
             onAddTransferClick={handleAddTransferClick}
             onSetCsvData={setTransferData}
             onNavigateToTransferList={handleNavigateToTransferList}
-            isActive={isActive}
           />
         );
       case PageKey.ManageTransfer:
         return (
           <ManageTransferPage
-            isActive={isActive}
+            isActive
             editingTransfer={editingTransfer}
             editingIndex={editingIndex}
             onBack={handleManageTransferBack}
@@ -170,7 +164,7 @@ function App({ mtwWalletInfo }: OwnProps) {
       case PageKey.TransferList:
         return (
           <TransferListPage
-            isActive={isActive}
+            isActive
             transferData={transferData}
             onSetTransferData={setTransferData}
             onAddTransferClick={handleAddTransferClick}
@@ -183,18 +177,9 @@ function App({ mtwWalletInfo }: OwnProps) {
     }
   }
 
-  const prevRenderKey = usePrevious2(renderKey);
-  const shouldForceFade = renderKey <= PageKey.Drop && (!prevRenderKey || prevRenderKey <= PageKey.Drop);
-
   return (
     <div className={styles.app}>
-      <Transition
-        name={isPortrait && !shouldForceFade ? resolveSlideTransitionName() : 'fade'}
-        activeKey={renderKey}
-        slideClassName={buildClassName(styles.appSlide, 'custom-scroll')}
-      >
-        {renderPage}
-      </Transition>
+      <div className={buildClassName(styles.appSlide, 'custom-scroll')}>{renderPage()}</div>
     </div>
   );
 }

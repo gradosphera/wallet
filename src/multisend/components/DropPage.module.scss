@@ -92,8 +92,6 @@
   text-align: center;
 
   background-color: var(--color-background-second);
-
-  transition: border-color 0.3s, background-color 0.3s;
 }
 
 .dropActive {
@@ -144,6 +142,108 @@
 
 .sticker {
   margin: 0 auto 1.25rem;
+}
+
+.logo {
+  display: block;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 auto 1.25rem;
+
+  background-color: var(--color-accent);
+  mask-image: var(--logo-url);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--logo-url);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.blago {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border: 1px solid var(--color-separator);
+  border-radius: var(--border-radius-default);
+
+  background-color: var(--color-background-second);
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.blagoTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  line-height: 1.375rem;
+  color: var(--color-black);
+}
+
+.blagoSubtitle {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  color: var(--color-black);
+}
+
+.blagoText {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  color: var(--color-gray-2);
+  text-align: left;
+}
+
+.blagoFacts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+}
+
+.blagoFact {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  dt {
+    color: var(--color-gray-2);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-black);
+    text-align: right;
+  }
+}
+
+.blagoLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.blagoLink {
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none !important;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline !important;
+  }
 }
 
 .title {

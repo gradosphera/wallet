@@ -1,39 +1,23 @@
-# MyTonWallet Multisend
+# Мультиотправка — Кошелёк ДАО Градосфера
 
-This is a standalone dapp for MyTonWallet's professional features.
+Страница мультиотправки позволяет отправить Gram и жетоны сразу нескольким получателям в одной транзакции через Кошелёк ДАО Градосфера.
 
-## Development
-
-To run the Multisend dapp in development mode:
+## Разработка
 
 ```bash
 npm run multisend:dev
 ```
 
-This will start the development server on port 4323.
-
-## Building
-
-To build the Multisend dapp for production:
+## Сборка
 
 ```bash
 npm run multisend:build
 ```
 
-For development build:
+## Деплой на GitHub Pages
 
 ```bash
-npm run multisend:build:dev
+npm run multisend:deploy
 ```
 
-## Structure
-
-The Multisend dapp follows a similar structure to the main MyTonWallet project:
-
-- `/components`: UI components specific to the Multisend dapp
-- `/utils`: Utility functions and helpers
-- `/public`: Static assets and public files
-
-## Configuration
-
-The Multisend dapp configuration is located in `config.ts`. 
+Сборка размещается в `docs/multisend/`.

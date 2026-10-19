@@ -121,8 +121,6 @@
   color: var(--color-black);
   text-decoration: none !important;
 
-  transition: background-color 200ms, border-radius 200ms;
-
   &:not(:last-child):after {
     content: '';
 

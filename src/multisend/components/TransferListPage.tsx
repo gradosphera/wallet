@@ -187,13 +187,13 @@ function TransferListPage({
             className={styles.addButton}
             onClick={handleAddTransfer}
           >
-            Add Transfer
+            Добавить перевод
           </Button>
         </div>
 
         <div className={styles.transfersHeader}>
           <div className={styles.blockTitle}>
-            {transferData.length} transfer{transferData.length !== 1 ? 's' : ''}
+            {transferData.length} {pluralize(transferData.length, 'перевод', 'перевода', 'переводов')}
           </div>
         </div>
 
@@ -201,7 +201,7 @@ function TransferListPage({
           {transferData.map((row, index) => {
             const isTon = isTonIdentifier(row.tokenIdentifier);
             const tokenInfo = !isTon ? row.resolvedTokenInfo : undefined;
-            const displayToken = isTon ? 'TON' : tokenInfo!.symbol;
+            const displayToken = isTon ? 'Gram' : tokenInfo!.symbol;
             const displayAddress = row.receiver;
             const addressTitle = row.resolvedAddress
               ? `${row.receiver} → ${row.resolvedAddress}`
@@ -217,7 +217,7 @@ function TransferListPage({
                 <div className={styles.transferContent}>
                   {formatNumber(row.amount)} {displayToken}{' '}
                   <span className={styles.toAddress}>
-                    to {shortenAddress(displayAddress, 4)}
+                    на {shortenAddress(displayAddress, 4)}
                   </span>
                 </div>
 
@@ -247,20 +247,21 @@ function TransferListPage({
             )}
             ref={txResultRef}
           >
-            {txResult.success} transfers succeeded, {txResult.failed} failed
+            {txResult.success} {pluralize(txResult.success, 'перевод', 'перевода', 'переводов')} отправлено,
+            {' '}{txResult.failed} неудачно
           </div>
         )}
 
         <div className={styles.actionButtons}>
           <Button onClick={handleCancel}>
-            Cancel
+            Отмена
           </Button>
           <Button
             isPrimary
             isLoading={isLoading || isResolvingAddresses}
             onClick={handleSendAll}
           >
-            {isResolvingAddresses ? 'Resolving Addresses...' : 'Send All'}
+            {isResolvingAddresses ? 'Определяем адреса...' : 'Отправить всё'}
           </Button>
         </div>
       </div>
@@ -269,6 +270,16 @@ function TransferListPage({
 }
 
 export default memo(TransferListPage);
+
+function pluralize(value: number, one: string, few: string, many: string): string {
+  const mod10 = value % 10;
+  const mod100 = value % 100;
+
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+
+  return many;
+}
 
 function createCommentPayload(comment: string): string {
   const cell = beginCell()

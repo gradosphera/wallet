@@ -1,13 +1,13 @@
 import React, { memo } from '../../lib/teact/teact';
 
-import Spinner from '../../components/ui/Spinner';
-
 import styles from './LoadingPage.module.scss';
+
+import blagoLogo from '../../assets/coins/blago-logo.svg';
 
 function LoadingPage() {
   return (
     <div className={styles.loadingContainer}>
-      <Spinner />
+      <span className={styles.logo} aria-hidden style={`--logo-url: url(${blagoLogo})`} />
     </div>
   );
 }

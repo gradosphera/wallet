@@ -34,15 +34,15 @@ async function validateTokenIdentifier(tokenIdentifier: string): Promise<{
       return {
         isValid: false,
         error: safeExec(() => Address.parse(tokenIdentifier))
-          ? `Token not found for address "${tokenIdentifier}". Please verify the token address is correct.`
-          : `Invalid token identifier "${tokenIdentifier}". Please use a valid token name, symbol, or minter address.`,
+          ? `Токен не найден по адресу «${tokenIdentifier}». Проверьте, что адрес токена указан верно.`
+          : `Неверный идентификатор токена «${tokenIdentifier}». Укажите корректное название, символ или адрес master-контракта.`,
       };
     }
 
     if (!safeExec(() => Address.parse(tokenInfo.tokenAddress))) {
       return {
         isValid: false,
-        error: `Invalid token address format for "${tokenIdentifier}".`,
+        error: `Неверный формат адреса токена «${tokenIdentifier}».`,
       };
     }
 
@@ -50,7 +50,7 @@ async function validateTokenIdentifier(tokenIdentifier: string): Promise<{
   } catch (err: any) {
     return {
       isValid: false,
-      error: err?.message || 'Failed to validate token',
+      error: err?.message || 'Не удалось проверить токен',
     };
   }
 }
@@ -81,7 +81,7 @@ export async function validateAndProcessTransfer(transfer: {
   if (!isValidAmount(amount)) {
     return {
       isValid: false,
-      error: 'Invalid amount',
+      error: 'Некорректная сумма',
     };
   }
 
@@ -91,7 +91,7 @@ export async function validateAndProcessTransfer(transfer: {
     if (!tokenValidationResult.isValid) {
       return {
         isValid: false,
-        error: tokenValidationResult.error || 'Invalid token identifier',
+        error: tokenValidationResult.error || 'Неверный идентификатор токена',
       };
     }
 
@@ -111,7 +111,7 @@ export async function validateAndProcessTransfer(transfer: {
   } catch (err) {
     return {
       isValid: false,
-      error: err instanceof Error ? err.message : 'Invalid token identifier',
+      error: err instanceof Error ? err.message : 'Неверный идентификатор токена',
     };
   }
 }

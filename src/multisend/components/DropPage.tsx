@@ -3,9 +3,7 @@ import React, { memo, useEffect, useRef, useState } from '../../lib/teact/teact'
 
 import type { TransferRow, ValidationError } from '../types';
 
-import { ANIMATED_STICKER_BIG_SIZE_PX } from '../../config';
 import buildClassName from '../../util/buildClassName';
-import { ANIMATED_STICKERS_PATHS } from '../../components/ui/helpers/animatedAssets';
 import { downloadTemplate, MIXED_TRANSFERS_TEMPLATE } from '../utils/csvTemplates';
 import { prettifyAddress } from '../utils/tonConnect';
 import { validateAndProcessTransfer } from '../utils/transferValidation';
@@ -13,10 +11,11 @@ import { validateAndProcessTransfer } from '../utils/transferValidation';
 import useLastCallback from '../../hooks/useLastCallback';
 import useShowTransition from '../../hooks/useShowTransition';
 
-import AnimatedIconWithPreview from '../../components/ui/AnimatedIconWithPreview';
 import Button from '../../components/ui/Button';
 
 import styles from './DropPage.module.scss';
+
+import blagoLogo from '../../assets/coins/blago-logo.svg';
 
 interface OwnProps {
   wallet?: Wallet;
@@ -25,7 +24,6 @@ interface OwnProps {
   onAddTransferClick: NoneToVoidFunction;
   onSetCsvData: (data: TransferRow[]) => void;
   onNavigateToTransferList: () => void;
-  isActive?: boolean;
 }
 
 function DropPage({
@@ -35,7 +33,6 @@ function DropPage({
   onAddTransferClick,
   onSetCsvData,
   onNavigateToTransferList,
-  isActive,
 }: OwnProps) {
   const [isDropActive, setIsDropActive] = useState(false);
   const [validationError, setValidationError] = useState<ValidationError | undefined>();
@@ -62,7 +59,7 @@ function DropPage({
         setValidationError({
           line: maxMessages + 1,
           column: 0,
-          reason: `CSV file exceeds the maximum of ${maxMessages} transfers`,
+          reason: `Файл CSV превышает максимум из ${maxMessages} переводов`,
         });
         return;
       }
@@ -82,7 +79,7 @@ function DropPage({
           error = {
             line: i + 1,
             column: columns.length + 1,
-            reason: 'Row must contain at least 3 columns: receiver, amount, and token type',
+            reason: 'Строка должна содержать минимум 3 столбца: получатель, сумма и тип токена',
           };
           break;
         }
@@ -101,7 +98,7 @@ function DropPage({
             error = {
               line: i + 1,
               column: 1,
-              reason: validationResult.error || 'Validation failed',
+              reason: validationResult.error || 'Ошибка проверки',
             };
             break;
           }
@@ -113,7 +110,7 @@ function DropPage({
           error = {
             line: i + 1,
             column: 1,
-            reason: err instanceof Error ? err.message : 'Processing failed',
+            reason: err instanceof Error ? err.message : 'Ошибка обработки',
           };
           break;
         }
@@ -183,7 +180,7 @@ function DropPage({
   });
 
   const handleDownloadTemplate = useLastCallback(() => {
-    downloadTemplate(MIXED_TRANSFERS_TEMPLATE, 'mytonwallet_multi_transfer_template.csv');
+    downloadTemplate(MIXED_TRANSFERS_TEMPLATE, 'multisend-template.csv');
   });
 
   useEffect(() => {
@@ -204,17 +201,9 @@ function DropPage({
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
           >
-            <AnimatedIconWithPreview
-              play={isActive}
-              tgsUrl={ANIMATED_STICKERS_PATHS.forge}
-              previewUrl={ANIMATED_STICKERS_PATHS.forgePreview}
-              size={ANIMATED_STICKER_BIG_SIZE_PX}
-              className={styles.sticker}
-              noLoop={false}
-              nonInteractive
-            />
+            <span className={styles.logo} aria-hidden style={`--logo-url: url(${blagoLogo})`} />
             <p className={styles.title}>
-              Send TON and tokens to multiple recipients in one batch operation
+              Отправляйте Gram и жетоны сразу нескольким получателям одной транзакцией
             </p>
 
             <div className={styles.importButtons}>
@@ -223,21 +212,21 @@ function DropPage({
                 onClick={handleAddTransfer}
                 className={buildClassName(styles.importButton, styles.addButton)}
               >
-                Add First Transfer
+                Добавить первый перевод
               </Button>
               <Button
                 onClick={handleButtonClick}
                 isLoading={isValidatingCsv}
                 className={styles.importButton}
               >
-                Upload CSV
+                Загрузить CSV
               </Button>
               <Button
                 onClick={handleDownloadTemplate}
                 isSmall
                 className={styles.importButton}
               >
-                Download CSV Sample
+                Скачать образец CSV
               </Button>
             </div>
             <input
@@ -251,8 +240,8 @@ function DropPage({
 
           {shouldRenderError && (
             <div ref={errorRef} className={styles.errorMessage}>
-              An error occurred (line {validationError?.line},
-              column {validationError?.column}). {validationError?.reason}
+              Ошибка в строке {validationError?.line},
+              столбце {validationError?.column}. {validationError?.reason}
             </div>
           )}
         </div>
@@ -262,29 +251,92 @@ function DropPage({
           <>
             {!!maxMessages && (
               <p>
-                The connected wallet supports up to <b>{maxMessages}</b> transfers.
+                Подключённый кошелёк поддерживает до <b>{maxMessages}</b> переводов.
                 {!!maxMessages && maxMessages <= 4 && (
-                  <>{' '}Use <b>W5</b> wallet to send up to <b>255</b> transfers.</>
+                  <>{' '}Используйте кошелёк <b>W5</b>, чтобы отправлять до <b>255</b> переводов.</>
                 )}
               </p>
             )}
           </>
         ) : (
           <p>
-            Connect <b>MyTonWallet</b> to access<br />the multi-send feature.
+            Подключите <b>Кошелёк ДАО Градосфера</b>,<br />чтобы получить доступ к мультиотправке.
           </p>
         )}
       </div>
+
+      <section className={styles.blago}>
+        <h2 className={styles.blagoTitle}>Жетон Благо (BLG)</h2>
+        <p className={styles.blagoText}>
+          Благо — utility-токен экосистемы ДАО Градосфера. Стандартный jetton в сети TON (TEP-74)
+          с расширенным управлением со стороны ДАО через мультиподпись.
+        </p>
+        <dl className={styles.blagoFacts}>
+          <div className={styles.blagoFact}>
+            <dt>Символ</dt>
+            <dd>BLG</dd>
+          </div>
+          <div className={styles.blagoFact}>
+            <dt>Точность</dt>
+            <dd>0 десятичных знаков</dd>
+          </div>
+          <div className={styles.blagoFact}>
+            <dt>Стандарт</dt>
+            <dd>Jetton master, TEP-74</dd>
+          </div>
+          <div className={styles.blagoFact}>
+            <dt>Верификация</dt>
+            <dd>10.09.2024, подтверждена</dd>
+          </div>
+          <div className={styles.blagoFact}>
+            <dt>Лицензия</dt>
+            <dd>CC0-1.0</dd>
+          </div>
+        </dl>
+
+        <h3 className={styles.blagoSubtitle}>Управление ДАО</h3>
+        <p className={styles.blagoText}>
+          ДАО может перевести жетон из кошелька пользователя, сжигать его, блокировать и
+          разблокировать аккаунты, а также обновлять код контракта и метаданные. Даже заблокированный
+          аккаунт остаётся под полным контролем ДАО.
+        </p>
+
+        <h3 className={styles.blagoSubtitle}>Модель распределения</h3>
+        <p className={styles.blagoText}>
+          <b>Благодарность</b> — личный вклад, оценивается как произведение вклада на время и качество работы
+          (время × качество). <b>Благо</b> — агрегированный общественный вклад с учётом числа пользователей
+          (U) и коэффициента БлагоРодства (r).
+        </p>
+
+        <div className={styles.blagoLinks}>
+          <a
+            className={styles.blagoLink}
+            href="https://github.com/gradosphera/blago-jetton"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Репозиторий жетона
+          </a>
+          <a
+            className={styles.blagoLink}
+            href="https://tonviewer.com/EQBlaryI1HCY6hIlW9giBoqKGtuMHfxlULZOhD6UyzpqLcll"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Мастер-контракт на Tonviewer
+          </a>
+        </div>
+      </section>
       {wallet ? (
         <div className={styles.walletInfo}>
           <div className={styles.walletAddress}>
             {wallet?.account ? prettifyAddress(wallet.account.address) : undefined}
           </div>
           <div className={styles.walletDescription}>
-            Connected Wallet
+            Подключённый кошелёк
             {' · '}
             <span className={styles.disconnectLink} onClick={onDisconnectClick}>
-              Disconnect
+              Отключить
             </span>
           </div>
         </div>
@@ -295,7 +347,7 @@ function DropPage({
             className={styles.connectButton}
             onClick={onConnectClick}
           >
-            Connect MyTonWallet
+            Подключить Кошелёк ДАО Градосфера
           </Button>
         </div>
       )}

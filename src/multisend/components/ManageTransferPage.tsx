@@ -16,7 +16,6 @@ import AddressInput from '../../components/ui/AddressInput';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import RichNumberInput from '../../components/ui/RichNumberInput';
-import Transition from '../../components/ui/Transition';
 
 import styles from './ManageTransferPage.module.scss';
 
@@ -106,7 +105,7 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
 
       if (!validationResult.isValid || !validationResult.processedTransfer) {
         if (validationResult.error && validationResult.error.includes('token')) {
-          setTokenError('Invalid token identifier');
+          setTokenError('Неверный идентификатор токена');
         } else {
           // eslint-disable-next-line no-console
           console.error('Transfer validation failed:', validationResult.error);
@@ -137,9 +136,11 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
   return (
     <div className={buildClassName(styles.container, isEditing && styles.editing)}>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <h1 className={styles.title}>{isEditing ? 'Редактирование перевода' : 'Новый перевод'}</h1>
+
         <div>
           <AddressInput
-            label={lang('Recipient Address')}
+            label={lang('Адрес получателя')}
             chain="ton"
             value={toAddress}
             address={toAddress}
@@ -153,7 +154,7 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
         <div>
           <RichNumberInput
             id="multisend-amount-input"
-            labelText={lang('Amount')}
+            labelText={lang('Сумма')}
             value={amount}
             onChange={handleAmountChange}
           />
@@ -162,9 +163,9 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
         <div>
           <Input
             id="multisend-token-input"
-            label={lang('Token')}
+            label={lang('Токен')}
             value={tokenIdentifier}
-            placeholder={lang('Token ticker or address')}
+            placeholder={lang('Символ токена или адрес')}
             hasError={!!tokenError}
             error={tokenError}
             onInput={handleTokenInput}
@@ -174,9 +175,9 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
         <div>
           <Input
             id="multisend-comment-input"
-            label={lang('Comment')}
+            label={lang('Комментарий')}
             value={comment}
-            placeholder={lang('Optional')}
+            placeholder={lang('Необязательно')}
             isMultiline={true}
             onInput={handleCommentInput}
           />
@@ -185,7 +186,7 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
         <div className={styles.footer}>
           <div className={styles.buttons}>
             <Button onClick={handleBackClick} className={styles.button}>
-              {lang('Back')}
+              {lang('Назад')}
             </Button>
             <Button
               isPrimary={!shouldShowDelete}
@@ -196,15 +197,7 @@ function ManageTransferPage({ isActive, onBack, onSubmit, onDelete, editingTrans
               className={styles.button}
               onClick={shouldShowDelete ? handleDelete : undefined}
             >
-              <Transition name="fade" activeKey={shouldShowDelete ? 1 : 0} slideClassName={styles.transitionSlide}>
-                {
-                  shouldShowDelete
-                    ? lang('Delete')
-                    : isEditing
-                      ? lang('Save')
-                      : lang('Add')
-                }
-              </Transition>
+              {shouldShowDelete ? lang('Удалить') : isEditing ? lang('Сохранить') : lang('Добавить')}
             </Button>
           </div>
         </div>

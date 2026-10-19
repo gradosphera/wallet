@@ -67,7 +67,9 @@
     "resolve-stacktrace": "node ./dev/resolveStackTrace.mjs",
     "i18n:build:default": "node ./dev/locales/buildDefault.js",
     "i18n:update": "node ./dev/locales/updateLocales.js",
-    "i18n:find-missing": "node ./dev/locales/findMissingKeys.js"
+    "i18n:find-missing": "node ./dev/locales/findMissingKeys.js",
+    "multisend:build:production": "APP_ENV=production webpack --config webpack-multisend.config.ts && bash ./deploy/copy_to_dist.sh dist-multisend src/multisend/public",
+    "multisend:deploy": "bash ./deploy/deploy_multisend_web.sh"
   },
   "engines": {
     "node": "^22.6 || ^24",

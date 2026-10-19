@@ -73,8 +73,8 @@ export async function findTokenInfo(identifier: string): Promise<RemoteToken | u
     } else if (matchingTokens.length > 1) {
       throw new Error(
         // eslint-disable-next-line @stylistic/max-len
-        `Ambiguous token identifier "${identifier}". Multiple tokens found: ${matchingTokens.map((t) => `${t.name} (${t.symbol})`)
-          .join(', ')}. Please be more specific.`,
+        `Неоднозначный идентификатор токена «${identifier}». Найдено несколько вариантов: ${matchingTokens.map((t) => `${t.name} (${t.symbol})`)
+          .join(', ')}. Уточните запрос.`,
       );
     }
 
