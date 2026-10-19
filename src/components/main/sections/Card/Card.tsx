@@ -3,12 +3,12 @@ import React, {
   memo, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from '../../../../lib/teact/teact';
 import { withGlobal } from '../../../../global';
-import { isCustomizationUnlocked } from '../../../../global/helpers';
 
 import type { ApiBaseCurrency, ApiNft, ApiStakingState } from '../../../../api/types';
 import type { UserToken } from '../../../../global/types';
 
 import { BLAGO, BLAGO_CURRENCY, IS_CORE_WALLET } from '../../../../config';
+import { isCustomizationUnlocked } from '../../../../global/helpers';
 import {
   selectAccountStakingStates,
   selectCurrentAccountSettings,

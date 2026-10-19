@@ -130,7 +130,7 @@ function CardAddress({
     const contractName = getWalletContractName(walletVersion);
     if (!contractName) return undefined;
 
-    return <span className={styles.addressLabel}>{contractName}</span>;
+    return <span className={buildClassName(styles.addressLabel, styles.versionBadge)}>{contractName}</span>;
   }
 
   function getAccountChainIcon(chain: ApiChain) {

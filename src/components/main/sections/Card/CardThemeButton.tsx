@@ -1,5 +1,7 @@
 import React, { memo } from '../../../../lib/teact/teact';
 
+import buildClassName from '../../../../util/buildClassName';
+
 import useFlag from '../../../../hooks/useFlag';
 import useLang from '../../../../hooks/useLang';
 
@@ -15,7 +17,7 @@ function CardThemeButton() {
     <>
       <button
         type="button"
-        className={styles.button}
+        className={buildClassName(styles.button, 'rounded-font')}
         aria-label={lang('Card Palette')}
         title={lang('Card Palette')}
         onClick={openPicker}
