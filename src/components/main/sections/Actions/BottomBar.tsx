@@ -56,7 +56,7 @@ function BottomBar({ areSettingsOpen, areAssetsActive, isExploreOpen }: StatePro
           className={buildClassName(styles.button, isExploreOpen && styles.active)}
           onClick={switchToExplore}
         >
-          <i className={buildClassName(styles.icon, 'icon-explore')} />
+          <i className={buildClassName(styles.icon, 'icon-ic_lt_browser')} />
           <span className={styles.label}>{lang('Explore')}</span>
         </Button>
       )}
@@ -65,7 +65,7 @@ function BottomBar({ areSettingsOpen, areAssetsActive, isExploreOpen }: StatePro
         className={buildClassName(styles.button, areSettingsOpen && styles.active)}
         onClick={switchToSettings}
       >
-        <i className={buildClassName(styles.icon, 'icon-settings')} />
+        <i className={buildClassName(styles.icon, 'icon-settings-2')} />
         <span className={styles.label}>{lang('Settings')}</span>
       </Button>
     </div>
