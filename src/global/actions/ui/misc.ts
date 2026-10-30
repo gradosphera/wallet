@@ -12,6 +12,7 @@ import {
 } from '../../types';
 
 import {
+  ALWAYS_ENABLED_TOKEN_SLUGS,
   ANIMATION_LEVEL_MIN,
   APP_VERSION,
   BETA_URL,
@@ -376,6 +377,9 @@ addActionHandler('updateOrderedSlugs', (global, actions, { orderedSlugs }) => {
 });
 
 addActionHandler('toggleTokenVisibility', (global, actions, { slug, shouldShow }) => {
+  // Жетоны из ALWAYS_ENABLED_TOKEN_SLUGS нельзя выключить переключателем
+  if (ALWAYS_ENABLED_TOKEN_SLUGS.has(slug) && !shouldShow) return global;
+
   const accountSettings = selectCurrentAccountSettings(global) ?? {};
   const { alwaysShownSlugs = [], alwaysHiddenSlugs = [] } = accountSettings;
   const alwaysShownSlugsSet = new Set(alwaysShownSlugs);
@@ -397,6 +401,9 @@ addActionHandler('toggleTokenVisibility', (global, actions, { slug, shouldShow }
 });
 
 addActionHandler('deleteToken', (global, actions, { slug }) => {
+  // Жетоны из ALWAYS_ENABLED_TOKEN_SLUGS нельзя удалить из «Моих токенов»
+  if (ALWAYS_ENABLED_TOKEN_SLUGS.has(slug)) return global;
+
   const accountSettings = selectCurrentAccountSettings(global) ?? {};
   return updateCurrentAccountSettings(global, {
     ...accountSettings,

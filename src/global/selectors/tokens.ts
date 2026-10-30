@@ -2,6 +2,7 @@ import type { ApiBalanceBySlug, ApiChain } from '../../api/types';
 import type { AccountSettings, GlobalState, UserToken } from '../types';
 
 import {
+  ALWAYS_ENABLED_TOKEN_SLUGS,
   DAO_POPULAR_TOKEN_SLUGS,
   DEFAULT_ENABLED_TOKEN_COUNT,
   DEFAULT_ENABLED_TOKEN_SLUGS,
@@ -21,9 +22,14 @@ import withCache from '../../util/withCache';
 import { selectAccountSettings, selectAccountState, selectCurrentAccountState } from './accounts';
 
 function getIsNewAccount(balancesBySlug: ApiBalanceBySlug, tokenInfo: GlobalState['tokenInfo']) {
-  return Object.keys(balancesBySlug).length === DEFAULT_ENABLED_TOKEN_COUNT && (
-    Object.entries(balancesBySlug).every(([slug, balance]) => {
-      const { decimals, priceUsd } = tokenInfo.bySlug[slug];
+  // Токены с форсированным нулевым балансом не должны влиять на определение
+  // нового аккаунта, иначе счётчик перестаёт совпадать с DEFAULT_ENABLED_TOKEN_COUNT
+  const slugs = Object.keys(balancesBySlug).filter((slug) => !ALWAYS_ENABLED_TOKEN_SLUGS.has(slug));
+
+  return slugs.length === DEFAULT_ENABLED_TOKEN_COUNT && (
+    slugs.every((slug) => {
+      const balance = balancesBySlug[slug];
+      const { decimals, priceUsd } = tokenInfo.bySlug[slug] ?? {};
 
       const balanceBig = toBig(balance, decimals);
       const hasCost = balanceBig.mul(priceUsd ?? 0).lt(TINY_TRANSFER_MAX_COST);
@@ -44,7 +50,8 @@ export const selectAccountTokensMemoizedFor = withCache((accountId: string) => m
 
   return Object
     .entries(balancesBySlug)
-    .filter(([slug]) => (slug in tokenInfo.bySlug && !accountSettings.deletedSlugs?.includes(slug)))
+    .filter(([slug]) => (slug in tokenInfo.bySlug
+      && (ALWAYS_ENABLED_TOKEN_SLUGS.has(slug) || !accountSettings.deletedSlugs?.includes(slug))))
     .map(([slug, balance]) => {
       const {
         symbol, name, image, decimals, cmcSlug, color, chain, tokenAddress, codeHash,
@@ -55,8 +62,9 @@ export const selectAccountTokensMemoizedFor = withCache((accountId: string) => m
       const totalValue = balanceBig.mul(price).round(decimals).toString();
       const hasCost = balanceBig.mul(priceUsd ?? 0).gte(TINY_TRANSFER_MAX_COST);
       const isPricelessTokenWithBalance = PRICELESS_TOKEN_HASHES.has(codeHash!) && balance > 0n;
+      const isAlwaysEnabled = ALWAYS_ENABLED_TOKEN_SLUGS.has(slug);
 
-      const isEnabled = (
+      const isEnabled = isAlwaysEnabled || (
         (isNewAccount && DEFAULT_ENABLED_TOKEN_SLUGS.includes(slug))
         || !areTokensWithNoCostHidden
         || (areTokensWithNoCostHidden && hasCost)
@@ -64,7 +72,8 @@ export const selectAccountTokensMemoizedFor = withCache((accountId: string) => m
         || accountSettings.alwaysShownSlugs?.includes(slug)
       );
 
-      const isDisabled = !isEnabled || accountSettings.alwaysHiddenSlugs?.includes(slug);
+      const isDisabled = !isEnabled
+        || (!isAlwaysEnabled && accountSettings.alwaysHiddenSlugs?.includes(slug));
 
       return {
         chain,

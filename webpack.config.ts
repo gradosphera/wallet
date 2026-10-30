@@ -365,7 +365,7 @@ export default function createConfig(
         chunks: ['main'],
         csp: CSP,
         title: APP_NAME,
-        homepage: IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://mytonwallet.io',
+        homepage: IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://wallet.gradosphera.org',
         assets_prefix: IS_CORE_WALLET ? 'coreWallet/' : '',
       }),
       new PreloadWebpackPlugin({

@@ -44,11 +44,11 @@ export const ELECTRON_HOST_URL = 'https://dumb-host';
 export const INACTIVE_MARKER = '[Inactive]';
 export const PRODUCTION_URL = IS_CORE_WALLET ? 'https://wallet.ton.org' : 'https://mytonwallet.app';
 export const BETA_URL = IS_CORE_WALLET ? 'https://beta.wallet.ton.org' : 'https://beta.mytonwallet.app';
-export const APP_INSTALL_URL = 'https://get.mytonwallet.io/';
-export const APP_REPO_URL = 'https://github.com/mytonwallet-org/mytonwallet';
+export const APP_INSTALL_URL = 'https://wallet.gradosphera.org/';
+export const APP_REPO_URL = 'https://github.com/gradosphera/wallet';
 export const BASE_URL = process.env.BASE_URL;
 
-export const BOT_USERNAME = process.env.BOT_USERNAME || 'MyTonWalletBot';
+export const BOT_USERNAME = process.env.BOT_USERNAME || 'wallet_gradosphera_bot';
 
 export const SWAP_FEE_ADDRESS = process.env.SWAP_FEE_ADDRESS || 'UQDUkQbpTVIgt7v66-JTFR-3-eXRFz_4V66F-Ufn6vOg0GOp';
 export const DIESEL_ADDRESS = process.env.DIESEL_ADDRESS || 'UQC9lQOaEHC6YASiJJ2NrKEOlITMMQmc8j0_iZEHy-4sl3tG';
@@ -188,7 +188,7 @@ export const NFT_MARKETPLACE_TITLES: Record<ApiNftMarketplace, string> = {
 export const MTW_STATIC_BASE_URL = 'https://static.mytonwallet.org';
 export const MTW_CARDS_BASE_URL = `${MTW_STATIC_BASE_URL}/cards/`;
 export const MTW_CARDS_MINT_BASE_URL = `${MTW_STATIC_BASE_URL}/mint-cards/`;
-export const MYTONWALLET_PROMO_URL = 'https://mytonwallet.io/';
+export const MYTONWALLET_PROMO_URL = 'https://wallet.gradosphera.org/';
 export const MYTONWALLET_MULTISEND_DAPP_URL = 'https://multisend.mytonwallet.io/';
 export const TELEGRAM_WEB_URL = 'https://web.telegram.org/a/';
 export const NFT_MARKETPLACE_URL = 'https://getgems.io/';
@@ -197,12 +197,8 @@ export const GETGEMS_BASE_MAINNET_URL = 'https://getgems.io/';
 export const GETGEMS_BASE_TESTNET_URL = 'https://testnet.getgems.io/';
 export const EMPTY_HASH_VALUE = 'NOHASH';
 
-export const IFRAME_WHITELIST = [
-  'http://localhost:*',
-  'https://tonscan.org',
-  'https://blago-vote.vercel.app',
-];
-export const SUBPROJECT_URL_MASK = 'https://*.mytonwallet.io';
+export const IFRAME_WHITELIST = ['http://localhost:*', 'https://tonscan.org', 'https://blago-vote.vercel.app'];
+export const SUBPROJECT_URL_MASK = 'https://*.gradosphera.org';
 
 export const CHANGELLY_SUPPORT_EMAIL = 'support@changelly.com';
 export const CHANGELLY_LIVE_CHAT_URL = 'https://changelly.com/';
@@ -242,8 +238,8 @@ export const NOMINATORS_STAKING_MIN_AMOUNT = 10_000n * ONE_TON;
 export const MIN_ACTIVE_STAKING_REWARDS = 100_000_000n; // 0.1 MY
 
 export const TONCONNECT_PROTOCOL_VERSION = 2;
-export const TONCONNECT_WALLET_JSBRIDGE_KEY = process.env.TONCONNECT_WALLET_JSBRIDGE_KEY
-  || (IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet');
+export const TONCONNECT_WALLET_JSBRIDGE_KEY =
+  process.env.TONCONNECT_WALLET_JSBRIDGE_KEY || (IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet');
 export const EMBEDDED_DAPP_BRIDGE_CHANNEL = 'embedded-dapp-bridge';
 
 export const GRADOSPHERA_DAO_CATEGORY_ID = 100;
@@ -650,6 +646,11 @@ export const PRICELESS_TOKEN_HASHES = new Set([
 export const STAKED_TOKEN_SLUGS = new Set([STAKED_TON_SLUG, STAKED_MYCOIN_SLUG, TON_TSUSDE.slug]);
 
 export const HIDDEN_PRICE_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
+
+// Жетоны, которые всегда показываются во вкладке «Мои токены» включёнными:
+// баланс форсируется в ноль, а состояние нельзя выключить переключателем
+// или скрыть фильтром «без стоимости».
+export const ALWAYS_ENABLED_TOKEN_SLUGS = new Set<string>([BLAGO.slug]);
 
 // Жетоны ДАО, которые всегда показываются в группе «Популярные» на экране
 // «Добавить токен», даже если бэкенд не отдаёт их как isPopular.

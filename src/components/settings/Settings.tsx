@@ -327,15 +327,15 @@ function Settings({
   });
 
   function handleClickInstallApp() {
-    void openUrl('https://mytonwallet.io/get', { isExternal: true });
+    void openUrl('https://wallet.gradosphera.org', { isExternal: true });
   }
 
   function handleClickInstallOnDesktop() {
-    void openUrl('https://mytonwallet.io/get/desktop', { isExternal: true });
+    void openUrl('https://wallet.gradosphera.org/desktop', { isExternal: true });
   }
 
   function handleClickInstallOnMobile() {
-    void openUrl('https://mytonwallet.io/get/mobile', { isExternal: true });
+    void openUrl('https://wallet.gradosphera.org/mobile', { isExternal: true });
   }
 
   const handleAddLedgerWallet = useLastCallback(() => {

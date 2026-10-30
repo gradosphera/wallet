@@ -7,7 +7,7 @@ import type {
 import type { Account, AccountState, AccountType, GlobalState } from '../types';
 
 import {
-  APP_NAME, IS_CORE_WALLET, POPULAR_WALLET_VERSIONS, TON_USDT_SLUG, TONCOIN,
+  ALWAYS_ENABLED_TOKEN_SLUGS, APP_NAME, IS_CORE_WALLET, POPULAR_WALLET_VERSIONS, TON_USDT_SLUG, TONCOIN,
 } from '../../config';
 import isPartialDeepEqual from '../../util/isPartialDeepEqual';
 import { getChainBySlug } from '../../util/tokens';
@@ -185,11 +185,11 @@ export function updateBalances(
     }
   }
 
-  // Force balance value for USDT-TON and manually imported tokens
+  // Force balance value for USDT-TON, always enabled tokens and manually imported tokens
   const importedSlugs = selectAccountSettings(global, accountId)?.importedSlugs ?? [];
   const hasTonWallet = Boolean(selectAccount(global, accountId)?.addressByChain?.ton);
 
-  let forcedSlugs = importedSlugs;
+  let forcedSlugs = [...importedSlugs, ...ALWAYS_ENABLED_TOKEN_SLUGS];
   if (hasTonWallet) forcedSlugs = [...forcedSlugs, TON_USDT_SLUG];
 
   for (const slug of forcedSlugs) {
