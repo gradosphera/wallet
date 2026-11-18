@@ -216,6 +216,7 @@ export const IFRAME_WHITELIST = [
   'https://tonviewer.com',
   'https://testnet.tonviewer.com',
   'https://blago-vote.vercel.app',
+  'https://dobro-six.vercel.app',
 ];
 export const SUBPROJECT_URL_MASK = 'https://*.gradosphera.org';
 
