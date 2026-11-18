@@ -52,6 +52,7 @@ import tonviewerIcon from '../../../assets/icons/tonviewer.svg';
 import gradospheraDaoIcon from '../../../assets/icons/gradosphera_dao.svg';
 import greenHomeIcon from '../../../assets/icons/green_home.svg';
 import cleanLeagueIcon from '../../../assets/icons/clean_league.svg';
+import dobroIcon from '../../../assets/icons/dobro.svg';
 
 const GET_DAPPS_PAUSE = 250;
 
@@ -556,6 +557,18 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
     categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
   };
 
+  const dobroSite: ApiSite = {
+    url: 'https://dobro-six.vercel.app',
+    name: 'Dobro',
+    icon: dobroIcon,
+    description: 'Сканер зарегистрированных волонтёрских часов dobro.ru',
+    manifestUrl: '',
+    canBeRestricted: false,
+    isExternal: false,
+    isFeatured: false,
+    categoryId: GRADOSPHERA_DAO_CATEGORY_ID,
+  };
+
   const cleanLeagueSite: ApiSite = {
     url: 'https://t.me/iligarubot/app',
     name: 'Чистая Лига',
@@ -606,7 +619,7 @@ function getGradospheraCatalog(): { categories: ApiSiteCategory[]; sites: ApiSit
 
   return {
     categories: [daoCategory, channelsCategory, toolsCategory],
-    sites: [voteSite, cleanLeagueSite, tonViewerSite, gradospheraDaoSite, greenHomeSite],
+    sites: [voteSite, dobroSite, cleanLeagueSite, tonViewerSite, gradospheraDaoSite, greenHomeSite],
   };
 }
 
